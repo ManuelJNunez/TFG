@@ -2,7 +2,7 @@
     <img width="400" height="400" src="https://www.iac.es/sites/default/files/styles/color/public/images/project/CTADiv.jpg?itok=QrLOeVSx">
 </p>
 
-> Imagen obtenida de la web del [Instituto de Astrofísica de canarias](https://www.iac.es/es/proyectos/iactec-grandes-telescopios-cherenkov-telescope-array-cta)
+> Imagen obtenida de la web del [Instituto de Astrofísica de Canarias](https://www.iac.es/es/proyectos/iactec-grandes-telescopios-cherenkov-telescope-array-cta)
 
 # Cherenkov Telescope Array. Particle classification.
 <p align="center">
