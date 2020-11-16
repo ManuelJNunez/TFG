@@ -6,6 +6,7 @@
 
 # Cherenkov Telescope Array. Particle classification.
 <p align="center">
+    <a hreft="https://github.com/ManuelJNunez/TFG/workflows/Comprueba%20README/badge.svg"><img alt="Comprueba README" src="https://github.com/ManuelJNunez/TFG/workflows/Comprueba%20README/badge.svg"></a>
     <a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
     <a href="https://github.com/psf/black"><img alt = "Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
