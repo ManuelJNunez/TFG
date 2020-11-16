@@ -5,3 +5,5 @@ Paranal
 Telescope
 classification
 Particle
+Núñez
+Ruiz
