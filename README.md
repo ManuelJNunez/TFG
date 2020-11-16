@@ -15,3 +15,6 @@
 El Cherenkov Telescope Array (CTA) es un conjunto de detectores de rayos cósmicos situados en Cerro Paranal (Chile) y en La Palma (España). Cuando un rayo cósmico llega a la atmósfera, hay una interacción que da lugar a una casca de partículas subatómicas. Como la luz viaja 0.003 veces más lenta en el aire que en el vacío, las partículas entonces viajan más rápido y debido a esto se produce la "luz Cherenkov". La función de los telescopios es detectar dicha luz.
 
 En la imagen de arriba podemos ver la distribución de los telescopios, que son "antenas" de espejos hexagonales. Estos espejos, que captan la anterior mencionada "luz Cherenkov" son fotografiados por las cámaras del mismo telescopio. Este trabajo se centrará por tanto en la clasificación de las imágenes según la partícula de la que procede el rayo captado.
+
+## Autor
+- [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
