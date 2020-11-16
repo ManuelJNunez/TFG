@@ -432,4 +432,7 @@ dmypy.json
 # profiling data
 .prof
 
+# Compiled dictionaries
+dictionary.dic
+
 # End of https://www.toptal.com/developers/gitignore/api/python,latex
