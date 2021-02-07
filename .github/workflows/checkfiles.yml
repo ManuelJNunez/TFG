@@ -1,4 +1,4 @@
-name: "Check existence of important files"
+name: "Check existence"
 on: [pull_request, push]
 
 jobs:
