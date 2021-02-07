@@ -4,7 +4,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 
-% \usepackage[style=list, number=none]{glossary} %
+
+
+%\usepackage[style=list, number=none]{glossary} %
 %\usepackage{titlesec}
 %\usepackage{pailatino}
 
@@ -63,7 +65,7 @@ pdfproducer = {pdflatex}
 \usepackage{url}
 \usepackage{colortbl,longtable}
 \usepackage[stable]{footmisc}
-%\usepackage{index}
+\usepackage{index}
 
 %\makeindex
 %\usepackage[style=long, cols=2,border=plain,toc=true,number=none]{glossary}
@@ -174,15 +176,15 @@ pdfproducer = {pdflatex}
 \input{portada/portada}
 \input{prefacios/prefacio}
 %\frontmatter
-%\tableofcontents
+\tableofcontents
 %\listoffigures
 %\listoftables
 %
 %\mainmatter
 %\setlength{\parskip}{5pt}
 
-%\input{capitulos/01_Introduccion}
-%
+\input{capitulos/01_Introduccion}
+
 %\input{capitulos/02_EspecificacionRequisitos}
 %
 %\input{capitulos/03_Planificacion}
@@ -200,16 +202,16 @@ pdfproducer = {pdflatex}
 %%\chapter{Conclusiones y Trabajos Futuros}
 %
 %
-%%\nocite{*}
-%\bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
-%\bibliographystyle{miunsrturl}
+% \nocite{*}
+\bibliography{bibliography/bibliography}\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliographystyle{miunsrturl}
 %
 %\appendix
 %\input{apendices/manual_usuario/manual_usuario}
 %\input{glosario/entradas_glosario}
 % \addcontentsline{toc}{chapter}{Glosario}
 % \printglossary
-\chapter*{}
-\thispagestyle{empty}
+%\chapter*{}
+%\thispagestyle{empty}
 
 \end{document}
