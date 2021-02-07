@@ -1,0 +1,13 @@
+name: "Check existence of important files"
+on: [pull_request, push]
+
+jobs:
+  file_presence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Check file existence"
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "LICENSE, README.md, .gitignore"
+          allow_failure: true
