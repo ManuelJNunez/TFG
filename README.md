@@ -1,8 +1,8 @@
 <p align="center">
-    <img width="400" height="400" src="https://www.iac.es/sites/default/files/styles/color/public/images/project/CTADiv.jpg?itok=QrLOeVSx">
+    <img width="639" height="406" src="https://astro.uchicago.edu/depot/images/highlight-080224-3_large.jpg">
 </p>
 
-> Imagen obtenida de la web del [Instituto de Astrofísica de Canarias](https://www.iac.es/es/proyectos/iactec-grandes-telescopios-cherenkov-telescope-array-cta)
+> Imagen obtenida de la web del [Departamento de astronomía y astrofísica de la Universidad de Chicago](https://astro.uchicago.edu/research/auger.php)
 
 # Cherenkov Telescope Array. Particle classification.
 <p align="center">
