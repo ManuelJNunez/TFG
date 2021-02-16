@@ -4,7 +4,7 @@
 
 > Imagen obtenida de la web del [Departamento de astronomía y astrofísica de la Universidad de Chicago](https://astro.uchicago.edu/research/auger.php)
 
-# Cherenkov Telescope Array. Particle classification.
+# Water Cherenkov Detectors. Cosmic Ray classification.
 <p align="center">
     <a href="https://github.com/ManuelJNunez/TFG/workflows/Comprueba%20README/badge.svg"><img alt="Check README" src="https://github.com/ManuelJNunez/TFG/workflows/Comprueba%20README/badge.svg"></a>
     <a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
@@ -13,9 +13,11 @@
 
 ## Descripción del problema
 
-El Cherenkov Telescope Array (CTA) es un conjunto de detectores de rayos cósmicos situados en Cerro Paranal (Chile) y en La Palma (España). Cuando un rayo cósmico llega a la atmósfera, hay una interacción que da lugar a una casca de partículas subatómicas. Como la luz viaja 0.003 veces más lenta en el aire que en el vacío, las partículas entonces viajan más rápido y debido a esto se produce la "luz Cherenkov". La función de los telescopios es detectar dicha luz.
+La Tierra está siendo bombardeada constantemente con rayos cósmicos que provienen, como su nombre indica, del universo. Estos rayos se componen de partículas que viajan a la velocidad de la luz, que al entrar en contacto con la atmósfera producen una cascada atmosférica extensa. Dicha cascada emite una luz debido a la radiación gamma llamada "Luz de Cherenkov". A la misma vez, el rayo cósmico se fragmenta formando hadrones. Es decir, estos rayos se descomponen en una componente hadrónica y otra componente electromagnética.
 
-En la imagen de arriba podemos ver la distribución de los telescopios, que son "antenas" de espejos hexagonales. Estos espejos, que captan la anterior mencionada "luz Cherenkov" son fotografiados por las cámaras del mismo telescopio. Este trabajo se centrará por tanto en la clasificación de las imágenes según la partícula de la que procede el rayo captado.
+Para poder capturar información sobre dichos rayos cósmicos, se usan WCD (en la imagen de arriba se puede ver uno) que son tanques de agua ultrapura que contienen fotomultiplicadores distribuidos simétricamente dentro del tanque que se utilizan para captar la señal del rayo que incide sobre el mismo. En función de la profundidad del agua del WCD, se emitirá más luz o menos, siendo directamente proporcionales.
+
+El problema que se pretende solucionar en este proyecto, es diseñar un modelo que sea capaz de diferenciar un rayo que sea solo radiación gamma electromagnética de uno que tenga una partícula denominada "muón". Esta partícula se genera por la interacción a alta energía de los hadrones y nos permiten discriminar bastante bien entre la radiación gamma y los hadrones.
 
 ## Autor
 - [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
