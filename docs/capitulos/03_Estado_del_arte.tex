@@ -2,5 +2,42 @@
 
 \section{DevOps}
 
+En esta sección voy a describir las herramientas que se usarán en este proyecto así como la justificación del uso de cada una.
 
+\subsection{Lenguaje elegido}
 
+El lenguaje que he elegido para la realización de este proyecto ha sido Python, por ser muy fácil de aprender y además tiene un gran número de librerías para ciencia de datos.
+
+\subsection{Gestor de dependencias}
+
+El gestor de dependencias es una herramienta muy útil hoy en día para poder manejar las dependencias de una aplicación o un proyecto de forma sencilla, usando las órdenes del mismo. Además nos permite instalar todas las librerías usando únicamente una orden. Esto claramente ayuda a mantener la reproducibilidad de la aplicación ya que facilita bastante la ejecución de la misma aplicación en otra máquina (como por ejemplo en el entorno de Integración continua, en la máquina de entrenamiento de modelos o en la que desplegaremos un microservicio). En Python, los dos principales gestores de dependencias son \enquote{Pipenv} y \enquote{Poetry}.
+
+\subsubsection*{Pipenv}
+
+Pipenv se define como una herramienta que apunta a traer todo lo mejor del mundo del empaquetado al mundo Python \cite{pipenv}. Usa un fichero con sintaxis TOML para registrar las dependencias cuyo nombre es Pipfile.
+
+\subsubsection*{Poetry}
+
+Poetry es una herramienta cuya popularidad está creciendo un montón actualmente en la comunidad de Python. Es utilizada únicamente para manejar las dependencias de cualquier proyecto de forma muy sencilla. Además, cuenta con una documentación muy buena y clara \cite{poetry}.
+
+\subsubsection*{Comparación de ambas herramientas}
+
+Para comparar ambas herramientas para el manejo de dependencias, voy a utilizar el tiempo que tardan en instalar las librerías usando el fichero \textit{lock}. Las librerías que he usado como dependencias han sido \textit{PyTorch} y \textit{FastAPI} y de dependencias de desarrollo \textit{pylint} y \textit{pytest}. En la siguiente tabla se pueden ver los resultados:
+
+\begin{table}[h]
+\begin{tabular}{|c|c|c|}
+\hline
+                     & \textbf{Pipenv} & \textbf{Poetry} \\ \hline
+\textbf{Ejecución 1} & 31,938          & 22,009          \\ \hline
+\textbf{Ejecución 2} & 38,528          & 23,068          \\ \hline
+\textbf{Ejecución 3} & 33,63           & 23,111          \\ \hline
+\textbf{Ejecución 4} & 35,452          & 21,407          \\ \hline
+\textbf{Ejecución 5} & 33,406          & 20,901          \\ \hline
+\textbf{Media}       & 34,59           & 22,10           \\ \hline
+\end{tabular}
+\centering
+\caption{Tiempo (medido en segundos) que tarda cada herramienta en instalar las dependencias anteriores.}
+\label{tab:poetryvspipenv}
+\end{table}
+
+Como se puede ver en el Cuadro \ref{tab:poetryvspipenv}, Poetry es siempre más rápido que Pipenv, por lo tanto usaré Poetry para manejar las dependencias del proyecto. Además me gustaría añadir que en el momento del testeo, intenté instalar la librería \textit{black}, pero Pipenv me dió problemas, cosa que con Poetry no pasó. He hecho el test de tiempo debido a que necesito que se instalen las dependencias lo más rápido posible para que la Integración Continua dure lo menos posible en ejecutarse y para que se despliegue rápido la aplicación, ya que la instalación de dependencias es casi siempre lo que más tarda.
