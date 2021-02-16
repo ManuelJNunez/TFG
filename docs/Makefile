@@ -1,15 +1,10 @@
-.PHONY: proyecto.pdf all clean
+DOC := proyecto.tex
+
+all: doc
+
+doc: $(DOC:.tex=.pdf)
 
 all: proyecto.pdf
 
-%.tex: %.raw
-	./raw2tex $< > $@
-
-%.tex: %.dat
-	./dat2tex $< > $@
-
-proyecto.pdf: proyecto.tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make proyecto.tex
-
-clean:
-	latexmk -CA
+%.pdf: %.tex
+	pdflatex $< && bibtex $* && pdflatex $< && pdflatex $<
