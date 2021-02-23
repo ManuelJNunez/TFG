@@ -104,4 +104,140 @@ Entre los \textit{container engines} más populares tenemos \textit{Docker} \cit
 
 \section{Modelos de Machine Learning y Deep Learning}
 
-En esta sección se describirán los modelos de Machine Learning o Deep Learning que se planean usar en los experimentos sobre el dataset.
+En esta sección se describirán los modelos de Machine Learning o Deep Learning que se planean usar en los experimentos sobre el dataset. Debemos de tener en cuenta que nos estamos enfrentando a un problema de clasificación, es decir, tenemos que entrenar modelos que intenten predecir un valor discreto \{0, 1\}. El 0 indica que la señal no es de un muón y el 1 indica que sí hay muón registrado en esa señal. Las variables que nos ayudan a predecir son las medidas de la señal en distintos momentos, es una serie temporal. En este proyecto probaré algunos modelos estado del arte en el campo de análisis de series temporales.
+
+\subsection{Concepto básicos}
+
+Algunos de los conceptos básicos sobre Machine Learning o Deep Learning son los siguientes:
+
+\begin{itemize}
+	\item \textbf{Dataset}: conjunto de datos que disponemos para entrenar el modelo predictivo. Este dataset se divide en 3 subconjuntos disjuntos, para entrenenar, validar y evaluar el modelo.
+	\item \textbf{Training Dataset}: contiene los datos que usaremos para ajustar el modelo.
+	\item \textbf{Validation Dataset}: los datos contenidos en este dataset se utilizan para la selección de hiperparámetros más convenientes para entrenar el modelo.
+	\item \textbf{Test Dataset}: se utiliza para evaluar la potencia predictiva del modelo.
+	\item \textbf{Alto sesgo (high bias)}: esto se produce cuando el poder predictivo del modelo en el conjunto de entrenamiento es malo y por tanto tampoco es capaz de hacer buenas predicciones fuera del conjunto de entrenamiento.
+	\item \textbf{Alta variabilidad (high variability)}: esto se produce cuando el modelo se comporta muy bien en el conjunto de entrenamiento, pero funciona muy mal en el conjunto de test (hace predicciones muy malas). Esto es consecuencia del \textit{overfitting}, que se produce porque el modelo se sobreajusta al conjunto de entrenamiento y por tanto no rinde bien en el conjunto de test. Esto suele pasar porque no tenemos datos suficientes para hacer una predicción en condiciones o porque hemos usado un modelo muy complejo.
+\end{itemize}
+
+Siempre el conjunto de entrenamiento debe ser mayor que los demás, ya que usar un número muy grande de datos hace que el modelo generado del entrenamiento sea mejor. En los capítulos posteriores explicaré los modelos estado del arte que usaré y los mejores algoritmos de entrenamiento de modelos actuales. También hablaré sobre como podemos evitar el overfitting usando un método muy sencillo llamado regularización.
+
+\subsection{Redes neuronales}
+
+Las redes neuronales son un modelo muy usado para aproximar funciones y en muchos problemas más. Fue inventada en los años 80, pero no era muy usada debido a que no había computadores tan potentes como los de ahora. Gracias a las capacidades de computación modernas, se han podido hacer Redes Neuronales más profundas que ofrecían mejores resultados.\newline
+
+Este modelo de aprendizaje automático se puede usar tanto para regresión lineal (cuando el valor que queremos predecir es continuo) como para regresión logística o clasificación (intentamos predecir un valor discreto que representa la clase a la que pertenece la instancia del dataset). Vamos a pasar a ver cómo funciona este modelo tan popular, empezando por un modelo muy básico.
+
+\begin{figure}[H]
+	\includegraphics[scale=0.25]{imagenes/03_Estado_del_arte/simplenn.png}
+	\centering
+	\caption{Red neuronal básica \cite{ng}.}
+	\label{fig:simlestnn}
+\end{figure}
+
+En la Figura \ref{fig:simlestnn} se puede observar una Red Neuronal muy simple, de hecho este caso específico de red es lo que se llama regresión lineal o logística (dependiendo del rango que tome el valor que intentamos predecir). Una neurona no es más que una función cuya salida es $h_{W,b}(x)=f(W^Tx+b)$, el parámetro $b$ corresponde a las unidades de \textit{bias} y debe ser aprendido al igual que $W$ que representa los pesos. La función $f$ es la función de activación, las más comunes son sigmoide (\ref{eq:sigmoid}), tangente hiperbólica (\ref{eq:tanh}) y RELU (\ref{eq:RELU}). El vector $x$ es el vector de datos, es decir, contiene el dataset. Expresado de otra forma más sencilla, la salida es la siguiente:\newline
+
+$$h_{W,b}=f(W_1 x_1+ W_2 x_2 + W_3 x_3 + b)$$
+
+Las funciones de activación de las que hablé pueden ser las siguientes:
+
+\begin{equation}
+	f(x) = \frac{1}{1+e^{-x}}
+	\label{eq:sigmoid}
+\end{equation}
+
+\begin{equation}
+	f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+	\label{eq:tanh}
+\end{equation}
+
+\begin{equation}
+	f(x) = \max (0, x)
+	\label{eq:RELU}
+\end{equation}
+
+Con el modelo anterior podríamos predecir un valor o la probabilidad de que una instancia del Dataset pertenezca a una clase u otra (usando por ejemplo la sigmoide que devuelve un valor entre 0 y 1). Ahora que sabemos lo básico, podemos pasar a explicar otra un poco más compleja para comprender como funciona una red neuronal. \newline
+
+\begin{figure}[H]
+	\includegraphics[scale=0.2]{imagenes/03_Estado_del_arte/complexnn.png}
+	\centering
+	\caption{Red neuronal un poco más compleja \cite{ng}.}
+	\label{fig:complexnn}
+\end{figure}
+
+En la Figura \ref{fig:complexnn} podemos ver una Red Neuronal más compleja que la anterior. Tanto en esta como en la anterior podemos observar que el tamaño de la entrada en la red es el tamaño de una instancia del dataset + 1 (la unidad de \textit{bias}). El tamaño del output, en un problema de clasificación depende del número de clases que tengamos, en este caso sirve para 2. En este caso, para realizar una predicción deberíamos usar el algoritmo de propagación hacia delante:
+
+\begin{align*}
+&a^{(1)} = x^{(i)} \\
+&z^{(2)} = W^{(1)}a^{(1)} + b^{(1)} \\
+&a^{(2)} = f(z^{(2)}) \\
+&z^{(3)} = W^{(2)}a^{(2)} + b^{(2)} \\
+&a^{(3)} = f(z^{(3)}) \\
+&z^{(4)} = W^{(3)}a^{(3)} + b^{(3)} \\
+&h_{W,b}(x) = a^{(4)} = f(z^{(4)})\\
+\end{align*}
+
+Una vez obtenido el resultado del algoritmo de propagación hacia delante, podemos obtener la probabilidad de que la instancia pertenezca a cada clase usando \textbf{softmax}:
+
+\begin{align*}
+\sigma (z)_j = \frac{e^{z_j}}{\sum^{K}_{k=1} e^{z_k}}
+\end{align*}
+
+\subsubsection{Descenso del gradiente}
+
+Anteriormente se ha explicado cómo funciona una red neuronal para predecir, pero ¿Cómo se entrenan para tal objetivo? Primero tenemos que especificar la función que queremos optimizar o dicho de otras palabras, la función que calcula el error en las predicciones y que queremos optimizar. Puede ser el Mean Squared Error (MSE):
+
+\begin{align*}
+	&J(W,b;x^{(i)},y^{(i)}) = \frac{1}{m} \sum^m_{i=1} (h_{W,b}(x^{(i)}) - y^{(i)} )^2
+\end{align*}
+
+En este caso, el error se calcula como la diferencia entre el valor predecido y el valor correcto. Otra función que podemos usar es la de Cross Entropy (CE):
+
+\begin{align*}
+	&J(W,b;x^{(i)},y^{(i)}) = - \frac{1}{m}\left(\sum^m_{i=1} y^{(i)} \cdot \log{h_{W,b}(x^{(i)}})\right)
+\end{align*}
+
+El caso específica de CE para dos clases se calcula así:
+
+\begin{align*}
+	&J(W,b;x^{(i)},y^{(i)}) = - \frac{1}{m} \left( \sum^m_{i=1} y^{(i)} \cdot \log (h_{W,b}(x^{(i)})) + (1 - y^{(i)}) \cdot \log (1 - h_{W,b}(x^{(i)})) \right)
+\end{align*}
+
+Una vez elegida la función de pérdida, debemos optimizarla usando el algoritmo llamado \textit{descenso del gradiente}. Dicho algoritmo actualiza los pesos en cada iteración de la siguiente forma en los modelos básicos de regresión (la red neuronal más básica):
+
+\begin{align*}
+	&W_j = W_j - \alpha \frac{\partial}{\partial W_j} J(W,b)\\
+	&b = b - \alpha \frac{\partial}{\partial b} J(W,b)\\
+\end{align*}
+
+El parámetro $\alpha$ representa el ratio de aprendizaje y es otro parámetro que debemos elegir usando el conjunto de validación. Si es muy alto, el aprendizaje puede fallar y si es muy bajo el entrenamiento tarda un montón en finalizar. Sin embargo, calcular las derivadas parciales en una red neuronal con más capas es un poco más complejo:
+
+\begin{align*}
+	&W^{(l)}_{ij} = W^{(l)}_{ij} - \alpha \frac{\partial}{\partial W^{(l)}_{ij}} J(W,b)\\
+	&b^{(l)}_i = b^{(l)}_i - \alpha \frac{\partial}{\partial b^{(l)}_i} J(W,b)\\
+\end{align*}
+
+Para calcular las derivadas parciales de forma eficiente, se usa el algoritmo de \textit{propagación hacia detrás}:\\
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	
+	Calcular $a^{(l)}$ $\forall l \in \{2, ..., L\}$ usando el algoritmo de \textit{propagación hacia delante}
+	
+	Para la capa de salida, calculamos: $\delta^{(L)} = \frac{\partial}{\partial z^{(L)}} \frac{1}{2} || y - h_{W,b}(x) ||^2 = (a^{(L)}- y) \odot f'(z^{(L)})$
+	
+	\For{$l \in \{L-1, ..., 2\}$}{
+		\nonl $\delta^{(l)} = ((W^{(l)})^T \delta^{(l+1)}) \odot f'(z^{(l)})$
+	}
+	
+	Calcular las derivadas parciales:\\
+	\nonl $\frac{\partial}{\partial W^{(l)}} = \delta^{(l+1)}(a^{(l)})^T$\\
+	\nonl $\frac{\partial}{\partial b^{(l)}} = \delta^{(l+1)}$
+	
+	\caption{Backpropagation Algorithm}
+\end{algorithm}
+
+\subsection{Mejoras para el modelo de Red Neuronal}
+
+\subsection{Autoencoders}
+
+\subsection{Redes Neuronales Convolucionales}
