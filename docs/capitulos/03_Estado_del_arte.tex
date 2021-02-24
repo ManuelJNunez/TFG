@@ -164,7 +164,7 @@ Con el modelo anterior podríamos predecir un valor o la probabilidad de que una
 	\label{fig:complexnn}
 \end{figure}
 
-En la Figura \ref{fig:complexnn} podemos ver una Red Neuronal más compleja que la anterior. Tanto en esta como en la anterior podemos observar que el tamaño de la entrada en la red es el tamaño de una instancia del dataset + 1 (la unidad de \textit{bias}). El tamaño del output, en un problema de clasificación depende del número de clases que tengamos, en este caso sirve para 2. En este caso, para realizar una predicción deberíamos usar el algoritmo de propagación hacia delante:
+En la Figura \ref{fig:complexnn} podemos ver una Red Neuronal más compleja que la anterior la cual nos permite aproximar funciones también más complejas. Tanto en esta como en la anterior podemos observar que el tamaño de la entrada en la red es el tamaño de una instancia del dataset + 1 (la unidad de \textit{bias}). El tamaño del output, en un problema de clasificación depende del número de clases que tengamos, en este caso sirve para 2. En este caso, para realizar una predicción deberíamos usar el algoritmo de propagación hacia delante:
 
 \begin{align*}
 &a^{(1)} = x^{(i)} \\
@@ -230,13 +230,43 @@ Para calcular las derivadas parciales de forma eficiente, se usa el algoritmo de
 	}
 	
 	Calcular las derivadas parciales:\\
-	\nonl $\frac{\partial}{\partial W^{(l)}} = \delta^{(l+1)}(a^{(l)})^T$\\
-	\nonl $\frac{\partial}{\partial b^{(l)}} = \delta^{(l+1)}$
+	\nonl $\frac{\partial}{\partial W^{(l)}} J(W,b) = \delta^{(l+1)}(a^{(l)})^T$\\
+	\nonl $\frac{\partial}{\partial b^{(l)}} J(W,b) = \delta^{(l+1)}$
 	
 	\caption{Backpropagation Algorithm}
 \end{algorithm}
 
-\subsection{Mejoras para el modelo de Red Neuronal}
+\subsection{Algoritmos de aprendizaje}
+
+\subsection{Mejoras para el modelo de Red neuronal}
+
+\subsubsection{Regularización}
+
+La regularización sirve para evitar el riesgo de un sobreajuste de un modelo complejo a los datos de entrenamiento. El mecanismo es muy sencillo, simplemente se añade una penalización a la función de pérdida para que el modelo resultante sea menos propenso a \textit{overfitting}:
+
+\begin{align*}
+	&J(W,b;x,y) = J(W,b;x,y) + \lambda \sum_{j=1}^n W_j^2\\
+\end{align*}
+
+En este caso, $\lambda$ es un hiperparámetro que reprenta cuánto queremos penalizar la flexibilidad del modelo, por lo que también se elige usando el conjunto de validación. Si tomamos un valor muy alto para $\lambda$, los parámetros $W$ y $b$ serán muy próximos a 0 y tal vez genere un problema de alto sesgo. Por el contrario, un valor muy cercado a 0 apenas penalizaría el modelo y la regularización no tendría efecto. Si usamos el valor correcto de $\lambda$, pagaríamos con un poco de \textit{bias} para una mejoría mayor en la \textit{variability}. En cada paso del gradiente descendiente se realiza ahora lo siguiente:
+
+\begin{align*}
+	&\frac{\partial}{\partial W^{(l)}}_{ij} J(W,b) = \left[ \frac{\partial}{\partial W^{(l)_{ij}}} J(W,b;x^{(i)},y^{(i)}) \right] + 2 \lambda W^{(l)}_{ij}\\
+	&\frac{\partial}{\partial b^{(l)}}_i J(W,b) = \frac{\partial}{\partial b^{(l)}_i} J(W,b;x^{(i)},y^{(i)})\\
+\end{align*}
+
+\subsubsection{Batch Normalization}
+
+Gracias a este método podemos acelerar el aprendizaje del modelo y además generar redes neuronales más profundas y con mejores predicciones. Este método lo que hace normalizar las activaciones para acelerar el aprendizaje. Básicamente coge las varianza y la media para hacer que $\mu = 0$ y $\sigma = 1$:
+
+\begin{align}
+	&\mu \leftarrow \frac{1}{m} \sum_{i=1}^m z_i\\
+	&\sigma^2 \leftarrow \frac{1}{m} \sum_{i=1}^m (z_i - \mu)^2\\
+	&\hat{z_i} \leftarrow \frac{z_i - \mu}{\sqrt{\sigma ^ 2 + \epsilon}}\\
+	&\hat{z_i} \leftarrow \gamma \hat{z_i} + \beta 
+\end{align}
+
+Los parámetros $\gamma$ y $\beta$ deben ser aprendidos. $\epsilon$ sirve para evitar la inestabilidad numérica debido a una división por 0, por tanto su valor debe ser muy pequeño \cite{DBLP:journals/corr/IoffeS15}.
 
 \subsection{Autoencoders}
 
