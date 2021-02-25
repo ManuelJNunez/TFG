@@ -238,6 +238,56 @@ Para calcular las derivadas parciales de forma eficiente, se usa el algoritmo de
 
 \subsection{Algoritmos de aprendizaje}
 
+\subsubsection{Descenso del gradiente estocástico}
+
+Con un dataset muy grande, como es el caso, el descenso del gradiente normal tarda mucho en converger a una solución óptima. En ese caso, puede resultar beneficioso el uso del Stochastic Gradient Descent (SGD).\newline
+
+Este algoritmo consiste en tomar un subconjunto (mini-batch) de datos aleatorio y mucho más pequeño que el propio dataset en cada iteración. Después de haber selecciondo aleatoriamente dicho subconjunto, realizamos una iteración de Gradient Descent (GD) sobre el mini-batch.
+
+\subsubsection{Adaptative Moment Estimation (Adam)}
+
+Adam hace uso de \textit{momentum}, un método de actualiza los pesos no solo teniendo en cuenta el gradiente actual, sino también todos los anteriores. Esto hace que el ajuste sea más suave.
+
+\begin{align}
+	&V_{dW} \leftarrow \beta \cdot V_{dW} + (1 - \beta) \frac{\partial}{\partial W} J(W,b)\\
+	&V_{db} \leftarrow \beta \cdot V_{db} + (1 - \beta) \frac{\partial}{\partial b} J(W,b)\\
+	&W \leftarrow W - \alpha V_{dW}
+	&b \leftarrow b - \alpha V_{db}
+\end{align}
+
+Y también usa \textit{RMSprop}, un método parecido a \textit{momento} pero la diferencia es que usa el segundo momento del gradiente para hacer el ajuste más suave.
+
+\begin{align}
+	&S_{dW} \leftarrow \beta_2 \cdot S_{dW} + (1 - \beta_2) \left( \frac{\partial}{\partial W} J(W,b) \right)^2\\
+	&S_{dW} \leftarrow \beta_2 \cdot S_{dW} + (1 - \beta_2) \left( \frac{\partial}{\partial b} J(W,b) \right)^2\\
+	&W \leftarrow W - \alpha \frac{\frac{\partial}{\partial W} J(W,b)}{\sqrt{S_{dW} + \epsilon}}
+	&b \leftarrow b - \alpha \frac{\frac{\partial}{\partial b} J(W,b)}{\sqrt{S_{db} + \epsilon}}
+\end{align}
+
+Adam hace uso de los métodos anteriores para conseguir un ajuste más suave que el SGD, llegando antes a una solución óptima y mejor en muchos casos.
+
+\begin{align}
+	&t \leftarrow iteration\_number\\
+	&V_{dW} \leftarrow \beta_1 \cdot V_{dW} + (1 - \beta_1) \frac{\partial}{\partial W} J(W,b)\\
+	&V_{db} \leftarrow \beta_1 \cdot V_{db} + (1 - \beta_1) \frac{\partial}{\partial b} J(W,b)\\
+	&S_{dW} \leftarrow \beta_2 \cdot S_{dW} + (1 - \beta_2) \left( \frac{\partial}{\partial W} J(W,b) \right)^2\\
+	&S_{dW} \leftarrow \beta_2 \cdot S_{dW} + (1 - \beta_2) \left( \frac{\partial}{\partial b} J(W,b) \right)^2\\
+	&V_{dW}^{corrected} \leftarrow \frac{V_{dW}}{(1 - \beta_1^t)}
+	&V_{db}^{corrected} \leftarrow \frac{V_{db}}{(1 - \beta_1^t)}\\
+	&S_{dW}^{corrected} \leftarrow \frac{S_{dW}}{(1 - \beta_2^t)}
+	&S_{db}^{corrected} \leftarrow \frac{S_{db}}{(1 - \beta_2^t)}\\
+	&W \leftarrow W - \alpha \frac{V_{dW}^{corrected}}{\sqrt{S_{dW}^{corrected}} + \epsilon}
+	& b \leftarrow b - \alpha \frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected}} + \epsilon}
+\end{align}
+
+En este algoritmo tenemos cuatro hiperparámetros, $\beta_1$, $\beta_2$, $\alpha$ y $\epsilon$ \cite{kingma2017adam}. Los valores típicos de estos hiperparámetros son los siguientes:
+
+\begin{align*}
+	\beta_1 &= 0.9\\
+	\beta_2 &= 0.999\\
+	\epsilon &= 10^{-8}
+\end{align*}
+
 \subsection{Mejoras para el modelo de Red neuronal}
 
 \subsubsection{Regularización}
