@@ -320,4 +320,88 @@ Los parámetros $\gamma$ y $\beta$ deben ser aprendidos. $\epsilon$ sirve para e
 
 \subsection{Autoencoders}
 
+Los autoencoders son redes neuronales que son entrenadas para reconstruir su \textit{input}. Un autoencoder está formado por dos partes: un \textit{encoder} y un \textit{decoder}. El \textit{encoder} se encarga de reducir los datos de la entrada a una dimensión menor (al igual que el algoritmo PCA). Los datos comprimidos en menor dimensión reciben el nombre de código. La parte del \textit{decoder} se encarga de reconstruir los datos originales con la menor pérdida posible. Estas dos redes neuronales que forman el autoencoder se suelen entrenar juntas.
+
+\begin{figure}[H]
+	\includegraphics[scale=0.3]{imagenes/03_Estado_del_arte/autoencoder.png}
+	\centering
+	\caption{Ejemplo de autoencoder \cite{vae}.}
+	\label{fig:autoencoder}
+\end{figure}
+
+Este problema, se suele definir formalmente como aprender las funciones $A: \mathbb{R}^n \rightarrow \mathbb{R}^p$ (encoder) y $B: \mathbb{R}^p \rightarrow \mathbb{R}^n$ (decoder) que satisfaga
+
+\begin{align}
+	&\argmin_{A,B}E[\Delta (x, B \circ A(x))]
+\end{align}
+
+Donde E es la media y $\Delta$ es la función que calcula el error de reconstrucción, que mide la distancia entre la salida del docoder y el input.\newline
+
+Este tipo de modelos se suele usar mucho para clasificación o predicción de series temporales, para reducción de dimensionalidad, para crear Generative Adversarial Networks, etc. Existen varios tipos de autoencoders que serán explicados a continuación.
+
+\subsubsection{Sparse Autoencoders}
+
+Para evitar que tras el entrenamiento se obtengan A y B como funciones identidades, podemos forzar a que las activaciones de las capas ocultas sean dispersas. Para ello, podríamos usar regularización $L_1$, la que hemos visto antes. La diferencia es que la aplicaríamos sobre las activaciones en lugar de los pesos. Por tanto el objetivo sería
+
+\begin{align}
+	&\argmin_{A,B}E[\Delta (x, B \circ A(x))] + \lambda \sum_i |a_i|
+\end{align}
+
+Donde $a_i$ es el valor de la activación de la i-ésima capa oculta. Otra forma de hacerlo sería usando la divergencia de Kullback-Leibler (mide la distancia entre dos funciones de distribución) asumiendo que las activaciones siguen una distribución de Bernuilli con probabilidad $p$. La función de pérdida pasaría a ser
+
+\begin{align}
+	&\argmin_{A,B}E[\Delta (x, B \circ A(x))] + \sum_j KL(p||\hat{p}_j)\\
+	&\hat{p}_j = \frac{1}{m} \sum_i a_j^{(2)}(x^{(i)})
+\end{align}
+
+Donde $a_i(x)$ representa el valor de la activación dada una entrada $x$. En este caso, el término de regularización es $p$, el cuál es forzado a aproximarse a $\hat{p}$. Normalmente $p$ suele ser un valor cercano a 0 \cite{ng, bank2020autoencoders}.
+
+\subsubsection{Stacked Autoencoders}
+
+Los autoencoders dispersos solo sirven para redes neuronales de tres capas, una para el encoder, otra para el código y otra para el decoder. Pero, ¿qué pasa si los datos que queremos aprender patrones más complejos en lugar de patrones lineales? La solución es simple, basta con añadir más capas al autoencoder en la parte del encoder, del decoder o en ambas.\newline
+
+Las redes neuronales son un modelo muy potente y propensas a \textit{overfitting}, por eso la regularización es siempre esencial en estos casos.
+
+\subsubsection{Varitional Autoencoders}
+
+Este tipo de autoencoders trata de describir la generación de datos a través de una distribución de probabilidad. Por tanto, en lugar de mapear la entrada en un vector de tamaño fijo, la vamos a mapear a una distribución. Por consecuencia, se usarán dos vectores uno que representa la media y el otro la desviación típica. La función de pérdida para este tipo de Autoencoder es la siguiente:
+
+\begin{align}
+	&\mathcal{L}(\theta, \phi; x^{(i)}) = \mathbb{E}_{q_\phi(z|x^{(i)})} \left[ \log p_\theta(x^{(i)}|z) \right] - KL(q_\phi(z|x_i)||p_\theta(z))
+\end{align}
+
+En la anterior función, $\mathbb{E}_{q_\phi(z|x^{(i)})} \left[ \log p_\theta(x^{(i)}|z) \right]$ representa la función de pérdida (como por ejemplo el MSE que usamos antes en la sección sobre redes neuronales).\newline
+
+Para ejecutar la propagación hacia detrás, $\mu$ (vector que representa la media de la distribución de los datos) y $\sigma$ (vector que representa la desviación típica de la distribución de los datos) se pasan a un único vector latente $z$ usando el truco de reparametrización. Los más usual es aproximar $p(z|x)$ a una distribución Gaussiana $q_\phi(z|x) = \mathcal{N}(g(x),h(x))$ donde $g(x)$ es la media y $h(x)$ es la covarianza de la distribución. Por tanto, podemos aplicar el truco de reparametrización esta manera:
+
+\begin{align}
+	&z = h(x) \xi + g(x)
+\end{align}
+
+Donde $\xi \sim \mathcal{N}(0,\mathbf{I})$ sigue una distribución normal. La KL divergencia en este caso se calcula de la siguiente manera \cite{kingma2014autoencoding}:
+
+\begin{align}
+	&KL(q_\phi(z|x_i)||p_\theta(z)) = \frac{1}{2} \sum^J_{j=1} \left( 1 + \log ((\sigma_j)^2) - (\mu_j)^2 - (\sigma_j)^2 \right)
+\end{align}
+
+\begin{figure}[H]
+	\includegraphics[scale=0.3]{imagenes/03_Estado_del_arte/vae-gaussian.png}
+	\centering
+	\caption{El proceso del truco de reparametrización explicado gráficamente \cite{weng2018VAE}.}
+	\label{fig:gaussianvae}
+\end{figure}
+
+\subsubsection{Autoencoder para clasificación}
+
+Dado el error de de reconstrucción como $R(x,\hat{x})$ y el error de clasificación $\mathcal{L}(y,\hat{y})$, podemos usar la función de pérdida $\tilde{\mathcal{L}} = \mathcal{L}(y,\hat{y}) + \lambda R(x,\hat{x})$ para entrenar un autoencoder que clasifica a partir de las variables generadas en el espacio latente. En esta nueva función, el error de reconstrucción pasa a ser el valor de regularización.
+
+\begin{figure}[H]
+	\includegraphics[scale=0.3]{imagenes/03_Estado_del_arte/classifierautoencoder.png}
+	\centering
+	\caption{Representación gráfica de un Autoencoder clasificador \cite{bank2020autoencoders}.}
+	\label{fig:classiferautoencoder}
+\end{figure}
+
 \subsection{Redes Neuronales Convolucionales}
+
+
