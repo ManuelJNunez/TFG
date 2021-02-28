@@ -404,4 +404,36 @@ Dado el error de de reconstrucción como $R(x,\hat{x})$ y el error de clasificac
 
 \subsection{Redes Neuronales Convolucionales}
 
+Las redes neuronales convolucionales son un modelo muy ampliamente usado hoy en día para detección de patrones en imágenes (datos 2D) el cual es muy potente y da buenos resultados. En este trabajo no estamos clasificando imágenes pero estamos buscando patrones en un vector 1D con medidas de señales para detectar si era señal muónica o no. Este modelo se puede aplicar también sobre 3D.\\
 
+La idea básica de una capa convolucional consiste en un vector que llamaremos \textit{Kernel} que contiene los pesos e iremos moviendo a través del vector.\\
+
+\begin{figure}[H]
+	\includegraphics[scale=0.3]{imagenes/03_Estado_del_arte/conv1d.png}
+	\centering
+	\caption{Explicación gráfica de las Convoluciones Unidimensionales.}
+	\label{fig:conv1d}
+\end{figure}
+
+Cada red de la arquitectura convolucional hace que el vector vaya perdiendo tamaño a la vez que vamos detectando patrones en el mismo. Por ejemplo, un vector de tamaño 6 usando un \textit{Kernel} de tamaño 3 quedaría en un vector de tamaño 4. Aunque con \textit{padding} esto se puede evitar (viene explicado más adelante).\\
+
+Con este tipo de capas, también podríamos diseñar un autoencoder y estaría muy interesante ver si es capaz de competir con el Autoencoder diseñado con una red neuronal totalmente conectada. De hecho, los autoencoders convolucionales suelen usarse mucho y tienen un gran potencial en segmentación de imágenes y como GANs. Un ejemplo de uso es en U-NET, una CNN diseñada para segmentación de imágenes médicas \cite{DBLP:journals/corr/RonnebergerFB15}.\\
+
+Este tipo de modelo también puede combinarse con redes neuronales totalmente conectadas para realizar la clasificación, por lo que también estaría interesante comparar el potencial entre simplemente usar únicamente capas totalmente conectadas o usar una combinación.\\
+
+Una capa de convolución puede tener más de un \textit{Kernel}, así que podemos tener de salida dos vectores o más lo cual puede llegar a detectar más patrones de los datos de entrada.
+
+\subsubsection{Modificaciones en las convoluciones}
+
+Una de las modificaciones más importantes es el \textit{padding}. Esta modificación permite que al realizar una convolución no se reduzca el tamaño del vector, permitiéndonos entrenar redes convolucionales más profundas. Esto se consigue añadiendo 0s a los extremos del vector.\\
+
+Otra modificación interesante es el \textit{stride}, la cual solo consiste en saltarse entre convolución y convolución $n$ posiciones a la derecha.
+
+\subsubsection{Pooling layers}
+
+Algunas arquitecturas de redes convolucionales, además de usar capas convolucionales y totalmente conectadas, también usan \textit{pooling layers}. Este tipo de capas se utilizan para acelerar la computación, pues no tienen parámetros que aprender. Los dos tipos principales de \textit{pooling} son:
+
+\begin{itemize}
+	\item \textbf{Max pooling}: consiste en un \textit{kernel} que va a ir tomando el máximo valor de la región del vector (o dato que estemos procesando) en la que se encuentra.
+	\item \textbf{Average pooling}: en lugar de tomar el máximo valor, tomaremos el valor medio.
+\end{itemize}
