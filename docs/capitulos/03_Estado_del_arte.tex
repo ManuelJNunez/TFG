@@ -437,3 +437,14 @@ Algunas arquitecturas de redes convolucionales, además de usar capas convolucio
 	\item \textbf{Max pooling}: consiste en un \textit{kernel} que va a ir tomando el máximo valor de la región del vector (o dato que estemos procesando) en la que se encuentra.
 	\item \textbf{Average pooling}: en lugar de tomar el máximo valor, tomaremos el valor medio.
 \end{itemize}
+
+\subsubsection{ResNets}
+
+Las \textit{Residual Networks} son una arquitectura de Red Convolucional muy potente que nos permite entrenar redes muy profundas. Un \textit{ResNet block} consta de dos o tres capas convolucionales seguidas de una suma de las activaciones de la capa anterior, tal y como se muestra en la Figura \ref{fig:resnet}. Concatenando varios \textit{Resnet Blocks} podemos crear una \textit{ResNet}.
+
+\begin{figure}[H]
+	\includegraphics[scale=0.35]{imagenes/03_Estado_del_arte/resnet-block.png}
+	\centering
+	\caption{Ejemplos de \textit{Resnet Blocks} \cite{resnetblocks}.}
+	\label{fig:resnet}
+\end{figure}
