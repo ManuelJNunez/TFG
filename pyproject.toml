@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "TFG"
+version = "0.0.1"
+description = "Dependency file for this project :)"
+authors = ["ManuelJNunez <manueljesusnunezruiz@gmail.com>"]
+license = "GPL-3.0"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
