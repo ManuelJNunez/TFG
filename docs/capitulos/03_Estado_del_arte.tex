@@ -6,11 +6,15 @@ En esta sección voy a describir las herramientas que se usarán en este proyect
 
 \subsection{Lenguaje elegido}
 
-El lenguaje que he elegido para la realización de este proyecto ha sido Python, por ser muy fácil de aprender y además tiene un gran número de librerías para ciencia de datos.
+El lenguaje que he elegido para la realización de este proyecto ha sido \textit{Python}, por ser muy fácil de aprender y además tiene un gran número de bibliotecas para ciencia de datos.\\
+
+Es cierto también que \textit{Python} es un lenguaje interpretado y bastante lento si tenemos el tiempo de ejecución, por eso la mayoría de las bibliotecas de cálculo, álgebra o ciencia de datos que realizan muchos cálculos están implementadas en otros lenguajes como \textit{C} o \textit{CUDA}. Existen alternativas muy buenas como por ejemplo \textit{Julia}, \textit{Go} o \textit{Rust} que son lenguajes compilados y con rendimiento muy parecido a \textit{C} o \textit{C++}, pero no tienen un ecosistema de bibliotecas para ciencias de datos tan grande como el de \textit{Python}. Otra alternativa interesante sería \textit{Node}, una runtime para \textit{JavaScript} (con la cual podríamos usar el mismo lenguaje para programar el \textit{front-end} y el \textit{back-end}) muy potente, pero pasa lo mismo que con lenguajes anteriores. El ecosistema de \textit{Node} está más bien enfocado a desarrollo de microservicios.
 
 \subsection{Gestor de dependencias}
 
-El gestor de dependencias es una herramienta muy útil hoy en día para poder manejar las dependencias de una aplicación o un proyecto de forma sencilla, usando las órdenes del mismo. Además nos permite instalar todas las librerías usando únicamente una orden. Esto claramente ayuda a mantener la reproducibilidad de la aplicación ya que facilita bastante la ejecución de la misma aplicación en otra máquina (como por ejemplo en el entorno de Integración continua, en la máquina de entrenamiento de modelos o en la que desplegaremos un microservicio). En Python, los dos principales gestores de dependencias son \enquote{Pipenv} y \enquote{Poetry}.Ambas herramientas gestionan por debajo un entorno virtual aislado que contiene las dependencias instaladas.
+El gestor de dependencias es una herramienta muy útil hoy en día para poder manejar las dependencias de una aplicación o un proyecto de forma sencilla, usando las órdenes del mismo. Además nos permite instalar todas las bibliotecas usando únicamente una orden. Esto claramente ayuda a mantener la reproducibilidad de la aplicación ya que facilita bastante la ejecución de la misma aplicación en otra máquina (como por ejemplo en el entorno de Integración continua, en la máquina de entrenamiento de modelos o en la que desplegaremos un microservicio). En Python, los dos principales gestores de dependencias son \enquote{Pipenv} y \enquote{Poetry}.Ambas herramientas gestionan por debajo un entorno virtual aislado que contiene las dependencias instaladas.\newline
+
+Algo que también hay que tener en cuenta es la versión del interprete que estemos usando, el usuario final debe de saber en qué versión o versiones del intérprete puede ejecutar el software sin problemas. Esto con las dos herramientas anteriores no es problema, pues en el mismo fichero de dependencias se puede especificar la versión o versiones del intérprete necesaria para poder ejecutar el software sin problemas.
 
 \subsubsection*{Pipenv}
 
@@ -27,7 +31,7 @@ Para comparar ambas herramientas para el manejo de dependencias, voy a utilizar 
 \begin{table}[h]
 \begin{tabular}{|c|c|c|}
 \hline
-                     & \textbf{Pipenv} & \textbf{Poetry} \\ \hline
+                     & \textbf{Pipenv (s)} & \textbf{Poetry (s)} \\ \hline
 \textbf{Ejecución 1} & 31,938          & 22,009          \\ \hline
 \textbf{Ejecución 2} & 38,528          & 23,068          \\ \hline
 \textbf{Ejecución 3} & 33,63           & 23,111          \\ \hline
@@ -40,7 +44,7 @@ Para comparar ambas herramientas para el manejo de dependencias, voy a utilizar 
 \label{tab:poetryvspipenv}
 \end{table}
 
-Como se puede ver en el Cuadro \ref{tab:poetryvspipenv}, Poetry es siempre más rápido que Pipenv, por lo tanto usaré Poetry para manejar las dependencias del proyecto. Además me gustaría añadir que en el momento del testeo, intenté instalar la librería \textit{black}, pero Pipenv me dió problemas, cosa que con Poetry no pasó. He hecho el test de tiempo debido a que necesito que se instalen las dependencias lo más rápido posible para que la Integración Continua dure lo menos posible en ejecutarse y para que se despliegue rápido la aplicación, ya que la instalación de dependencias es casi siempre lo que más tarda.
+Como se puede ver en el Cuadro \ref{tab:poetryvspipenv}, Poetry es siempre más rápido que Pipenv, por lo tanto usaré Poetry para manejar las dependencias del proyecto. Además me gustaría añadir que en el momento del testeo, intenté instalar la librería \textit{Black}, pero Pipenv me dió problemas debido a que a veces no es capaz de resolver bien las dependencias, cosa que con Poetry no pasó. He hecho el test de tiempo debido a que necesito que se instalen las dependencias lo más rápido posible para que la Integración Continua dure lo menos posible en ejecutarse y para que se despliegue rápido la aplicación, ya que la instalación de dependencias debe realizarse en el menor tiempo posible para optimizar los pipelines de Integración Continua y de Despliegue Continuo o hacer que alguien que intente ejecutar nuestro proyecto en otra máquina, lo consiga lo antes posible.
 
 \subsection{Gestor de tareas}
 
@@ -56,7 +60,7 @@ La finalidad de esta plataforma es ejecutar los tests y realizar el despliegue c
 	\caption{Flujo de trabajo CI/CD. \cite{cicd}}
 \end{figure}
 
-Casi todas las plataformas de CI/CD tienen un plan de pago pero también tienen un plan gratuito. Mi criterio al seleccionar una plataforma de CI/CD concreta es gastar el menor dinero posible. Por ejemplo Travis, una plataforma que antes era gratuita y es muy rápida, otorgan ahora 10.000 créditos de los cuales, debido al uso que le di en una asignatura, solo me quedan 1650, por lo que esta plataforma queda descartada. En el caso de CircleCI, otorga 2.500 créditos gratis al mes, lo cual limitaría el número de subidas de código que puedo realizar en un mes y no me convence demasiado.\newline
+Casi todas las plataformas de CI/CD tienen un plan de pago pero también tienen un plan gratuito. Mi criterio al seleccionar una plataforma de CI/CD concreta es gastar el menor dinero posible. Por ejemplo Travis, una plataforma que antes era gratuita y es muy rápida, otorgan ahora 10.000 créditos de los cuales, debido al uso que le di en una asignatura, solo me quedan 1650, por lo que esta plataforma queda descartada. En el caso de CircleCI, otorga 2.500 créditos gratis al mes, lo cual limitaría el número de subidas de código que puedo realizar en un mes y puede ser que en algún momento se me olvide esto y me pase del plan gratuito y no pueda volver a ejecutar el pipeline de CI/CD en lo que quede de mes.\newline
 
 Existen algunas plataformas gratuitas como por ejemplo Shippable, pero es demasiado lenta. GitHub Actions también es gratuita para repositorios públicos, como es el caso por lo que estaría interesante usarlo para comprobaciones básicas del repositorio, como por ejemplo comprobar la presencia de archivos importantes del mismo o comprobar la ortografía del README.\newline
 
@@ -76,7 +80,7 @@ Como se puede ver, este framework es todo lo que necesito para conseguir la repr
 
 Otro detalle que no se nos puede olvidar, es la reproducibilidad de la infraestructura para que la misma pueda ser creada y aprovisionada en otras cuentas de la misma plataforma cloud de forma rápida y fácil. ¿Para qué queremos aprovisionar una infraestructura? En este caso, es necesaria por ejemplo para aprovisionar una instancia de EC2 con \textit{Jenkins}.\newline
 
-Para esto existen dos alternativas: \textit{Pulumi} \cite{pulumi} y \textit{Terraform} \cite{Terraform}. Ambas nos dejan describir la Infraestructura como Código (IaC), lo que nos facilita un montón la reproducibilidad. Las diferencias entre ambos son las siguientes:
+Para esto existen dos alternativas muy populares a día de hoy: \textit{Pulumi} \cite{pulumi} y \textit{Terraform} \cite{Terraform}. Ambas nos dejan describir la Infraestructura como Código (IaC), lo que nos facilita un montón la reproducibilidad. Las diferencias entre ambos son las siguientes:
 
 \begin{itemize}
 	\item \textbf{Lenguaje de programación}: \textit{Terraform} usa Hashicorp Configuration Language (HCL), un lenguaje propio declarativo para poder describir nuestra infraestructura. Con \textit{Pulumi}, se puede usar un lenguaje de programación de propósito general (\textit{TypeScript}, \textit{JavaScript}, \textit{Python}, \textit{Go} o \textit{C\#}). Usar un lenguaje de propósito general puede ser más cómodo que usar uno declarativo, pues por ejemplo nos permite usar estructuras condicionales si llega a ser necesario.
@@ -88,9 +92,7 @@ En conclusión, ambas herramientas están muy bien diseñadas, cada una tiene su
 
 \subsection{Contenedores}
 
-\enquote{Los contenedores linux son una tecnología que nos permite empaquetar y aislar aplicaciones junto con su entorno de ejecución (todos los archivos necesarios para que funcione)} \cite{containers}. Esto nos permite que la aplicación se pueda ejecutar en cualquier máquina/arquitectura que ejecute Linux sin problemas (solo se tiene que tener instalado algún \textit{container engine}) y con mucha facilidad, pues los contenedores son portables. Para esto, existe en internet un gran número de repositorios de contenedores, que  nos permite subirlos de manera gratuita y descargarlo en otra máquina.\newline
-
-Además de los anterior, los contenedores no se ejecutan sobre un hipervisor que funcionan sobre el Sistema Operativo Host, como sí hacen las máquinas virtuales, sino que se ejecutan como un proceso más y comparten el Kernel. Esto hace que las imágenes de los contenedores sean ligeras y además no degrade el rendimiento de la aplicación al no necesitar una capa de abstracción sobre el Sistema Operativo Host.\newline
+Además de lo dicho en el capítulo de introducción, los contenedores no se ejecutan sobre un hipervisor que funcionan sobre el Sistema Operativo Host, como sí hacen las máquinas virtuales, sino que se ejecutan como un proceso más y comparten el Kernel. Esto hace que las imágenes de los contenedores sean ligeras y además no degrade el rendimiento de la aplicación al no necesitar una capa de abstracción sobre el Sistema Operativo Host.\newline
 
 Otra gran característica de esta tecnología es que se puedan desarrollar nuevas actualizaciones del propio contenedor de forma fácil, pues utilizan por debajo un sistema de versionamiento.
 
@@ -320,7 +322,7 @@ Los parámetros $\gamma$ y $\beta$ deben ser aprendidos. $\epsilon$ sirve para e
 
 \subsection{Autoencoders}
 
-Los autoencoders son redes neuronales que son entrenadas para reconstruir su \textit{input}. Un autoencoder está formado por dos partes: un \textit{encoder} y un \textit{decoder}. El \textit{encoder} se encarga de reducir los datos de la entrada a una dimensión menor (al igual que el algoritmo PCA). Los datos comprimidos en menor dimensión reciben el nombre de código. La parte del \textit{decoder} se encarga de reconstruir los datos originales con la menor pérdida posible. Estas dos redes neuronales que forman el autoencoder se suelen entrenar juntas.
+Los autoencoders son redes neuronales utilizada, entre otras cosas, para reducir la dimensionalidad de los datos. A veces da mejores aprender de estos datos de dimensión reducida, es por eso que sería interesante probar este modelo. Estas redes neuronales se entrenan para reconstruir su \textit{input}, es por eso que están formadas por dos partes: un \textit{encoder} y un \textit{decoder}. El \textit{encoder} se encarga de reducir los datos de la entrada a una dimensión menor (al igual que el algoritmo PCA). Los datos comprimidos en menor dimensión reciben el nombre de código. La parte del \textit{decoder} se encarga de reconstruir los datos originales con la menor pérdida posible. Estas dos redes neuronales que forman el autoencoder se suelen entrenar juntas.
 
 \begin{figure}[H]
 	\includegraphics[scale=0.3]{imagenes/03_Estado_del_arte/autoencoder.png}
