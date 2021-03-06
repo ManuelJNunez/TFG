@@ -7,8 +7,10 @@ pipeline {
 
   stages {
     stage('Build') {
-      checkout scm
-      sh 'python --version'
+      steps {
+        checkout scm
+        sh 'python --version'
+      }
     }
   }
 }
