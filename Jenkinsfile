@@ -8,10 +8,7 @@ pipeline {
   stages {
     stage('Build') {
       checkout scm
-      sh """
-      . .env/bin/activate
-      pip install poetry
-      """
+      sh 'python --version'
     }
   }
 }
