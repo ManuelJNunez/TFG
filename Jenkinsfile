@@ -1,11 +1,11 @@
 pipeline {
-  stages {
-
-    agent {
-      docker {
-        image 'python:3.8-slim'
-      }
+  agent {
+    docker {
+      image 'python:3.8-slim'
+    }
   }
+
+  stages {
     stage('Build') {
       steps {
         sh 'apt update && apt install -y curl'
