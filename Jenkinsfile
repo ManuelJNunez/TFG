@@ -9,7 +9,6 @@ pipeline {
     stage('Build') {
       steps {
         checkout scm
-        sh 'apt update && apt install -y curl'
         sh 'pip install poetry'
       }
     }
