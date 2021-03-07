@@ -40,7 +40,7 @@ resource "aws_security_group" "jenkins_sg" {
 
 resource "aws_instance" "jenkins" {
   instance_type   = "t2.micro"
-  ami             = "ami-047a51fa27710816e"
+  ami             = "ami-042e8287309f5df03"
   key_name        = "m1"
   security_groups = [aws_security_group.jenkins_sg.name]
 
