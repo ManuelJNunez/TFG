@@ -9,7 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         checkout scm
-        sh 'pip install poetry'
+        sh 'pip install poetry --user'
         sh 'python --version'
       }
     }
