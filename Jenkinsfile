@@ -9,11 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''
-          virtualenv venv --distribute
-          . venv/bin/activate
-          pip install poetry
-        '''
+        sh 'pip install poetry'
         sh 'python --version'
       }
     }
