@@ -10,6 +10,7 @@ pipeline {
       steps {
         checkout scm
         sh 'pip install poetry'
+        sh 'python --version'
       }
     }
   }
