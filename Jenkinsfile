@@ -1,13 +1,14 @@
 pipeline {
   agent {
-    dockerfile true
+    docker {
+      image 'python:3.8-slim'
+    }
   }
 
   stages {
     stage('Build') {
       steps {
-        checkout scm
-        sh 'poetry install'
+        sh 'pip install poetry'
       }
     }
   }
