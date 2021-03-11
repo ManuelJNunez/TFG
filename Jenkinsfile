@@ -2,7 +2,6 @@ pipeline {
   agent {
     docker {
       image 'mjnunez/tfgtesting:latest'
-      args '--user jenkins:jenkins'
     }
 
   }
