@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'mjnunez/testing:latest'
+      image 'mjnunez/tfgtesting:latest'
       args '--user jenkins:jenkins'
     }
 
