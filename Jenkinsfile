@@ -10,7 +10,6 @@ pipeline {
       steps {
         sh 'pip install poetry'
         sh 'poetry install'
-        sh 'python --version'
       }
     }
   }
