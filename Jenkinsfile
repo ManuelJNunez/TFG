@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'pip install --target ${env.WORKSPACE} poetry'
+        sh 'pip install --target ${env.WORKSPACE} --user poetry'
         sh 'poetry install'
       }
     }
