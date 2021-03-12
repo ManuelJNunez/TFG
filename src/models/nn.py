@@ -1,4 +1,4 @@
-"""Neural Network implementation using PyTorch"""
+"""Neural Network Model implementation using PyTorch"""
 import torch.nn as nn
 
 class NeuralNetworkModel(nn.Module):
