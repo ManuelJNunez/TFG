@@ -13,7 +13,7 @@ pipeline {
       }
     }
 
-    stages('test') {
+    stage('test') {
       steps {
         sh 'poetry run task test'
       }
