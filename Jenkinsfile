@@ -13,6 +13,12 @@ pipeline {
       }
     }
 
+    stage('linting') {
+      steps {
+        sh 'poetry run task lint'
+      }
+    }
+
     stage('test') {
       steps {
         sh 'poetry run task test'
