@@ -11,4 +11,4 @@ WORKDIR /home/jenkins
 
 ENV PATH=/home/jenkins/.local/bin:$PATH
 
-ENTRYPOINT [ "/bin/bash" ]
+CMD [ "/bin/bash" ]
