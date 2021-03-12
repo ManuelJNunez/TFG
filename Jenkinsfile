@@ -12,5 +12,11 @@ pipeline {
         sh 'poetry install'
       }
     }
+
+    stages('test') {
+      steps {
+        sh 'poetry run task test'
+      }
+    }
   }
 }
