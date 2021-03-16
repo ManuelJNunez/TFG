@@ -8,19 +8,17 @@ class NeuralNetworkModel(nn.Module):
     def __init__(self, layer_sizes: [int], output_units: int):
         """Class inatializer with layer sizes and output_units as parameters"""
         super().__init__()
-        layers = []
+        self.layer_list = nn.ModuleList([])
 
         for i in range(len(layer_sizes) - 1):
             input_size = layer_sizes[i]
             output_size = layer_sizes[i + 1]
-            layers.append(nn.Linear(in_features=input_size, out_features=output_size))
-            layers.append(nn.BatchNorm1d(num_features=output_size))
-            layers.append(nn.ReLU())
+            self.layer_list.append(nn.Linear(in_features=input_size, out_features=output_size))
+            self.layer_list.append(nn.BatchNorm1d(num_features=output_size))
+            self.layer_list.append(nn.ReLU())
 
-        layers.append(nn.Linear(layer_sizes[-1], output_units))
-        layers.append(nn.Softmax(dim=1))
-
-        self.layer_list = nn.ModuleList(layers)
+        self.layer_list.append(nn.Linear(layer_sizes[-1], output_units))
+        self.layer_list.append(nn.Softmax(dim=1))
 
     def forward(self, fordward_input):
         """Neural Network Forward Pass"""
