@@ -13,7 +13,9 @@ class NeuralNetworkModel(nn.Module):
         for i in range(len(layer_sizes) - 1):
             input_size = layer_sizes[i]
             output_size = layer_sizes[i + 1]
-            self.layer_list.append(nn.Linear(in_features=input_size, out_features=output_size))
+            self.layer_list.append(
+                nn.Linear(in_features=input_size, out_features=output_size)
+            )
             self.layer_list.append(nn.BatchNorm1d(num_features=output_size))
             self.layer_list.append(nn.ReLU())
 
