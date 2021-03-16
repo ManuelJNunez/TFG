@@ -1,6 +1,7 @@
 """Neural Network Model implementation using PyTorch"""
 import torch.nn as nn
 
+
 class NeuralNetworkModel(nn.Module):
     """Neural Network Model Class"""
 
@@ -9,9 +10,9 @@ class NeuralNetworkModel(nn.Module):
         super().__init__()
         layers = []
 
-        for i in range(len(layer_sizes)-1):
+        for i in range(len(layer_sizes) - 1):
             input_size = layer_sizes[i]
-            output_size = layer_sizes[i+1]
+            output_size = layer_sizes[i + 1]
             layers.append(nn.Linear(in_features=input_size, out_features=output_size))
             layers.append(nn.BatchNorm1d(num_features=output_size))
             layers.append(nn.ReLU())
