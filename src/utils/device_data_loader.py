@@ -1,5 +1,6 @@
 """Data Loader Wrapped class to send model and dataset to the training device"""
 
+
 class DeviceDataLoader:
     """
     This is a wrapped DataLoader used for loading the data to training device (CPU or CUDA)
