@@ -20,17 +20,15 @@ class VAE(nn.Module):
         """
         super().__init__()
 
-        encoder_layers = []
+        self.encoder = nn.ModuleList([])
 
         for i in range(len(autoencoder_sizes) - 2):
             input_size = autoencoder_sizes[i]
             output_size = autoencoder_sizes[i + 1]
-            encoder_layers.append(
+            self.encoder.append(
                 nn.Linear(in_features=input_size, out_features=output_size)
             )
-            encoder_layers.append(nn.ReLU())
-
-        self.encoder = nn.ModuleList(encoder_layers)
+            self.encoder.append(nn.ReLU())
 
         self.mean = nn.Linear(
             in_features=autoencoder_sizes[len(autoencoder_sizes) - 2],
@@ -41,38 +39,34 @@ class VAE(nn.Module):
             out_features=autoencoder_sizes[len(autoencoder_sizes) - 1],
         )
 
-        decoder_layers = []
+        self.decoder = nn.ModuleList([])
 
         for i in reversed(range(len(autoencoder_sizes))):
             input_size = autoencoder_sizes[i]
             output_size = classifier_sizes[i - 1]
-            decoder_layers.append(
+            self.decoder.append(
                 nn.Linear(in_features=input_size, out_features=output_size)
             )
-            decoder_layers.append(nn.ReLU())
+            self.decoder.append(nn.ReLU())
 
-        self.decoder = nn.ModuleList(decoder_layers)
-
-        classifier_layers = []
+        self.classifier = nn.ModuleList([])
 
         for i in range(len(classifier_sizes) - 2):
             input_size = classifier_sizes[i]
             output_size = classifier_sizes[i + 1]
-            classifier_layers.append(
+            self.classifier.append(
                 nn.Linear(in_features=input_size, out_features=output_size)
             )
-            classifier_layers.append(nn.BatchNorm1d(num_features=output_size))
-            classifier_layers.append(nn.ReLU())
+            self.classifier.append(nn.BatchNorm1d(num_features=output_size))
+            self.classifier.append(nn.ReLU())
 
-        classifier_layers.append(
+        self.classifier.append(
             nn.Linear(
                 in_features=classifier_sizes[len(classifier_sizes) - 2],
                 out_features=classifier_sizes[len(classifier_sizes) - 1],
             )
         )
-        classifier_layers.append(nn.Softmax(dim=1))
-
-        self.classifier = nn.ModuleList(classifier_layers)
+        self.classifier.append(nn.Softmax(dim=1))
 
     def encode(self, encoder_input):
         """
