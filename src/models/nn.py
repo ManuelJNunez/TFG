@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class NeuralNetworkModel(nn.Module):
-    """Neural Network Model Class"""
+    """Neural Network Model Class with variable number of layers"""
 
     def __init__(self, layer_sizes: [int], output_units: int):
         """Class inatializer with layer sizes and output_units as parameters"""
