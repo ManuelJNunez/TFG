@@ -16,6 +16,7 @@ pipeline {
     stage('Linting') {
       steps {
         sh 'poetry run task lint'
+        sh 'poetry run task black'
       }
     }
 
