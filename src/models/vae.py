@@ -41,9 +41,9 @@ class VAE(nn.Module):
 
         self.decoder = nn.ModuleList([])
 
-        for i in reversed(range(len(autoencoder_sizes))):
+        for i in reversed(range(1, len(autoencoder_sizes))):
             input_size = autoencoder_sizes[i]
-            output_size = classifier_sizes[i - 1]
+            output_size = autoencoder_sizes[i - 1]
             self.decoder.append(
                 nn.Linear(in_features=input_size, out_features=output_size)
             )
@@ -82,32 +82,41 @@ class VAE(nn.Module):
 
         return self.mean(next_input), self.logvar(next_input)
 
-    def reparametrize(self):
+    def reparametrize(self, mean, logvar):
         """
         This method computes the output of the reparametrization trick.
         """
-        std = torch.exp(0.5 * self.logvar)
+        std = torch.exp(0.5 * logvar)
         epsilon = torch.randn_like(std)
-        return self.mean + epsilon * std
+        return mean + epsilon * std
 
     def decode(self, latent_code):
         """
-        This method computes the output of the decoder and of the classifier.
+        This method computes the output of the decoder.
 
         Parameters:
             latent code: output from the encoder and reparametrization trick.
         """
-        next_input_decoder = latent_code
+        next_input = latent_code
 
         for layer in self.decoder:
-            next_input_decoder = layer(next_input_decoder)
+            next_input= layer(next_input)        
 
-        next_input_classifier = latent_code
+        return next_input
+
+    def classify(self, latent_code):
+        """
+        This method computes the output of the classifier.
+
+        Parameters:
+            latent code: output from the encoder and reparametrization trick.
+        """
+        next_input = latent_code
 
         for layer in self.classifier:
-            next_input_classifier = layer(next_input_classifier)
+            next_input = layer(next_input)
 
-        return next_input_decoder, next_input_classifier
+        return next_input
 
     def forward(self, vae_input):
         """
@@ -118,9 +127,9 @@ class VAE(nn.Module):
         """
         mean, logvar = self.encode(vae_input)
 
-        latent_code = self.reparametrize()
+        latent_code = self.reparametrize(mean, logvar)
 
-        return self.decode(latent_code), mean, logvar
+        return self.decode(latent_code), self.classify(latent_code), mean, logvar
 
     def training_step(self, batch, loss_func):
         """
