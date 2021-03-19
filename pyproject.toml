@@ -15,6 +15,7 @@ pytest = "^6.2.2"
 pylint = "^2.7.2"
 pytest-cov = "^2.11.1"
 black = "^20.8b1"
+pytest-mock = "^3.5.1"
 
 [tool.taskipy.tasks]
 test = "pytest"
