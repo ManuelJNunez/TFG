@@ -1,4 +1,5 @@
 """Neural Network Model implementation using PyTorch"""
+import torch
 import torch.nn as nn
 
 
@@ -22,7 +23,7 @@ class NeuralNetworkModel(nn.Module):
         self.layer_list.append(nn.Linear(layer_sizes[-1], output_units))
         self.layer_list.append(nn.Softmax(dim=1))
 
-    def forward(self, fordward_input):
+    def forward(self, fordward_input: torch.Tensor) -> torch.Tensor:
         """Neural Network Forward Pass"""
         layer_output = fordward_input
 
@@ -31,7 +32,7 @@ class NeuralNetworkModel(nn.Module):
 
         return layer_output
 
-    def training_step(self, batch, loss_func):
+    def training_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
         """Neural Network training step (calculates batch loss)"""
         data, label = batch
         pred = self(data)
@@ -39,7 +40,7 @@ class NeuralNetworkModel(nn.Module):
 
         return loss
 
-    def validation_step(self, batch, loss_func):
+    def validation_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
         """Neural Network validation step (calculates batch loss for validation)"""
         data, label = batch
         pred = self(data)
