@@ -68,7 +68,7 @@ class VAE(nn.Module):
         )
         self.classifier.append(nn.Softmax(dim=1))
 
-    def encode(self, encoder_input):
+    def encode(self, encoder_input: torch.Tensor) -> torch.Tensor:
         """
         This method computes the encoder output.
 
@@ -83,7 +83,7 @@ class VAE(nn.Module):
         return self.mean(next_input), self.logvar(next_input)
 
     # pylint: disable=R0201
-    def reparametrize(self, mean, logvar):
+    def reparametrize(self, mean: torch.Tensor, logvar: torch.Tensor) -> torch.Tensor:
         """
         This method computes the output of the reparametrization trick.
         """
@@ -91,7 +91,7 @@ class VAE(nn.Module):
         epsilon = torch.randn_like(std)
         return mean + epsilon * std
 
-    def decode(self, latent_code):
+    def decode(self, latent_code: torch.Tensor) -> torch.Tensor:
         """
         This method computes the output of the decoder.
 
@@ -105,7 +105,7 @@ class VAE(nn.Module):
 
         return next_input
 
-    def classify(self, latent_code):
+    def classify(self, latent_code: torch.Tensor) -> torch.Tensor:
         """
         This method computes the output of the classifier.
 
@@ -119,7 +119,7 @@ class VAE(nn.Module):
 
         return next_input
 
-    def forward(self, vae_input):
+    def forward(self, vae_input: torch.Tensor) -> torch.Tensor:
         """
         Method that computes the output of the Autoencoder and the classifier.
 
@@ -132,7 +132,7 @@ class VAE(nn.Module):
 
         return self.decode(latent_code), self.classify(latent_code), mean, logvar
 
-    def training_step(self, batch, loss_func):
+    def training_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
         """
         This method computes the training batch loss.
 
@@ -146,7 +146,7 @@ class VAE(nn.Module):
 
         return loss
 
-    def validation_step(self, batch, loss_func):
+    def validation_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
         """
         This method computes the validation batch loss.
 
