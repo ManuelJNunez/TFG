@@ -82,6 +82,7 @@ class VAE(nn.Module):
 
         return self.mean(next_input), self.logvar(next_input)
 
+    # pylint: disable=R0201
     def reparametrize(self, mean, logvar):
         """
         This method computes the output of the reparametrization trick.
@@ -100,7 +101,7 @@ class VAE(nn.Module):
         next_input = latent_code
 
         for layer in self.decoder:
-            next_input= layer(next_input)        
+            next_input= layer(next_input)
 
         return next_input
 
