@@ -29,7 +29,7 @@ usermod -aG docker jenkins
 
 # Enable and start services
 systemctl enable jenkins
-systemctl start jenkins
+systemctl restart jenkins
 systemctl enable docker
 systemctl start docker
 
