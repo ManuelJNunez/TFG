@@ -101,7 +101,7 @@ class VAE(nn.Module):
         next_input = latent_code
 
         for layer in self.decoder:
-            next_input= layer(next_input)
+            next_input = layer(next_input)
 
         return next_input
 
