@@ -1,7 +1,8 @@
 """Data Loader Wrapped class to send model and dataset to the training device"""
+from typing import Iterable, List
 import torch
 from torch.utils.data import DataLoader
-from typing import Iterable, List
+
 
 class DeviceDataLoader:
     """
@@ -25,8 +26,8 @@ class DeviceDataLoader:
         This method is for iterating over the batches while it loads them to the training device.
         """
         for batch in self.data_loader:
-            x, y = batch
-            yield [x.to(self.device), y.to(self.device)]
+            data, label = batch
+            yield [data.to(self.device), label.to(self.device)]
 
     def __len__(self) -> int:
         """
