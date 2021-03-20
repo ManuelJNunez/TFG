@@ -1,8 +1,13 @@
 """Utils for training models or get the data"""
 import torch
+import torch.nn as nn
+from torch.optim import Optimizer
+from torch.utils.data import DataLoader
 
 
-def validate(model, valid_dl, loss_func):
+def validate(
+    model: nn.Module, valid_dl: DataLoader, loss_func: callable
+) -> torch.Tensor:
     """Validation of the model"""
     batches_losses = [model.validation_step(batch, loss_func) for batch in valid_dl]
     epoch_loss = torch.cat(batches_losses).mean()
@@ -10,7 +15,13 @@ def validate(model, valid_dl, loss_func):
     return epoch_loss
 
 
-def fit(epochs, model, loss_func, opt, train_dl):
+def fit(
+    epochs: int,
+    model: nn.Module,
+    loss_func: callable,
+    opt: Optimizer,
+    train_dl: DataLoader,
+) -> None:
     """Function for training models"""
     for _ in range(epochs):
         model.train()
@@ -21,7 +32,7 @@ def fit(epochs, model, loss_func, opt, train_dl):
             opt.zero_grad()
 
 
-def default_device():
+def default_device() -> torch.device:
     """Use CUDA if available, else CPU"""
     dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
