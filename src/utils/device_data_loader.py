@@ -1,12 +1,14 @@
 """Data Loader Wrapped class to send model and dataset to the training device"""
-
+import torch
+from torch.utils.data import DataLoader
+from typing import Iterable, List
 
 class DeviceDataLoader:
     """
     This is a wrapped DataLoader used for loading the data to training device (CPU or CUDA)
     """
 
-    def __init__(self, data_loader, device):
+    def __init__(self, data_loader: DataLoader, device: torch.device):
         """
         Initializes the DeviceDataLoader object with the data and the device where this class
         will load it.
@@ -18,14 +20,15 @@ class DeviceDataLoader:
         self.data_loader = data_loader
         self.device = device
 
-    def __iter__(self):
+    def __iter__(self) -> Iterable[List[torch.Tensor]]:
         """
         This method is for iterating over the batches while it loads them to the training device.
         """
         for batch in self.data_loader:
-            yield batch.to(self.device)
+            x, y = batch
+            yield [x.to(self.device), y.to(self.device)]
 
-    def __len__(self):
+    def __len__(self) -> int:
         """
         This method retrieves the DataLoader's length
         """
