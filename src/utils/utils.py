@@ -2,17 +2,17 @@
 import torch
 import torch.nn as nn
 from torch.optim import Optimizer
-from torch.utils.data import DataLoader
+from torch.utils.data import TensorDataset, DataLoader
 
 
 def validate(
-    model: nn.Module, valid_dl: DataLoader, loss_func: callable
+    model: nn.Module, valid_dl: TensorDataset, loss_func: callable, val_length: int
 ) -> torch.Tensor:
     """Validation of the model"""
     batches_losses = [model.validation_step(batch, loss_func) for batch in valid_dl]
-    epoch_loss = torch.cat(batches_losses).mean()
+    epoch_loss = torch.stack(batches_losses).sum()
 
-    return epoch_loss
+    return epoch_loss / val_length
 
 
 def fit(
@@ -34,6 +34,6 @@ def fit(
 
 def default_device() -> torch.device:
     """Use CUDA if available, else CPU"""
-    dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    dev = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
     return dev
