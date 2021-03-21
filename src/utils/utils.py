@@ -34,6 +34,6 @@ def fit(
 
 def default_device() -> torch.device:
     """Use CUDA if available, else CPU"""
-    dev = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     return dev
