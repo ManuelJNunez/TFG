@@ -13,12 +13,14 @@ taskipy = "^1.6.0"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
 pylint = "^2.7.2"
-pytest-cov = "^2.11.1"
 black = "^20.8b1"
 pytest-mock = "^3.5.1"
+coverage = "^5.5"
 
 [tool.taskipy.tasks]
-test = "pytest"
+test = "coverage run --source=src/ -m pytest"
+cov-result = "coverage report -m"
+cov-xml = "coverage xml"
 lint = "pylint src --generated-members=torch"
 black = "black src --check"
 
