@@ -1,4 +1,4 @@
-"""Data Loader Wrapped class to send model and dataset to the training device"""
+"""Data Loader Wrapped class to send model and dataset to the training device (CPU OR CUDA)"""
 from typing import Iterable, List
 import torch
 from torch.utils.data import DataLoader
