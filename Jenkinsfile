@@ -34,7 +34,11 @@ pipeline {
         """
 
         withCredentials([string(credentialsId: 'codacy-token', variable: 'CODACY_PROJECT_TOKEN')]) {
-          sh 'bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml'
+          sh """
+            curl -Ls https://coverage.codacy.com/get.sh > coveragereport.sh
+            chmod 755 coveragereport.sh
+            ./coveragereport.sh report -r coverage.xml
+          """
         }
       }
     }
