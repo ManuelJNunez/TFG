@@ -22,4 +22,4 @@ Para poder capturar información sobre dichos rayos cósmicos, se usan WCD (en l
 El problema que se pretende solucionar en este proyecto, es diseñar un modelo que sea capaz de diferenciar un rayo que sea solo radiación gamma electromagnética de uno que tenga una partícula denominada "muón". Esta partícula se genera por la interacción a alta energía de los hadrones y nos permiten discriminar bastante bien entre la radiación gamma y los hadrones.
 
 ## Autor
-- [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
+-   [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
