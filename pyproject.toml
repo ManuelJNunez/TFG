@@ -6,7 +6,7 @@ authors = ["ManuelJNunez <manueljesusnunezruiz@gmail.com>"]
 license = "GPL-3.0"
 
 [tool.poetry.dependencies]
-python = ">=3.6"
+python = "^3.6.2"
 torch = "^1.8.0"
 taskipy = "^1.6.0"
 
