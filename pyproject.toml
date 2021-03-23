@@ -22,7 +22,7 @@ test = "coverage run --source=src/ -m pytest"
 cov-result = "coverage report -m"
 cov-xml = "coverage xml"
 lint = "pylint src --generated-members=torch"
-black = "black src --check"
+black = "black src test --check"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
