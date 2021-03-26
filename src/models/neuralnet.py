@@ -9,6 +9,8 @@ class NeuralNetworkModel(nn.Module):
     def __init__(self, layer_sizes: [int], output_units: int):
         """Class inatializer with layer sizes and output_units as parameters"""
         super().__init__()
+        self.layer_sizes = layer_sizes
+        self.output_units = output_units
         self.layer_list = nn.ModuleList([])
 
         for i in range(len(layer_sizes) - 1):
