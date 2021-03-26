@@ -2,7 +2,7 @@ import pytest
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 from src.utils.utils import validate, fit, default_device
-from src.models.nn import NeuralNetworkModel
+from src.models.neuralnet import NeuralNetworkModel
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
