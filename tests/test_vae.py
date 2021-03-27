@@ -42,17 +42,8 @@ def test_initializer(model):
     # Check classifier layer sizes
     classifier = model.classifier
 
-    for i in range(len(CLASSIFIER_SIZES) - 2):
-        expected_input = CLASSIFIER_SIZES[i]
-        expected_output = CLASSIFIER_SIZES[i + 1]
-        assert classifier[i * 3].in_features == expected_input
-        assert classifier[i * 3].out_features == expected_output
-        assert classifier[i * 3 + 1].num_features == expected_output
-        assert isinstance(classifier[i * 3 + 2], nn.ReLU)
-
-    assert classifier[-2].in_features == CLASSIFIER_SIZES[-2]
-    assert classifier[-2].out_features == CLASSIFIER_SIZES[-1]
-    assert isinstance(classifier[-1], nn.Softmax)
+    assert classifier.layer_sizes == CLASSIFIER_SIZES[:-1]
+    assert classifier.output_units == CLASSIFIER_SIZES[-1]
 
 
 def test_encode(model):
