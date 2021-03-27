@@ -41,7 +41,7 @@ class CAEBlock(nn.Module):
             number of output channels.
         """
         super().__init__()
-        self.modules = nn.ModuleList([])
+        self.layers = nn.ModuleList([])
         self.block_type = block_type
         upconv_kernel_size = 2
         upconv_stride = 2
@@ -53,20 +53,20 @@ class CAEBlock(nn.Module):
                 "The block_type parameter of CAEBlock only have two possible values: down or up"
             )
 
-        if block_type == "down" and in_channels < out_channels:
+        if block_type == "down" and in_channels > out_channels:
             # pylint: disable=C0301
             raise ValueError(
                 "The number of output channels of a down-sampling block should be greater than the number of input channels"
             )
 
-        if block_type == "up" and in_channels > out_channels:
+        if block_type == "up" and in_channels < out_channels:
             # pylint: disable=C0301
             raise ValueError(
                 "The number of input channels of an up-sampling block should be greater than the number of output channels"
             )
 
         if block_type == "up":
-            self.modules.append(
+            self.layers.append(
                 nn.ConvTranspose1d(
                     in_channels,
                     in_channels,
@@ -75,7 +75,7 @@ class CAEBlock(nn.Module):
                 )
             )
 
-        self.modules.append(
+        self.layers.append(
             nn.Conv1d(
                 in_channels if block_type == "down" else in_channels * 2,
                 out_channels,
@@ -83,14 +83,14 @@ class CAEBlock(nn.Module):
                 padding=padding,
             )
         )
-        self.modules.append(nn.ReLU())
+        self.layers.append(nn.ReLU())
 
-        self.modules.append(
+        self.layers.append(
             nn.Conv1d(
                 out_channels, out_channels, kernel_size=kernel_size, padding=padding
             )
         )
-        self.modules.append(nn.ReLU())
+        self.layers.append(nn.ReLU())
 
     def forward(
         self,
@@ -126,11 +126,11 @@ class CAEBlock(nn.Module):
                     "The forward method of a CAEBlock with block_type 'up' requires concatenated_block parameter"
                 )
 
-            next_input = self.modules[0](next_input)
+            next_input = self.layers[0](next_input)
             next_input = torch.cat([next_input, concatenated_block], dim=1)
-            modules = self.modules[1:]
+            modules = self.layers[1:]
         else:
-            modules = self.modules
+            modules = self.layers
 
         for layer in modules:
             next_input = layer(next_input)
