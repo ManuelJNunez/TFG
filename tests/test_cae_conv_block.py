@@ -12,6 +12,7 @@ up_out_channels = 1
 samples = 200
 length = 100
 
+
 @pytest.fixture
 def downblock():
     return CAEBlock(down_in_channels, down_out_channels, "down")
@@ -25,6 +26,7 @@ def upblock():
 @pytest.fixture
 def data_down_sample():
     return torch.rand((samples, down_in_channels, length))
+
 
 @pytest.fixture
 def data_up_sample():
@@ -108,6 +110,7 @@ def test_forward_up(upblock, data_up_sample, concatenated_block):
     assert output.size(0) == samples
     assert output.size(1) == up_out_channels
     assert output.size(2) == length * 2
+
 
 def test_forward_up_exception(upblock, data_up_sample):
     with pytest.raises(TypeError):
