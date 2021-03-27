@@ -4,6 +4,7 @@ https://github.com/pytorch/examples/tree/master/vae
 """
 import torch
 import torch.nn as nn
+from .neuralnet import NeuralNetworkModel
 
 
 class VAE(nn.Module):
@@ -49,24 +50,9 @@ class VAE(nn.Module):
             )
             self.decoder.append(nn.ReLU())
 
-        self.classifier = nn.ModuleList([])
-
-        for i in range(len(classifier_sizes) - 2):
-            input_size = classifier_sizes[i]
-            output_size = classifier_sizes[i + 1]
-            self.classifier.append(
-                nn.Linear(in_features=input_size, out_features=output_size)
-            )
-            self.classifier.append(nn.BatchNorm1d(num_features=output_size))
-            self.classifier.append(nn.ReLU())
-
-        self.classifier.append(
-            nn.Linear(
-                in_features=classifier_sizes[len(classifier_sizes) - 2],
-                out_features=classifier_sizes[len(classifier_sizes) - 1],
-            )
+        self.classifier = NeuralNetworkModel(
+            classifier_sizes[:-1], classifier_sizes[-1]
         )
-        self.classifier.append(nn.Softmax(dim=1))
 
     def encode(self, encoder_input: torch.Tensor) -> torch.Tensor:
         """
@@ -112,12 +98,7 @@ class VAE(nn.Module):
         Parameters:
             latent code: output from the encoder and reparametrization trick.
         """
-        next_input = latent_code
-
-        for layer in self.classifier:
-            next_input = layer(next_input)
-
-        return next_input
+        return self.classifier(latent_code)
 
     def forward(self, vae_input: torch.Tensor) -> torch.Tensor:
         """
