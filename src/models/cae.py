@@ -19,6 +19,8 @@ class ConvAutoencoder(nn.Module):
         Contains the layers of the encoder section.
     decoded : nn.ModuleList
         Contains the layers of the decoder section.
+    flatten : nn.Flatten
+        Flatten layer for the classifier fully-connected neural network.
     classifier : NeuralNetworkModel
         Model that classifies the latent-code (output of the encoder).
     """
@@ -29,7 +31,7 @@ class ConvAutoencoder(nn.Module):
 
         Parameters
         ----------
-        channels : int
+        in_channels : int
             Number of channels of the input data.
         initial_channels : int
             Number of channels of the output of the first ConvBlock.
@@ -44,7 +46,6 @@ class ConvAutoencoder(nn.Module):
         ------
         TypeError
             If the parameters `classifier_layers` or `classes` are missing.
-
         """
         super().__init__()
         prev_channels = in_channels
@@ -67,9 +68,11 @@ class ConvAutoencoder(nn.Module):
         self.decoder = nn.ModuleList([])
         # Initialize decoder
         for i in reversed(range(depth)):
-            next_channels = prev_channels / 2 if i != 0 else in_channels
+            next_channels = prev_channels // 2 if i != 0 else in_channels
             self.decoder.append(CAEBlock(prev_channels, next_channels, "up"))
             prev_channels = next_channels
+
+        self.flatten = nn.Flatten()
 
         self.classifier = NeuralNetworkModel(
             kwargs["classifier_layers"], kwargs["classes"]
@@ -99,11 +102,11 @@ class ConvAutoencoder(nn.Module):
 
             if i != len(self.encoder) - 1:
                 block_outputs.append(next_input)
-                next_input = F.max_pool1d(next_input)
+                next_input = F.max_pool1d(next_input, kernel_size=2)
 
-        class_output = self.classifier(next_input)
+        class_output = self.classifier(self.flatten(next_input))
 
-        for layer in range(self.decoder):
+        for layer in self.decoder:
             next_input = layer(next_input, block_outputs.pop())
 
         return next_input, class_output
