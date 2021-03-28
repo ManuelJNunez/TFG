@@ -95,4 +95,11 @@ def test_initializer_exception_3():
 def test_forward(model, data):
     decoded, prediction = model(data)
 
+    # Unet output assertions
     assert decoded.size(0) == samples
+    assert decoded.size(1) == in_channels
+    assert decoded.size(2) == length
+
+    # Classifier output assertions
+    assert prediction.size(0) == samples
+    assert prediction.size(1) == classes
