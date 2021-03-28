@@ -10,11 +10,15 @@ class CAEBlock(nn.Module):
 
     Attributes
     ----------
-    modules : nn.ModuleList
+    layers : nn.ModuleList
         List of layers of the Convolutional Block.
     block_type : str
         Type of block. It only have two possible values: `up` or `down`. Use `down` for a
         down-sampling block and `up` for an up-sampling block.
+    in_channels : int
+        Number of channels the input should have.
+    out_channels : int
+        Number of channels in the output
     """
 
     def __init__(self, in_channels: int, out_channels: int, block_type: str):
@@ -43,6 +47,8 @@ class CAEBlock(nn.Module):
         super().__init__()
         self.layers = nn.ModuleList([])
         self.block_type = block_type
+        self.in_channels = in_channels
+        self.out_channels = out_channels
         upconv_kernel_size = 2
         upconv_stride = 2
         kernel_size = 3
