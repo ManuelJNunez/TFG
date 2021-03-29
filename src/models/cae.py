@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from .convblocks.cae_conv_block import CAEBlock
 from .neuralnet import NeuralNetworkModel
+from typing import Tuple
 
 
 class ConvAutoencoder(nn.Module):
@@ -78,7 +79,7 @@ class ConvAutoencoder(nn.Module):
             kwargs["classifier_layers"], kwargs["classes"]
         )
 
-    def forward(self, data: torch.Tensor) -> torch.Tensor:
+    def forward(self, data: torch.Tensor) -> Tuple[torch.Tensor]:
         """
         Given a batch of `data`, computes the output of the ConvAutoencoder and the output
         of the latent-code classifier.
