@@ -21,5 +21,32 @@ Para poder capturar información sobre dichos rayos cósmicos, se usan WCD (en l
 
 El problema que se pretende solucionar en este proyecto, es diseñar un modelo que sea capaz de diferenciar un rayo que sea solo radiación gamma electromagnética de uno que tenga una partícula denominada "muón". Esta partícula se genera por la interacción a alta energía de los hadrones y nos permiten discriminar bastante bien entre la radiación gamma y los hadrones.
 
-## Autor
--   [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
+## Órdenes del task runner
+
+### Instalación de dependencias
+
+    poetry install
+
+### Ejecutar tests
+
+    poetry run task test
+
+### Ejecutar `pylint`
+
+    poetry run task lint
+
+### Comprobar si el código sigue el estilo `Black`
+
+    poetry run task black
+
+### Visualizar resultado de los tests de cobertura
+
+    poetry run task cov-result
+
+### Generar fichero XML con los resultados del test de cobertura
+
+    poetry run task cov-xml
+
+## Participantes del proyecto
+-   **Alumno**: [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
+-   **Tutor:** [Alberto Guillén Perales](https://github.com/aguillenatc)
