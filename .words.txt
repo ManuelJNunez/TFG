@@ -18,3 +18,17 @@ Cosmic
 Detectors
 Ray
 Water
+Alberto
+Guillén
+cov
+poetry
+result
+run
+task
+xml
+tests
+black
+pylint
+lint
+install
+runner
