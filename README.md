@@ -48,5 +48,5 @@ El problema que se pretende solucionar en este proyecto, es diseñar un modelo q
     poetry run task cov-xml
 
 ## Participantes del proyecto
--   **Alumno**: [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
+-   **Alumno:** [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
 -   **Tutor:** [Alberto Guillén Perales](https://github.com/aguillenatc)
