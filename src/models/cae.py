@@ -1,10 +1,10 @@
 """Implementation of a Convolutional Autoencoder with classifier"""
+from typing import Tuple
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from .convblocks.cae_conv_block import CAEBlock
 from .neuralnet import NeuralNetworkModel
-from typing import Tuple
 
 
 class ConvAutoencoder(nn.Module):

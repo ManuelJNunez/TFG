@@ -2,10 +2,10 @@
 VAE implementation using PyTorch. Based in this implementation:
 https://github.com/pytorch/examples/tree/master/vae
 """
+from typing import Tuple
 import torch
 import torch.nn as nn
 from .neuralnet import NeuralNetworkModel
-from typing import Tuple
 
 
 class VAE(nn.Module):
@@ -84,7 +84,7 @@ class VAE(nn.Module):
         ----------
         encoder_input : torch.Tensor
             Data to which we want to reduce the dimensionality.
-        
+
         Returns
         -------
         tuple
