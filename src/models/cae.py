@@ -131,6 +131,6 @@ class ConvAutoencoder(nn.Module):
         """
         data, label = batch
         cae_output, predictions = self(data)
-        loss = loss_func(decoder_output, data, predictions, label)
+        loss = loss_func(cae_output, data, predictions, label)
 
         return loss
