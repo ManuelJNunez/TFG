@@ -103,3 +103,16 @@ def test_forward(model, data):
     # Classifier output assertions
     assert prediction.size(0) == samples
     assert prediction.size(1) == classes
+
+def test_training_step(model, data):
+    # Fake loss function
+    def loss_func(cae_output, data, predictions, label):
+        return torch.ones(data.size(0))
+    
+    labels = torch.ones(samples)
+
+    batch = (data, labels)
+
+    loss = model.training_step(batch, loss_func)
+
+    assert loss.equal(torch.ones(data.size(0)))
