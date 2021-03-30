@@ -15,13 +15,6 @@ pipeline {
 
     stage('Testing & Linting'){
       parallel {
-        stage('Linting') {
-          steps {
-            sh 'poetry run task lint'
-            sh 'poetry run task black'
-          }
-        }
-
         stage('Testing') {
           stages{
             stage('Unit Tests') {
@@ -46,6 +39,13 @@ pipeline {
                 }
               }
             }
+          }
+        }
+
+        stage('Linting') {
+          steps {
+            sh 'poetry run task lint'
+            sh 'poetry run task black'
           }
         }
       }
