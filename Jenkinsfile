@@ -13,7 +13,7 @@ pipeline {
       }
     }
 
-    stage('Parallel'){
+    stage('Testing & Linting'){
       parallel {
         stage('Linting') {
           steps {
