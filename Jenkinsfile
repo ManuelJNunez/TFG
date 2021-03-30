@@ -13,34 +13,36 @@ pipeline {
       }
     }
 
-    parallel {
-      stage('Linting') {
-        steps {
-          sh 'poetry run task lint'
-          sh 'poetry run task black'
-        }
-      }
-
-      stage('Testing') {
-        stage('Unit Tests') {
+    stage('Parallel'){
+      parallel {
+        stage('Linting') {
           steps {
-            sh 'poetry run task test'
+            sh 'poetry run task lint'
+            sh 'poetry run task black'
           }
         }
 
-        stage('Coverage report') {
-          steps {
-            sh """
-              poetry run task cov-result
-              poetry run task cov-xml
-            """
+        stage('Testing') {
+          stage('Unit Tests') {
+            steps {
+              sh 'poetry run task test'
+            }
+          }
 
-            withCredentials([string(credentialsId: 'codacy-token', variable: 'CODACY_PROJECT_TOKEN')]) {
+          stage('Coverage report') {
+            steps {
               sh """
-                curl -Ls https://coverage.codacy.com/get.sh > coveragereport.sh
-                chmod 755 coveragereport.sh
-                ./coveragereport.sh report -r coverage.xml
+                poetry run task cov-result
+                poetry run task cov-xml
               """
+
+              withCredentials([string(credentialsId: 'codacy-token', variable: 'CODACY_PROJECT_TOKEN')]) {
+                sh """
+                  curl -Ls https://coverage.codacy.com/get.sh > coveragereport.sh
+                  chmod 755 coveragereport.sh
+                  ./coveragereport.sh report -r coverage.xml
+                """
+              }
             }
           }
         }
