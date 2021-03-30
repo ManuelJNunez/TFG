@@ -22,7 +22,7 @@ pipeline {
           }
         }
 
-        stage('Testing') {
+        stages {
           stage('Unit Tests') {
             steps {
               sh 'poetry run task test'
