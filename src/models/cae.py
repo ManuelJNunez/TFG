@@ -111,3 +111,26 @@ class ConvAutoencoder(nn.Module):
             next_input = layer(next_input, block_outputs.pop())
 
         return next_input, class_output
+
+    def training_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
+        """
+        This method computes the training batch loss.
+
+        Parameters
+        ----------
+        batch : torch.Tensor
+            A tensor with a portion of data.
+        loss_func : callable
+            Function that computes the training loss in each batch of data.
+
+        Returns
+        -------
+        torch.Tensor
+            The result of the loss functions for the batch of data, the output size depends on
+            the used loss function.
+        """
+        data, label = batch
+        pred = self(data)
+        loss = loss_func(pred, label)
+
+        return loss
