@@ -6,7 +6,7 @@
 
 # Water Cherenkov Detectors. Cosmic Ray classification.
 <p align="center">
-    <a href='http://54.161.147.47/job/TFG/job/main/'><img src='http://54.161.147.47/buildStatus/icon?job=TFG%2Fmain'></a>
+    <a href='http://jenkins.mjnunez.es/job/TFG/job/main/'><img src='http://jenkins.mjnunez.es/buildStatus/icon?job=TFG%2Fmain'></a>
     <a href="https://www.codacy.com/gh/ManuelJNunez/TFG/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ManuelJNunez/TFG&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/e289951e1da6421e82062829ef76ae5d"/></a>
     <a href="https://www.codacy.com/gh/ManuelJNunez/TFG/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ManuelJNunez/TFG&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/e289951e1da6421e82062829ef76ae5d"/></a>
     <a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
