@@ -14,7 +14,7 @@ def model():
 
 
 def test_initializer(model):
-    modules = model.layer_list
+    modules = model.layers
 
     for i in range(len(SIZES) - 1):
         expected_input = SIZES[i]
