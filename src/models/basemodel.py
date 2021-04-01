@@ -2,6 +2,7 @@
 import torch
 import torch.nn as nn
 
+
 class BaseModel(nn.Module):
     """
     Base Model from which other classes will inherit for avoiding duplicated code.
