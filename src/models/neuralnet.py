@@ -1,9 +1,10 @@
 """Neural Network Model classifier implementation using PyTorch"""
 import torch
 import torch.nn as nn
+from .basemodel import BaseModel
 
 
-class NeuralNetworkModel(nn.Module):
+class NeuralNetworkModel(BaseModel):
     """
     Neural Network Model Class with variable number of layers. It uses batch normalization and
     softmax.
@@ -34,64 +35,19 @@ class NeuralNetworkModel(nn.Module):
         super().__init__()
         self.layer_sizes = layer_sizes
         self.output_units = output_units
-        self.layer_list = nn.ModuleList([])
+        self.layers = nn.ModuleList([])
 
         for i in range(len(layer_sizes) - 1):
             input_size = layer_sizes[i]
             output_size = layer_sizes[i + 1]
-            self.layer_list.append(
+            self.layers.append(
                 nn.Linear(in_features=input_size, out_features=output_size)
             )
-            self.layer_list.append(nn.BatchNorm1d(num_features=output_size))
-            self.layer_list.append(nn.ReLU())
+            self.layers.append(nn.BatchNorm1d(num_features=output_size))
+            self.layers.append(nn.ReLU())
 
-        self.layer_list.append(nn.Linear(layer_sizes[-1], output_units))
-        self.layer_list.append(nn.Softmax(dim=1))
-
-    def forward(self, classifier_input: torch.Tensor) -> torch.Tensor:
-        """
-        Computes the output of the classifier.
-
-        Parameters
-        ----------
-        classifier_input : torch.Tensor
-            Data to which we want to classify.
-
-        Returns
-        -------
-        torch.Tensor
-            A tensor whose size is `num samples` x `num clases`. Each value of a row represents
-            the probability of beloging to a class.
-        """
-        layer_output = classifier_input
-
-        for layer in self.layer_list:
-            layer_output = layer(layer_output)
-
-        return layer_output
-
-    def training_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
-        """
-        This method computes the training batch loss.
-
-        Parameters
-        ----------
-        batch : torch.Tensor
-            A tensor with a portion of data.
-        loss_func : callable
-            Function that computes the training loss in each batch of data.
-
-        Returns
-        -------
-        torch.Tensor
-            The result of the loss functions for the batch of data, the output size depends on
-            the used loss function.
-        """
-        data, label = batch
-        pred = self(data)
-        loss = loss_func(pred, label)
-
-        return loss
+        self.layers.append(nn.Linear(layer_sizes[-1], output_units))
+        self.layers.append(nn.Softmax(dim=1))
 
     def validation_step(self, batch: torch.Tensor, loss_func: callable) -> torch.Tensor:
         """
