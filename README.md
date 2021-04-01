@@ -5,6 +5,9 @@
 > Imagen obtenida de la web del [Departamento de astronomía y astrofísica de la Universidad de Chicago](https://astro.uchicago.edu/research/auger.php)
 
 # Water Cherenkov Detectors. Cosmic Ray classification.
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/143ed2de85c342c1a343c3552decf220)](https://app.codacy.com/gh/ManuelJNunez/TFG?utm_source=github.com&utm_medium=referral&utm_content=ManuelJNunez/TFG&utm_campaign=Badge_Grade_Settings)
+
 <p align="center">
     <a href='http://54.161.147.47/job/TFG/job/main/'><img src='http://54.161.147.47/buildStatus/icon?job=TFG%2Fmain'></a>
     <a href="https://www.codacy.com/gh/ManuelJNunez/TFG/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ManuelJNunez/TFG&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/e289951e1da6421e82062829ef76ae5d"/></a>
