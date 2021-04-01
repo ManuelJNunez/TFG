@@ -39,7 +39,7 @@ resource "aws_security_group" "jenkins_sg" {
 }
 
 resource "aws_instance" "jenkins" {
-  instance_type   = "t4g.medium"
+  instance_type   = "t2.medium"
   ami             = "ami-042e8287309f5df03"
   key_name        = "m1"
   security_groups = [aws_security_group.jenkins_sg.name]
