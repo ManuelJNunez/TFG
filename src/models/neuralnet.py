@@ -16,7 +16,7 @@ class NeuralNetworkModel(BaseModel):
     output_units : int
         The number of output units of the neural network, if the number of classes is 3, it should
         be 3 too.
-    layer_list : nn.ModuleList
+    layers : nn.ModuleList
         The list of layers composing the network.
     """
 
