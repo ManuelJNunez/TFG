@@ -29,4 +29,5 @@ class ConvClassifier(BaseModel):
         self.layers.append(nn.ReLU())
         self.layers.append(nn.MaxPool1d(max_pool_kernel))
 
+        self.layers.append(nn.Flatten())
         self.layers.append(NeuralNetworkModel(classifier_sizes, classes))
