@@ -19,6 +19,7 @@ class ResBlock(nn.Module):
     bn2 : nn.BatchNorm1d
         Batch normalization for the second convolution output values.
     """
+
     def __init__(
         self,
         in_channels: int,
