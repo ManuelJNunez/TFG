@@ -50,7 +50,7 @@ class ResBlock(nn.Module):
         self.bn1 = norm_layer(out_channels)
         self.relu = nn.ReLU()
         self.conv2 = nn.Conv1d(
-            in_channels, out_channels, kernel_size, padding=padding_size
+            out_channels, out_channels, kernel_size, padding=padding_size
         )
         self.bn2 = norm_layer(out_channels)
         self.downsample = downsample
@@ -72,16 +72,16 @@ class ResBlock(nn.Module):
         addition = data
 
         out = self.conv1(data)
-        out = self.bn1(data)
-        out = self.relu(data)
+        out = self.bn1(out)
+        out = self.relu(out)
 
-        out = self.conv2(data)
-        out = self.bn2(data)
+        out = self.conv2(out)
+        out = self.bn2(out)
 
         if self.downsample is not None:
             addition = self.downsample(data)
 
         out += addition
-        out = self.relu(data)
+        out = self.relu(out)
 
         return out
