@@ -5,9 +5,10 @@ from torch import Tensor
 import torch.nn as nn
 from .convblocks.resblock import ResBlock
 from .neuralnet import NeuralNetworkModel
+from .basemodel import BaseModel
 
 
-class ResNetModel(nn.Module):
+class ResNetModel(BaseModel):
     """
     Residual Network implementation for 1-dimensional data.
 
@@ -132,7 +133,7 @@ class ResNetModel(nn.Module):
         layers.append(ResBlock(in_channels, out_channels, stride, downsample))
 
         for _ in range(1, blocks):
-            layers.append(ResBlock(in_channels, out_channels))
+            layers.append(ResBlock(out_channels, out_channels))
 
         return nn.Sequential(*layers)
 
