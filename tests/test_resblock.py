@@ -18,7 +18,9 @@ def model():
 
 @pytest.fixture
 def model_with_stride():
-    return ResBlock(in_channels, out_channels, stride=2, downsample=downsample_with_stride)
+    return ResBlock(
+        in_channels, out_channels, stride=2, downsample=downsample_with_stride
+    )
 
 
 @pytest.fixture
