@@ -6,13 +6,19 @@ from src.models.convblocks.resblock import ResBlock
 in_channels = 1
 out_channels = 32
 downsample = nn.Conv1d(in_channels, out_channels, 1)
+downsample_with_stride = nn.Conv1d(in_channels, out_channels, 1, 2)
 samples = 200
 length = 100
 
 
 @pytest.fixture
 def model():
-    return ResBlock(in_channels, out_channels, downsample)
+    return ResBlock(in_channels, out_channels, stride=1, downsample=downsample)
+
+
+@pytest.fixture
+def model_with_stride():
+    return ResBlock(in_channels, out_channels, stride=2, downsample=downsample_with_stride)
 
 
 @pytest.fixture
@@ -29,9 +35,17 @@ def test_initializer(model):
     assert model.downsample == downsample
 
 
-def test_forward(monkeypatch, model, data):
+def test_forward(model, data):
     output = model(data)
 
     assert output.size(0) == samples
     assert output.size(1) == out_channels
     assert output.size(2) == length
+
+
+def test_forward_with_stride(model_with_stride, data):
+    output = model_with_stride(data)
+
+    assert output.size(0) == samples
+    assert output.size(1) == out_channels
+    assert output.size(2) == length // 2
