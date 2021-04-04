@@ -1,5 +1,5 @@
 """ResNet block for 1-dimensional data"""
-from typing import Optional, Callable
+from typing import Optional
 import torch.nn as nn
 from torch import Tensor
 
@@ -24,8 +24,8 @@ class ResBlock(nn.Module):
         self,
         in_channels: int,
         out_channels: int,
+        stride: Optional[int] = 1,
         downsample: Optional[nn.Module] = None,
-        norm_layer: Optional[Callable[..., nn.Module]] = nn.BatchNorm1d,
     ):
         """
         ResBlock initializer.
@@ -36,23 +36,23 @@ class ResBlock(nn.Module):
             Number of channels of the input data.
         out_channels : int
             Number of channels of the output data.
+        stride : int
+            Stride of the first 3x3 convolution. The default value is 1.
         downsample : Optional[nn.Module]
             Downsample method for identity data.
-        norm_layer : Optional[Callable[..., nn.Module]]
-            Normalization layer method.
         """
         super().__init__()
         kernel_size = 3
         padding_size = 1
         self.conv1 = nn.Conv1d(
-            in_channels, out_channels, kernel_size, padding=padding_size
+            in_channels, out_channels, kernel_size, padding=padding_size, stride=stride
         )
-        self.bn1 = norm_layer(out_channels)
+        self.bn1 = nn.BatchNorm1d(out_channels)
         self.relu = nn.ReLU()
         self.conv2 = nn.Conv1d(
             out_channels, out_channels, kernel_size, padding=padding_size
         )
-        self.bn2 = norm_layer(out_channels)
+        self.bn2 = nn.BatchNorm1d(out_channels)
         self.downsample = downsample
 
     def forward(self, data: Tensor) -> Tensor:
