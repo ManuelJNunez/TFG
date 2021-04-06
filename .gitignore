@@ -460,3 +460,7 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Ignore dataset and images in notebooks directory
+data
+notebooks/**.jpg
