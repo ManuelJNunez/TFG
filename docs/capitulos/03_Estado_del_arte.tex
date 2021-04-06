@@ -70,6 +70,16 @@ Una plataforma a la que seguro le daré uso será Jenkins, tal vez una de las pl
 
 Todas las plataformas anteriores disponen de un fichero de configuración que se almacena en el repositorio en el que hay que describir la secuencia de órdenes para poder ejecutar los tests o hacer el despliegue, además de especificar el contenedor en el que ese ejecuta, versiones del lenguaje, etc.
 
+\subsection{Plataforma de análisis de código}
+
+El objetivo de usar estas plataformas es para evaluar la calidad de nuestro código. Con calidad del código me refiero a que siga las \textit{code conventions} de \textit{Python} (o de cualquier otro lenguaje que elijamos para realizar nuestro proyecto), las cuales ayudan a mejorar la legibilidad y mantenibilidad del código. En adición a lo anterior, permiten registrar el resultado de los tests de cobertura los cuales nos dicen qué porcentaje de código es alcanzado por nuestro tests (cuanto más alto mejor). Y por último pero no menos importante, analizan el porcentaje de código duplicado con el fin de evitar malas prácticas.\newline
+
+El modo de funciona de estas herramientas es conectándolas a nuestro repositorio de \textit{GitHub} (no soportan otras forjas de código) y a partir de ahí, cada vez que se realice un \textit{push}, se lanzan automáticamente los análisis.\newline
+
+Existen dos alternativas muy conocidas de plataformas de análisis de calidad de código, una es \textit{Codacy} \cite{codacy} y la otra es \textit{Code Climate} \cite{codeclimate}. Ambas son muy parecidas, pero me he quedado con \textit{Codacy} porque usa unas reglas más exigentes y me detecta más issues y ninguno es falso positivo.\newline
+
+A parte de la plataforma de análisis de código, también sería interesante comprobar el cumplimiento de las \textit{code conventions} de \textit{Python} cada vez que se suba código al repositorio utilizando la plataforma de CI/CD. Para ello existen herramientas como \textit{Pylint} (para comprobar que el código sigue las reglas y además detecta errores lógicos) la cual es oficial y \textit{Black} (para cuidar el formato del código y corregirlo). 
+
 \subsection{Framework para MLOps}
 
 Lo que necesito de un framework para MLOps es que registre los experimentos realizados (hiperparámetros usados y resultados obtenidos) y además nos facilite la reproducibilidad de los mismos, es decir, que se obtengan los mismos resultados independientemente de la máquina/entorno en el que se ejecuten.\newline
