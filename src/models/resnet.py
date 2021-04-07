@@ -14,10 +14,10 @@ class ResNetModel(BaseModel):
 
     Attributes
     ----------
-    conv1 : nn.Conv1d
+    conv1 : nn.Conv2d
         First convolution of the ResNet which changes the number of channels (2nd dimension) and
         divide by 2 the data length (3rd dimension).
-    bn1 : nn.BatchNorm1d
+    bn1 : nn.BatchNorm2d
         Normalizes the output of conv1.
     relu : nn.ReLU
         Activation function for the normalized output of conv1.
@@ -76,12 +76,12 @@ class ResNetModel(BaseModel):
         if classifier_sizes[0] != num_channels[-1]:
             classifier_sizes.insert(0, num_channels[-1])
 
-        self.conv1 = nn.Conv1d(
+        self.conv1 = nn.Conv2d(
             in_channels, num_channels[0], kernel_size=7, stride=2, padding=3
         )
-        self.bn1 = nn.BatchNorm1d(num_channels[0])
+        self.bn1 = nn.BatchNorm2d(num_channels[0])
         self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool1d(kernel_size=2)
+        self.maxpool = nn.MaxPool2d(kernel_size=2)
         self.layer1 = self._create_layer(
             num_channels[0], num_channels[1], number_of_blocks[0]
         )
@@ -94,7 +94,7 @@ class ResNetModel(BaseModel):
         self.layer4 = self._create_layer(
             num_channels[3], num_channels[4], number_of_blocks[3], stride=2
         )
-        self.avgpool = nn.AdaptiveAvgPool1d(1)
+        self.avgpool = nn.AdaptiveAvgPool2d((1,1))
         self.classifier = NeuralNetworkModel(classifier_sizes, classes)
 
     # pylint: disable=R0201
@@ -125,8 +125,8 @@ class ResNetModel(BaseModel):
             Contains the layers of the ResNet group.
         """
         downsample = nn.Sequential(
-            nn.Conv1d(in_channels, out_channels, 1, stride),
-            nn.BatchNorm1d(out_channels),
+            nn.Conv2d(in_channels, out_channels, 1, stride),
+            nn.BatchNorm2d(out_channels),
         )
 
         layers = []
