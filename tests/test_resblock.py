@@ -5,10 +5,10 @@ from src.models.convblocks.resblock import ResBlock
 
 in_channels = 1
 out_channels = 32
-downsample = nn.Conv1d(in_channels, out_channels, 1)
-downsample_with_stride = nn.Conv1d(in_channels, out_channels, 1, 2)
+downsample = nn.Conv2d(in_channels, out_channels, 1)
+downsample_with_stride = nn.Conv2d(in_channels, out_channels, 1, 2)
 samples = 200
-length = 100
+heigth = width = 100
 
 
 @pytest.fixture
@@ -25,15 +25,15 @@ def model_with_stride():
 
 @pytest.fixture
 def data():
-    return torch.randn((samples, in_channels, length))
+    return torch.randn((samples, in_channels, heigth, width))
 
 
 def test_initializer(model):
-    assert isinstance(model.conv1, nn.Conv1d)
-    assert isinstance(model.bn1, nn.BatchNorm1d)
+    assert isinstance(model.conv1, nn.Conv2d)
+    assert isinstance(model.bn1, nn.BatchNorm2d)
     assert isinstance(model.relu, nn.ReLU)
-    assert isinstance(model.conv2, nn.Conv1d)
-    assert isinstance(model.bn2, nn.BatchNorm1d)
+    assert isinstance(model.conv2, nn.Conv2d)
+    assert isinstance(model.bn2, nn.BatchNorm2d)
     assert model.downsample == downsample
 
 
@@ -42,7 +42,8 @@ def test_forward(model, data):
 
     assert output.size(0) == samples
     assert output.size(1) == out_channels
-    assert output.size(2) == length
+    assert output.size(2) == heigth
+    assert output.size(3) == width
 
 
 def test_forward_with_stride(model_with_stride, data):
@@ -50,4 +51,5 @@ def test_forward_with_stride(model_with_stride, data):
 
     assert output.size(0) == samples
     assert output.size(1) == out_channels
-    assert output.size(2) == length // 2
+    assert output.size(2) == heigth // 2
+    assert output.size(3) == width // 2
