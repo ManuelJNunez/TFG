@@ -10,13 +10,13 @@ class ResBlock(nn.Module):
 
     Attributtes
     -----------
-    conv1 : nn.Conv1d
+    conv1 : nn.Conv2d
         First 1x3 convolution with a ``padding`` of 1.
-    bn1 : nn.BatchNorm1d
+    bn1 : nn.BatchNorm2d
         Batch normalization for the first convolution output values.
-    conv2 : nn.Conv1d
+    conv2 : nn.Conv2d
         Second 1x3 convolution with a ``padding`` of 1.
-    bn2 : nn.BatchNorm1d
+    bn2 : nn.BatchNorm2d
         Batch normalization for the second convolution output values.
     """
 
@@ -44,15 +44,15 @@ class ResBlock(nn.Module):
         super().__init__()
         kernel_size = 3
         padding_size = 1
-        self.conv1 = nn.Conv1d(
+        self.conv1 = nn.Conv2d(
             in_channels, out_channels, kernel_size, padding=padding_size, stride=stride
         )
-        self.bn1 = nn.BatchNorm1d(out_channels)
+        self.bn1 = nn.BatchNorm2d(out_channels)
         self.relu = nn.ReLU()
-        self.conv2 = nn.Conv1d(
+        self.conv2 = nn.Conv2d(
             out_channels, out_channels, kernel_size, padding=padding_size
         )
-        self.bn2 = nn.BatchNorm1d(out_channels)
+        self.bn2 = nn.BatchNorm2d(out_channels)
         self.downsample = downsample
 
     def forward(self, data: Tensor) -> Tensor:
