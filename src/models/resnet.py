@@ -94,7 +94,7 @@ class ResNetModel(BaseModel):
         self.layer4 = self._create_layer(
             num_channels[3], num_channels[4], number_of_blocks[3], stride=2
         )
-        self.avgpool = nn.AdaptiveAvgPool2d((1,1))
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.classifier = NeuralNetworkModel(classifier_sizes, classes)
 
     # pylint: disable=R0201
