@@ -10,7 +10,7 @@ classifier_sizes = [10, 2]
 in_channels = 1
 classes = 2
 samples = 500
-length = 256
+height = width = 80
 
 
 @pytest.fixture
@@ -22,17 +22,23 @@ def model():
 
 @pytest.fixture
 def data():
-    return torch.rand((samples, in_channels, length))
+    return torch.rand((samples, in_channels, height, width))
 
 
 def test_initializer(model):
-    # The first convolution should increment the number of channels and divide by 2 the length
+    # The first convolution should increment the number of channels and divide by 2 the H & W
     conv1 = model.conv1
-    output_length = math.floor(
-        (length + 2 * conv1.padding[0] - conv1.kernel_size[0]) / conv1.stride[0] + 1
+    output_height = math.floor(
+        (height + 2 * conv1.padding[0] - conv1.kernel_size[0]) / conv1.stride[0] + 1
     )
 
-    assert output_length == length // 2
+    assert output_height == height // 2
+
+    output_width = math.floor(
+        (width + 2 * conv1.padding[1] - conv1.kernel_size[1]) / conv1.stride[1] + 1
+    )
+
+    assert output_width == width // 2
 
     # The number of features of the first BN should be the number of channels of the conv1 output
     assert model.bn1.num_features == num_channels[0]
@@ -43,10 +49,10 @@ def test_initializer(model):
     # The MaxPool should divide by 2 the length
     maxpool = model.maxpool
     output_length = math.floor(
-        (length + 2 * maxpool.padding - maxpool.kernel_size) / maxpool.stride + 1
+        (height + 2 * maxpool.padding - maxpool.kernel_size) / maxpool.stride + 1
     )
 
-    assert output_length == length // 2
+    assert output_length == height // 2
 
     # Assertions about group of layers
     assert isinstance(model.layer1, nn.Sequential)
@@ -55,7 +61,7 @@ def test_initializer(model):
     assert isinstance(model.layer4, nn.Sequential)
 
     # The average pool should reduce the length of each channel to 1
-    assert model.avgpool.output_size == 1
+    assert model.avgpool.output_size == (1, 1)
 
     # The classifier should be correctly initialized
     classifier_sizes.insert(0, num_channels[-1])
