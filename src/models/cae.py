@@ -1,10 +1,8 @@
 """Implementation of a Convolutional Autoencoder with classifier"""
 from typing import Tuple, List
 import torch
-import math
 from torch import Tensor
 import torch.nn as nn
-import torch.nn.functional as F
 from .neuralnet import NeuralNetworkModel
 
 
@@ -42,8 +40,8 @@ class ConvAutoencoder(nn.Module):
             Number of channels of the input data.
         first_conv_out_channels : int
             Number of channels of the output of the first ConvBlock. The number of channels of the
-            next convolutional layers will be ``first_conv_out_channels * 2 * i`` being `i` the layer
-            order number.
+            next convolutional layers will be ``first_conv_out_channels * 2 * i`` being `i` the
+            layer order number.
         depth : int
             Depth of the encoder and autoencoder (number of ConvBlocks on each part).
         classifier_layers : List[int]
