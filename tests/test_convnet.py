@@ -5,21 +5,22 @@ from src.models.convnet import ConvClassifier
 from src.models.neuralnet import NeuralNetworkModel
 
 samples = 200
-length = 100
-first_layer = int(((((length - 4) / 2) - 4) / 2) * 16)
-classifier_sizes = [first_layer, 100, 50, 10]
+height = width = 80
+out_channels = [2, 6]
+first_layer = int(((((height - 4) / 2) - 4) / 2))
+classifier_sizes = [(first_layer ** 2) * out_channels[1], 100, 50, 10]
 classes = 2
 in_channels = 1
 
 
 @pytest.fixture
 def model():
-    return ConvClassifier(classifier_sizes, classes, in_channels)
+    return ConvClassifier(classifier_sizes, out_channels, classes, in_channels)
 
 
 @pytest.fixture
 def data():
-    return torch.rand((samples, in_channels, length))
+    return torch.rand((samples, in_channels, height, width))
 
 
 def test_initializer(model):
