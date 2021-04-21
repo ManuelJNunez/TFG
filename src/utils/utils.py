@@ -3,6 +3,10 @@ import torch
 import torch.nn as nn
 from torch.optim import Optimizer
 from torch.utils.data import TensorDataset, DataLoader
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import h5py
 
 
 def validate(
@@ -37,3 +41,12 @@ def default_device() -> torch.device:
     dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     return dev
+
+
+def read_data(path: Path) -> torch.Tensor:
+    with h5py.File(path, "r") as f:
+        data = torch.from_numpy(np.array(f["data"]))
+        info = pd.read_hdf(path, key="info")
+        labels = torch.from_numpy(info.loc[:, "Y_class"].values)
+
+    return data, labels.long()
