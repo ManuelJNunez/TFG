@@ -6,11 +6,13 @@ authors = ["ManuelJNunez <manueljesusnunezruiz@gmail.com>"]
 license = "GPL-3.0"
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.9"
+python = "^3.7"
 torch = "^1.8.0"
 taskipy = "^1.6.0"
 snapper-ml = "^0.1.0"
 h5py = "^3.2.1"
+tables = "^3.6.1"
+scikit-learn = "0.24.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
@@ -21,7 +23,7 @@ coverage = "^5.5"
 pytest-sugar = "^0.9.4"
 
 [tool.taskipy.tasks]
-test = "coverage run --source=src/ -m pytest"
+test = "coverage run --source=src/ml -m pytest"
 cov-result = "coverage report -m"
 cov-xml = "coverage xml"
 lint = "pylint src --generated-members=torch"
