@@ -7,7 +7,6 @@ import torch
 import torch.nn as nn
 from .neuralnet import NeuralNetworkModel
 
-
 class VAE(nn.Module):
     """
     Varitional Autoencoder (VAE) implementation with variable depth and layer sizes.
