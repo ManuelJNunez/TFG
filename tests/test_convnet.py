@@ -1,8 +1,8 @@
 import pytest
 import torch
 import torch.nn as nn
-from src.models.convnet import ConvClassifier
-from src.models.neuralnet import NeuralNetworkModel
+from src.ml.models.convnet import ConvClassifier
+from src.ml.models.neuralnet import NeuralNetworkModel
 
 samples = 200
 height = width = 80

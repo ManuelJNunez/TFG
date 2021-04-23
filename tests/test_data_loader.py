@@ -1,7 +1,7 @@
 import pytest
 import torch
 from torch.utils.data import TensorDataset, DataLoader
-from src.utils.device_data_loader import DeviceDataLoader
+from src.ml.utils.device_data_loader import DeviceDataLoader
 
 NUM_SAMPLES = 500
 BATCH_SIZE = 64

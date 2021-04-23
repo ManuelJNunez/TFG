@@ -1,7 +1,7 @@
 import pytest
 import torch
 import torch.nn as nn
-from src.models.convblocks.resblock import ResBlock
+from src.ml.models.convblocks.resblock import ResBlock
 
 in_channels = 1
 out_channels = 32

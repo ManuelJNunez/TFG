@@ -1,6 +1,6 @@
 import pytest
 import torch
-from src.models.vae import VAE
+from src.ml.models.vae import VAE
 import torch.nn as nn
 
 VAE_SIZES = [10, 5, 3]

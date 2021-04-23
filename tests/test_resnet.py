@@ -2,7 +2,7 @@ import pytest
 import torch
 import math
 import torch.nn as nn
-from src.models.resnet import ResNetModel
+from src.ml.models.resnet import ResNetModel
 
 num_channels = [2, 4, 8, 16, 32]
 number_of_blocks = [2, 2, 2, 2]

@@ -1,7 +1,7 @@
 import pytest
 import torch
 import torch.nn as nn
-from src.models.neuralnet import NeuralNetworkModel
+from src.ml.models.neuralnet import NeuralNetworkModel
 
 SIZES = [5, 4, 3]
 OUTPUT_UNITS = 2

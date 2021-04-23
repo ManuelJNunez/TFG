@@ -1,7 +1,7 @@
 import pytest
 import torch
 import torch.nn as nn
-from src.models.cae import ConvAutoencoder
+from src.ml.models.cae import ConvAutoencoder
 
 in_channels = 1
 initial_channels = 8
