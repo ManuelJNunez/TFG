@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+    optuna-db:
+        image: postgres
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: optuna
+            POSTGRES_USER: optuna
+            POSTGRES_DB: optuna
