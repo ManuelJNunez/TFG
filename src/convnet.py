@@ -5,22 +5,24 @@ import torch.nn as nn
 import torch.optim as optim
 from ml.utils.utils import read_data, default_device, fit
 from ml.utils.device_data_loader import DeviceDataLoader
+from ml.utils.snapperml_data_loader import SnapperDataLoader
 from ml.models.convnet import ConvClassifier
 from torch.utils.data import TensorDataset, DataLoader
 
 
-@job()
-def main(epochs = 10, seed=123, bs=64, lr=0.0001, out_channels=[2,6]):
+@job(data_loader_func=SnapperDataLoader)
+def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=[2, 6]):
     torch.manual_seed(seed)
-    train_path = Path("data/Train_EnergyGround_alt5200m_qgsii_fluka_N44971.h5")
-    test_path = Path("data/Test_EnergyGround_alt5200m_qgsii_fluka_N14989.h5")
 
-    train_data, train_labels = read_data(train_path)
+    train_data, train_labels, test_data, test_labels = SnapperDataLoader.load_data()
 
+    # Process data and load to the default device
     dev = default_device()
     train_data.unsqueeze_(1)
     train_data = train_data.to(dev)
     train_labels = train_labels.to(dev)
+
+    # Create a Tensor Dataset and a Data Loader
     train_ds = TensorDataset(train_data, train_labels)
     train_dl = DataLoader(train_ds, batch_size=bs, shuffle=True)
 
@@ -34,11 +36,11 @@ def main(epochs = 10, seed=123, bs=64, lr=0.0001, out_channels=[2,6]):
 
     fit(epochs, model, nn.CrossEntropyLoss(), opt, train_dl)
 
-    #train_acc = (model(train_data).argmax(dim=1) == train_labels).float().mean()
+    train_acc = (model(train_data).argmax(dim=1) == train_labels).float().mean()
 
-    #print(train_acc)
+    print(train_acc)
 
-    #return { 'train_acc': train_acc.item() }
+    return {"train_acc": train_acc.item()}
 
 
 if __name__ == "__main__":
