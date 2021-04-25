@@ -1,5 +1,9 @@
-name: 'Simple CNN'
-kind: 'group'
+name: "Simple CNN"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 0.5
+  gpu: 0.85
 
 params:
   epochs: 10
@@ -7,10 +11,14 @@ params:
 
 param_space:
   bs: randint(32, 256)
-  lr: loguniform(0.01, 0.00001)
+  lr: loguniform(0.0001, 0.01)
   out_channels:
     - randint(2, 20)
     - randint(2, 20)
+
+metric:
+  name: train_acc
+  direction: maximize
 
 run:
   - src/convnet.py
