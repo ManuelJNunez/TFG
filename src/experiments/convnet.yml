@@ -1,8 +1,8 @@
 name: "Simple CNN"
 kind: group
-num_trials: 1
+num_trials: 10
 resources_per_worker:
-  cpu: 0.5
+  cpu: 0.8
   gpu: 0.85
 
 params:
@@ -17,7 +17,7 @@ param_space:
     - randint(2, 20)
 
 metric:
-  name: train_acc
+  name: test_acc
   direction: maximize
 
 run:
