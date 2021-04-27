@@ -3,44 +3,51 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from ml.utils.utils import read_data, default_device, fit
-from ml.utils.device_data_loader import DeviceDataLoader
+import numpy as np
+from ml.utils.utils import compute_general_loss, default_device, fit
 from ml.utils.snapperml_data_loader import SnapperDataLoader
 from ml.models.convnet import ConvClassifier
-from torch.utils.data import TensorDataset, DataLoader
+from sklearn.metrics import accuracy_score, f1_score
+
+SEED = 1234
 
 
 @job(data_loader_func=SnapperDataLoader)
 def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=[2, 6]):
+    # Set the seed and get the default device for training
     torch.manual_seed(seed)
-
-    train_data, train_labels, test_data, test_labels = SnapperDataLoader.load_data()
-
-    # Process data and load to the default device
     dev = default_device()
-    train_data.unsqueeze_(1)
-    train_data = train_data.to(dev)
-    train_labels = train_labels.to(dev)
 
-    # Create a Tensor Dataset and a Data Loader
-    train_ds = TensorDataset(train_data, train_labels)
-    train_dl = DataLoader(train_ds, batch_size=bs, shuffle=True)
+    # Read the data and create the DataLoader
+    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs)
 
-    first_layer = int(((((train_data.size(3) - 4) / 2) - 4) / 2))
+    # Compute the size of the first fully-connected layer
+    first_layer = int(((((data_size[3] - 4) / 2) - 4) / 2))
     classifier_sizes = [(first_layer ** 2) * out_channels[1], 100, 50, 10]
 
-    model = ConvClassifier(classifier_sizes, out_channels, 2, train_data.size(1))
-
+    # Initialize the model and load it to the training device
+    model = ConvClassifier(classifier_sizes, out_channels, 2, data_size[1])
     model.to(dev)
+
+    # Initialize optimizer
     opt = optim.Adam(model.parameters())
 
+    # Fit the model to the data
     fit(epochs, model, nn.CrossEntropyLoss(), opt, train_dl)
 
-    train_acc = (model(train_data).argmax(dim=1) == train_labels).float().mean()
+    # Compute the model losses
+    train_acc = compute_general_loss(train_dl, model, accuracy_score)
+    test_acc = compute_general_loss(test_dl, model, accuracy_score)
 
-    print(train_acc)
+    train_f1 = compute_general_loss(train_dl, model, f1_score)
+    test_f1 = compute_general_loss(test_dl, model, f1_score)
 
-    return {"train_acc": train_acc.item()}
+    return {
+        "train_acc": train_acc,
+        "test_acc": test_acc,
+        "train_f1": train_f1,
+        "test_f1": test_f1,
+    }
 
 
 if __name__ == "__main__":
