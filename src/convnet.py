@@ -1,22 +1,25 @@
+"""Script for training a LeNet-5 based Network"""
 from snapper_ml import job
-from pathlib import Path
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import numpy as np
+from sklearn.metrics import accuracy_score, f1_score
 from .ml.utils.utils import compute_general_loss, default_device, fit
 from .ml.utils.snapperml_data_loader import SnapperDataLoader
 from .ml.models.convnet import ConvClassifier
-from sklearn.metrics import accuracy_score, f1_score
 
 SEED = 1234
 
 
 @job(data_loader_func=SnapperDataLoader)
-def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=[2, 6]):
+def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
+    """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
     torch.manual_seed(seed)
     dev = default_device()
+
+    if out_channels is None:
+        out_channels = [2,6]
 
     # Read the data and create the DataLoader
     train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs)
@@ -30,7 +33,7 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=[2, 6]):
     model.to(dev)
 
     # Initialize optimizer
-    opt = optim.Adam(model.parameters())
+    opt = optim.Adam(model.parameters(), lr)
 
     # Fit the model to the data
     fit(epochs, model, nn.CrossEntropyLoss(), opt, train_dl)
