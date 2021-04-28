@@ -4,9 +4,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-from ml.utils.utils import compute_general_loss, default_device, fit
-from ml.utils.snapperml_data_loader import SnapperDataLoader
-from ml.models.convnet import ConvClassifier
+from .ml.utils.utils import compute_general_loss, default_device, fit
+from .ml.utils.snapperml_data_loader import SnapperDataLoader
+from .ml.models.convnet import ConvClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
 SEED = 1234
