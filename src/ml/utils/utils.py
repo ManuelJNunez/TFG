@@ -1,15 +1,15 @@
 """Utils for training models or get the data"""
+from typing import Callable, Tuple
+from pathlib import Path
 import torch
 import torch.nn as nn
 from torch import Tensor
 from torch.optim import Optimizer
 from torch.utils.data import TensorDataset, DataLoader
-from .device_data_loader import DeviceDataLoader
-from typing import Callable, Tuple
-from pathlib import Path
 import numpy as np
 import pandas as pd
 import h5py
+from .device_data_loader import DeviceDataLoader
 
 
 def validate(
@@ -22,13 +22,13 @@ def validate(
     return epoch_loss / val_length
 
 
-def loss_batch(
+def compute_batch_loss(
     model: nn.Module,
     loss_func: Callable,
     data: Tensor,
     labels: Tensor,
-    opt=None,
 ) -> Tuple[Tensor]:
+    """Compute the loss for a given batch"""
     pred_labels = model(data).argmax(dim=1)
     pred_labels = pred_labels.cpu()
     true_labels = labels.cpu()
@@ -42,12 +42,11 @@ def compute_general_loss(
     data_loader: DeviceDataLoader,
     model: nn.Module,
     loss_func: Callable,
-    opt=None,
 ) -> float:
     """Compute the loss in the entire DataSet"""
 
     losses, nums = zip(
-        *[loss_batch(model, loss_func, xb, yb) for xb, yb in data_loader]
+        *[compute_batch_loss(model, loss_func, xb, yb) for xb, yb in data_loader]
     )
 
     train_acc = np.sum(np.multiply(losses, nums)) / np.sum(nums)
@@ -82,8 +81,9 @@ def default_device() -> torch.device:
 
 
 def read_data(path: Path) -> Tensor:
-    with h5py.File(path, "r") as f:
-        data = torch.from_numpy(np.array(f["data"]))
+    """Read the dataset from the given path"""
+    with h5py.File(path, "r") as file:
+        data = torch.from_numpy(np.array(file["data"]))
         info = pd.read_hdf(path, key="info")
         labels = torch.from_numpy(info.loc[:, "Y_class"].values)
 
