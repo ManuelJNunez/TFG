@@ -9,6 +9,7 @@ from .device_data_loader import DeviceDataLoader
 
 class SnapperDataLoader(snapper_ml.DataLoader):
     """DataLoader for SnapperML, contains the PyTorch's DataLoaders"""
+
     @classmethod
     def load_data(cls, dev: torch.device, batch_size: int):
         train_path = Path("data/Train_EnergyGround_alt5200m_qgsii_fluka_N44971.h5")

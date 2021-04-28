@@ -19,7 +19,7 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
     dev = default_device()
 
     if out_channels is None:
-        out_channels = [2,6]
+        out_channels = [2, 6]
 
     # Read the data and create the DataLoader
     train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs)
