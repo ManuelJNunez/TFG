@@ -1,16 +1,16 @@
-import snapper_ml
-from typing import Tuple
-from .utils import read_data, default_device
-from .device_data_loader import DeviceDataLoader
-from torch.utils.data import TensorDataset, DataLoader
-from torch import Tensor
-from torch import device
+"""The snapperml_data_loader contains a DataLoader for SnapperML"""
 from pathlib import Path
+import snapper_ml
+import torch
+from torch.utils.data import TensorDataset, DataLoader
+from .utils import read_data
+from .device_data_loader import DeviceDataLoader
 
 
 class SnapperDataLoader(snapper_ml.DataLoader):
+    """DataLoader for SnapperML, contains the PyTorch's DataLoaders"""
     @classmethod
-    def load_data(cls, dev: device, batch_size: int):
+    def load_data(cls, dev: torch.device, batch_size: int):
         train_path = Path("data/Train_EnergyGround_alt5200m_qgsii_fluka_N44971.h5")
         test_path = Path("data/Test_EnergyGround_alt5200m_qgsii_fluka_N14989.h5")
 
