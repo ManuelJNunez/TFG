@@ -7,8 +7,8 @@ in_channels = 1
 out_channels = 32
 downsample = nn.Conv2d(in_channels, out_channels, 1)
 downsample_with_stride = nn.Conv2d(in_channels, out_channels, 1, 2)
-samples = 200
-heigth = width = 100
+samples = 50
+heigth = width = 80
 
 
 @pytest.fixture
