@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+    mlflow-db:
+        image: mysql
+        restart: always
+        ports: 
+            - 3306:3306
+        volumes:
+            - mysql_vol:/var/lib/postgresql/data
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: random
+            MYSQL_USER: mlflow
+            MYSQL_DATABASE: mlflow
+            MYSQL_PASSWORD: mlflow
+
+    mlflow:
+        build: .
+        depends_on:
+            - mlflow-db
+        restart: always
+        ports:
+            - 80:5000
+        volumes:
+            - mlflow_vol:/home/mlflow
+        environment:
+            DB_HOST: mlflow-db
+            DB_USER: mlflow
+            DB_NAME: mlflow
+            DB_PASSWORD: mlflow
+            DB_PORT: 3306
+
+volumes:
+    mysql_vol: {}
+    mlflow_vol: {}
