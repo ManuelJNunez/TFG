@@ -9,11 +9,10 @@ RUN groupadd mlflow \
 USER mlflow
 
 ENV PATH=/home/mlflow/.local/bin:$PATH
-RUN pip install --user mlflow pymysql cryptography
+RUN pip install --user mlflow pymysql cryptography boto3
 
 WORKDIR /home/mlflow
 
 ENTRYPOINT mlflow server -h 0.0.0.0 \
-    --backend-store-uri=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME} \
-    --default-artifact-root='./mlruns'  \
-    && /bin/bash
+    --backend-store-uri=mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MLFLOW_DBHOST}:${MYSQL_PORT}/${MYSQL_DATABASE} \
+    --default-artifact-root=${MLFLOW_ARTIFACTS_URI}
