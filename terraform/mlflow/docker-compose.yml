@@ -8,11 +8,7 @@ services:
             - 3306:3306
         volumes:
             - mysql_vol:/var/lib/postgresql/data
-        environment:
-            MYSQL_RANDOM_ROOT_PASSWORD: random
-            MYSQL_USER: mlflow
-            MYSQL_DATABASE: mlflow
-            MYSQL_PASSWORD: mlflow
+        env_file: .env
 
     mlflow:
         build: .
@@ -21,15 +17,7 @@ services:
         restart: always
         ports:
             - 80:5000
-        volumes:
-            - mlflow_vol:/home/mlflow
-        environment:
-            DB_HOST: mlflow-db
-            DB_USER: mlflow
-            DB_NAME: mlflow
-            DB_PASSWORD: mlflow
-            DB_PORT: 3306
+        env_file: .env
 
 volumes:
     mysql_vol: {}
-    mlflow_vol: {}
