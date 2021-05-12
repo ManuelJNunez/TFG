@@ -69,6 +69,18 @@ resource "aws_instance" "mlflow" {
     }
   }
 
+  provisioner "file" {
+    source      = ".env"
+    destination = "/home/ubuntu/.env"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("../keys/m2.pem")
+      host        = self.public_dns
+    }
+  }
+
   user_data = file("provision.sh")
 
   tags = {
