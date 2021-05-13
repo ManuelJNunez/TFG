@@ -4,8 +4,8 @@ from snapper_ml.logging import logger
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import config
 from sklearn.metrics import accuracy_score, f1_score
+import config
 from ml.utils.utils import compute_general_loss, default_device, fit
 from ml.utils.snapperml_data_loader import SnapperDataLoader
 from ml.models.convnet import ConvClassifier
