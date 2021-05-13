@@ -19,15 +19,15 @@ pipeline {
           stages{
             stage('Unit Tests') {
               steps {
-                sh 'poetry run task test'
+                sh 'poetry run invoke test'
               }
             }
 
             stage('Coverage report') {
               steps {
                 sh """
-                  poetry run task cov-result
-                  poetry run task cov-xml
+                  poetry run invoke covreport
+                  poetry run invoke covxml
                 """
 
                 withCredentials([string(credentialsId: 'codacy-token', variable: 'CODACY_PROJECT_TOKEN')]) {
@@ -44,8 +44,8 @@ pipeline {
 
         stage('Linting') {
           steps {
-            sh 'poetry run task lint'
-            sh 'poetry run task black'
+            sh 'poetry run invoke lint'
+            sh 'poetry run invoke black --check'
           }
         }
       }
