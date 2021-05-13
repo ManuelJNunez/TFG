@@ -479,3 +479,5 @@ notebooks/**.jpg
 # End of https://www.toptal.com/developers/gitignore/api/vscode
 
 *.pem
+
+artifacts
