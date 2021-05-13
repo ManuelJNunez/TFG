@@ -62,9 +62,7 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
         "test_acc": test_acc,
         "train_f1": train_f1,
         "test_f1": test_f1,
-    }, {
-        "model": str(model_path)
-    }
+    }, {"model": str(model_path)}
 
 
 if __name__ == "__main__":
