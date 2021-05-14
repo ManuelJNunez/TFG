@@ -1,9 +1,10 @@
 from invoke import task
+from pathlib import Path
 
 
 @task
 def test(c):
-    c.run("coverage run --source=src/ml -m pytest")
+    c.run("coverage run --source=src/ml -m pytest", pty=True)
 
 
 @task
@@ -28,4 +29,25 @@ def black(c, check=False):
     if check:
         command += " --check"
 
-    c.run(command)
+    c.run(command, pty=True)
+
+@task
+def train(c, all=False):
+    experiments_path = Path('src/experiments')
+    train_files = []
+    train = True
+
+    for child in experiments_path.iterdir():
+        if child.suffix in ['.yml', '.yaml']:
+            train_files.append(child)
+
+    for file in train_files:
+        if not all:
+            train = False
+            reply = input(f"Would you like to run the experiment defined in {str(file)}? [Y/n] ")
+
+            if reply.lower() in ['1', 'y', 'yes', 'true', 'yeah']:
+                train = True
+            
+        if train:
+            c.run(f"snapper-ml --config_file={str(file)}", pty=True)
