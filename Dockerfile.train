@@ -7,11 +7,11 @@ RUN apt update \
 
 ENV PATH=/root/.local/bin:${PATH}
 
-RUN pip install poetry \
-    && poetry install
+WORKDIR /home/python
 
-WORKDIR /home/python/TFG
+COPY pyproject.toml poetry.lock ./
+
+RUN pip install poetry \
+    && poetry install --no-dev
 
 VOLUME [ "/home/python/TFG" ]
-
-ENTRYPOINT poetry run invoke train
