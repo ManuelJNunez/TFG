@@ -48,9 +48,9 @@ Como se puede ver en el Cuadro \ref{tab:poetryvspipenv}, Poetry es siempre más 
 
 \subsection{Gestor de tareas}
 
-Para seguir ayudando con la reproducibilidad del proyecto, necesitamos un gestor que contenga las órdenes necesarias para testear o arrancar la aplicación o lanzar el entrenamiento de modelos. Esto nos permite que nuestro proyecto se pueda ejecutar en otra máquina de forma sencilla, ejecutando una sola orden que ya lo hace todo por nosotros. Poetry no trae por defecto ningún gestor de tareas, al contrario que Pipenv que sí lo trae. Pero por suerte, existen dos herramientas que nos añaden un task manager en Poetry llamadas \textit{Poethepoet} \cite{poethepoet} y \textit{Taskipy}\cite{taskipy}. La diferencia es que \textit{Taskipy} nos permite ejecutar la orden desde fuera del entorno virtual, lo cual es más cómodo desde el punto de vista del usuario.\\
+Para seguir ayudando con la reproducibilidad del proyecto, necesitamos un gestor que contenga las órdenes necesarias para testear o arrancar la aplicación o lanzar el entrenamiento de modelos. Esto nos permite que nuestro proyecto se pueda ejecutar en otra máquina de forma sencilla, ejecutando una sola orden que ya lo hace todo por nosotros. \textit{Pipenv} trae soporte para registrar tareas que lanzan una orden shell. Para \textit{Poetry} existen dos herramientas que nos permiten también registrar tareas que lancen una orden shell (como \textit{poe the poet} y \textit{taskipy}). Pero esta vez he preferido usar \textit{invoke}, ya que permite programar las tareas en Python y no estar limitado a ejecutar una orden shell.\\
 
-Para lanzar una tarea hay que escribir \textit{poetry run task $<taskname>$} .
+Para lanzar una tarea hay que lanzar la orden \textit{poetry run invoke $<taskname>$} .
 
 \subsection{Plataforma de CI/CD}
 
