@@ -1,6 +1,7 @@
 FROM nvidia/cuda:11.3.0-cudnn8-runtime-ubuntu20.04
 
 RUN apt update \
+    && apt install git \
     && apt install python3 -y \
     && apt install python3-pip -y \
     && apt install libpq-dev -y
@@ -11,7 +12,7 @@ WORKDIR /home/python
 
 COPY pyproject.toml poetry.lock ./
 
-RUN pip install poetry \
-    && poetry install --no-dev
+RUN pip -f requirements.txt -o requirements.txt \
+    && pip install -r requirements.txt
 
 VOLUME [ "/home/python/TFG" ]
