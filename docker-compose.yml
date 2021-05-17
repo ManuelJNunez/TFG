@@ -16,6 +16,7 @@ services:
           context: .
           dockerfile: Dockerfile.train
         shm_size: 10.11gb
+        env_file: .env
         deploy:
           resources:
             reservations:
