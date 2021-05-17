@@ -9,7 +9,7 @@ RUN apt update \
 
 ENV PATH=/root/.local/bin:${PATH}
 
-WORKDIR /home/python
+WORKDIR /home/python/TFG
 
 COPY pyproject.toml poetry.lock ./
 
