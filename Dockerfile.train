@@ -12,7 +12,6 @@ WORKDIR /home/python
 
 COPY pyproject.toml poetry.lock ./
 
-RUN pip -f requirements.txt -o requirements.txt \
-    && pip install -r requirements.txt
+RUN poetry export -f requirements.txt | /venv/bin/pip install -r /dev/stdin
 
 VOLUME [ "/home/python/TFG" ]
