@@ -257,6 +257,17 @@ humanfriendly = ">=9.1"
 cron = ["capturer (>=2.4)"]
 
 [[package]]
+name = "colorful"
+version = "0.5.4"
+description = "Terminal string styling done right, in Python."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
 name = "colorlog"
 version = "5.0.1"
 description = "Add colours to the output of Python's logging module."
@@ -1186,6 +1197,7 @@ aiohttp-cors = "*"
 aioredis = "*"
 click = ">=7.0"
 colorama = "*"
+colorful = {version = "*", optional = true, markers = "extra == \"default\""}
 filelock = "*"
 gpustat = "*"
 grpcio = ">=1.28.1"
@@ -1579,7 +1591,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b6a49b3da243b06697963b377a02bb7455e5fcd2f91dba823058f5082c677b81"
+content-hash = "959f7f115fbf7f61e539d9cb2144f48584ee1e501283db1314e49cfc7bd817bd"
 
 [metadata.files]
 aiohttp = [
@@ -1703,6 +1715,10 @@ colorama = [
 coloredlogs = [
     {file = "coloredlogs-15.0-py2.py3-none-any.whl", hash = "sha256:b7f630a8297a66984b6bae0f6a1b0e0afb9f2f6838ea3bfa58f50d3d13e133d6"},
     {file = "coloredlogs-15.0.tar.gz", hash = "sha256:5e78691e2673a8e294499e1832bb13efcfb44a86b92e18109fa18951093218ab"},
+]
+colorful = [
+    {file = "colorful-0.5.4-py2.py3-none-any.whl", hash = "sha256:8d264b52a39aae4c0ba3e2a46afbaec81b0559a99be0d2cfe2aba4cf94531348"},
+    {file = "colorful-0.5.4.tar.gz", hash = "sha256:86848ad4e2eda60cd2519d8698945d22f6f6551e23e95f3f14dfbb60997807ea"},
 ]
 colorlog = [
     {file = "colorlog-5.0.1-py2.py3-none-any.whl", hash = "sha256:4e6be13d9169254e2ded6526a6a4a1abb8ac564f2fa65b310a98e4ca5bea2c04"},
