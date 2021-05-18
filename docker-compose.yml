@@ -6,10 +6,7 @@ services:
       restart: always
       ports:
         - 5432:5432
-      environment:
-        POSTGRES_PASSWORD: optuna
-        POSTGRES_USER: optuna
-        POSTGRES_DB: optuna
+      env_file: .env
 
     train-container:
         build:
