@@ -12,13 +12,14 @@ services:
         POSTGRES_DB: optuna
 
     train-container:
-        depends_on:
-          - optuna-db
         build:
           context: .
           dockerfile: Dockerfile.train
+        stdin_open: true
+        tty: true  
         shm_size: 10.11gb
         env_file: .env
+        command: invoke train
         volumes:
           - ${PWD}:/home/python/TFG
         deploy:
