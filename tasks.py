@@ -1,5 +1,6 @@
 from invoke import task
 from pathlib import Path
+from dotenv import dotenv_values
 
 
 @task
@@ -35,6 +36,7 @@ def black(c, check=False):
 @task
 def train(c, all=False):
     experiments_path = Path("src/experiments")
+    config = dotenv_values(".env")
     train_files = []
     train = True
 
@@ -53,4 +55,11 @@ def train(c, all=False):
                 train = True
 
         if train:
-            c.run(f"snapper-ml --config_file={str(file)}", pty=True)
+            c.run(f"snapper-ml --config_file={str(file)}", pty=True, env=config)
+
+
+@task
+def dockertrain(c):
+    c.run("docker-compose up --build -d", pty=True)
+    c.run("docker start -ai tfg_train-container_1")
+    c.run("docker-compose down")
