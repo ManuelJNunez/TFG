@@ -1,27 +1,28 @@
 version: '3.9'
 
 services:
-    optuna-db:
-      image: postgres
-      restart: always
-      ports:
-        - 5432:5432
-      env_file: .env
+  optuna-db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file: .env
 
-    train-container:
-        build:
-          context: .
-          dockerfile: Dockerfile.train
-        stdin_open: true
-        tty: true  
-        shm_size: 10.11gb
-        env_file: .env
-        volumes:
-          - ${PWD}:/home/python/TFG
-        deploy:
-          resources:
-            reservations:
-              devices:
-              - driver: nvidia
-                count: 1
-                capabilities: [gpu]
+  train-container:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+      network: host
+    stdin_open: true
+    tty: true
+    ipc: host
+    env_file: .env
+    volumes:
+      - ${PWD}:/home/python/TFG
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu, utility]
