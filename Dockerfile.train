@@ -15,6 +15,4 @@ COPY pyproject.toml poetry.lock ./
 
 RUN poetry export -f requirements.txt --without-hashes | pip install -r /dev/stdin
 
-VOLUME [ "/home/python/TFG" ]
-
 ENTRYPOINT invoke train
