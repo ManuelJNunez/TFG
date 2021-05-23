@@ -29,23 +29,23 @@ El problema que se pretende solucionar en este proyecto, es diseñar un modelo q
 
 ### Ejecutar tests
 
-    poetry run task test
+    poetry run invoke test
 
 ### Ejecutar `pylint`
 
-    poetry run task lint
+    poetry run invoke lint
 
 ### Comprobar si el código sigue el estilo `Black`
 
-    poetry run task black
+    poetry run invoke black
 
 ### Visualizar resultado de los tests de cobertura
 
-    poetry run task cov-result
+    poetry run invoke cov-result
 
 ### Generar fichero XML con los resultados del test de cobertura
 
-    poetry run task cov-xml
+    poetry run invoke cov-xml
 
 ## Participantes del proyecto
 -   **Alumno:** [Manuel Jesús Núñez Ruiz](https://github.com/ManuelJNunez)
