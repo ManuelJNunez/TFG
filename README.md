@@ -49,7 +49,7 @@ El problema que se pretende solucionar en este proyecto, es diseñar un modelo q
 
 ## Cómo reproducir el experimento
 
-El experimento ha sido diseñado para que pueda reproducirse entero sólo con unas pocas órdenes. Antes de arrancarlo, hace falta poner en marcha varios servicios, uno de `mlfow` con su correspondiente base de datos `mysql` y otro de `postgresql` para `optuna`.
+El experimento ha sido diseñado para que pueda reproducirse entero sólo con unas pocas órdenes. Antes de arrancarlo, hace falta poner en marcha varios servicios, uno de `mlflow` con su correspondiente base de datos `mysql` y otro de `postgresql` para `optuna`.
 
 ### Levantar servicio `mlflow`
 
@@ -59,7 +59,7 @@ Para desplegarlo en EC2, es necesario un fichero `.env` con las siguientes varia
 
 - **MYSQL_RANDOM_ROOT_PASSWORD.** Genera una password aleatoria para el usuario root de la base de datos, por lo que se le debe de asignar cualquier valor (pues será ignorado). También puedes asignarla tú usando la variable `MYSQL_ROOT_PASSWORD` o dejarla vacía usando `MYSQL_ALLOW_EMPTY_PASSWORD` (inseguro).
 - **MYSQL_USER.** Nombre de usuario no root para acceder a la base de datos. Ejemplo: *mlflow_user*.
-- **MYSQL_DATABASE.** Nombre de la base de datos que contendrá toda la información sobre los experimentos registrados epor `mlflow`. Ejemplo: *mlflow_db*.
+- **MYSQL_DATABASE.** Nombre de la base de datos que contendrá toda la información sobre los experimentos registrados por `mlflow`. Ejemplo: *mlflow_db*.
 - **MYSQL_PASSWORD.** Contraseña para la base de datos que contendrá la información de `mlflow`. Ejemplo: *mlflow_pass*.
 - **MYSQL_PORT.** Puerto en el que escuchará el servicio `MySQL`, en el `docker-compose.yml` está definido en el *3306*, por lo que si pones uno distinto a ese, actualiza también el otro fichero.
 - **MLFLOW_DBHOST.** Debe contener el valor *mlflow-db*, pues así se llama el servicio de `MySQL` en el `docker-compose.yml`.
@@ -84,14 +84,14 @@ docker-compose up -d
 
 ### Reproducir el experimento
 
-Tras haber desplegado nuestro servicio de `mlflow`, podemos pasar ahora a reproducir el experimento. Para ello necesitaremos levantar un servicio de `postresql`, pero gracias a `docker-compose` de nuevo, esto no es un problema.
+Tras haber desplegado nuestro servicio de `mlflow`, podemos pasar ahora a reproducir el experimento. Para ello necesitaremos levantar un servicio de `postgresql`, pero gracias a `docker-compose` de nuevo, esto no es un problema.
 
 Antes que nada, para este paso también es necesario crear un `.env`, pero en el root folder del proyecto (dónde se encuentran el `Jenkinsfile` y el `Dockerfile.train`) con las siguientes variables de entorno:
 
-- **POSTGRES_PASSWORD.** Contraseña para acceder a la base de datos `postgres`. Ejemplo: *tuclave123*.
+- **POSTGRES_PASSWORD.** Contraseña para acceder a la base de datos `postgres`. Ejemplo: *tu-clave123*.
 - **POSTGRES_USER.** Nombre de usuario para acceder a la base de datos. Ejemplo: *user123*.
 - **POSTGRES_DB.** Nombre de la base de datos dónde `optuna` guardará sus datos. Ejemplos: *optuna*.
-- **MLFLOW_TRACKING_URI.** dirección URL (o IP) de tu servicio `mlflow`. Ejemplos: *http://localhost* o *http://mlflow.tudominio.com*.
+- **MLFLOW_TRACKING_URI.** dirección URL (o IP) de tu servicio `mlflow`. Ejemplos: *http://localhost* o *http://mlflow.tu-dominio.com*.
 - **OPTUNA_STORAGE_URI.** URI para acceder a la base de datos `posgres`. Se le puede asignar el valor:
 ```plaintext  
 postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}
