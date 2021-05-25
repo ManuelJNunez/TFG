@@ -1,12 +1,12 @@
 name: "Simple CNN"
 kind: group
-num_trials: 10
+num_trials: 1
 resources_per_worker:
-  cpu: 0.8
-  gpu: 0.85
+  cpu: 1.0
+  gpu: 1.0
 
 params:
-  epochs: 10
+  epochs: 5
   seed: 2342
 
 param_space:
