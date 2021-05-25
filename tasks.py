@@ -60,7 +60,7 @@ def train(c, all=False):
 
 @task
 def venvtrain(c):
-    c.run("docker-compose up optuna-db -d")
+    c.run("docker-compose up -d optuna-db")
     c.run("invoke train")
     c.run("docker-compose down")
 
