@@ -1,4 +1,4 @@
-from invoke import task
+from invoke import task, Responder, watchers
 from pathlib import Path
 from dotenv import dotenv_values
 
@@ -38,24 +38,30 @@ def train(c, all=False):
     experiments_path = Path("src/experiments")
     config = dotenv_values(".env")
     train_files = []
-    train = True
 
     for child in experiments_path.iterdir():
         if child.suffix in [".yml", ".yaml"]:
             train_files.append(child)
 
     for file in train_files:
+        command = f"snapper-ml --config_file={str(file)}"
+
         if not all:
-            train = False
-            reply = input(
-                f"Would you like to run the experiment defined in {str(file)}? [Y/n] "
+            responder = Responder(
+                pattern=f"Would you like to run the experiment defined in {str(file)}?",
+                response= "y\n",
             )
 
-            if reply.lower() in ["1", "y", "yes", "true", "yeah"]:
-                train = True
+            c.run(command, pty=True, env=config, watchers=[responder])
+        else:
+            c.run(command, pty=True, env=config)
 
-        if train:
-            c.run(f"snapper-ml --config_file={str(file)}", pty=True, env=config)
+
+@task
+def venvtrain(c):
+    c.run("docker-compose up optuna-db -d")
+    c.run("invoke train")
+    c.run("docker-compose down")
 
 
 @task
