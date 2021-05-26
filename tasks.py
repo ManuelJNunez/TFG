@@ -1,6 +1,8 @@
 from invoke import task
+from fabric import Connection
 from pathlib import Path
 from dotenv import dotenv_values
+import sys
 
 
 @task
@@ -70,3 +72,16 @@ def dockertrain(c):
     c.run("docker-compose up --build -d", pty=True)
     c.run("docker start -ai tfg_train-container_1")
     c.run("docker-compose down")
+    
+
+@task
+def sshtrain(c, host=None, gw=None):
+    if host is None:
+        sys.exit("Usage: inv sshtrain --host=<server_dir> [--gw=<gw_dir>]")
+
+    gw = Connection(gw)
+    connect = Connection(host, gateway=gw)
+
+    with connect.cd("TFG/"):
+        connect.run("git pull")
+        connect.run("poetry run inv venvtrain")
