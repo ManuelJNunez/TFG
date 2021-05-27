@@ -47,6 +47,10 @@ El problema que se pretende solucionar en este proyecto, es diseñar un modelo q
 
     poetry run invoke cov-xml
 
+### Conectarse a través de SSH para entrenar modelos
+
+    poetry run invoke sshtrain --host=<host> [--gw=<gateway>]
+
 ## Cómo reproducir el experimento
 
 El experimento ha sido diseñado para que pueda reproducirse entero sólo con unas pocas órdenes. Antes de arrancarlo, hace falta poner en marcha varios servicios, uno de `mlflow` con su correspondiente base de datos `mysql` y otro de `postgresql` para `optuna`.
@@ -105,6 +109,11 @@ Tras haber creado el `.env`, puedes ejecutar el experimento de forma local (con 
 poetry install --no-dev
 docker-compose up optuna-db -d
 poetry run invoke train
+```
+
+O simplemente ejecuta lo siguiente, que ya hace todo por tí (menos el install) y al finalizar termina con todos los servicios levantados:
+```sh
+poetry run invoke venvtrain
 ```
 
 O si prefieres crearlo en un entorno aún más aislado, puedes ejecutar los experimentos dentro de un contenedor docker si has instalado [nvidia-docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html). Para ello, usa la siguiente orden:
