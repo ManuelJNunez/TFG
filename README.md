@@ -111,7 +111,7 @@ docker-compose up optuna-db -d
 poetry run invoke train
 ```
 
-O simplemente ejecuta lo siguiente, que ya hace todo por tí (menos el install) y al finalizar termina con todos los servicios levantados:
+O simplemente ejecuta lo siguiente, que ya hace todo por ti (menos el install) y al finalizar termina con todos los servicios levantados:
 ```sh
 poetry run invoke venvtrain
 ```

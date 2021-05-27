@@ -94,3 +94,9 @@ EMPTY
 RANDOM
 password
 mysql
+gateway
+SSH
+gw
+host
+sshtrain
+venvtrain
