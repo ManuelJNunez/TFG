@@ -72,7 +72,7 @@ def dockertrain(c):
     c.run("docker-compose up --build -d", pty=True)
     c.run("docker start -ai tfg_train-container_1")
     c.run("docker-compose down")
-    
+
 
 @task
 def sshtrain(c, host=None, gw=None):
