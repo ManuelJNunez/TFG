@@ -1,7 +1,10 @@
 FROM python:3.8-slim
 
-RUN apt update \
-    && apt install curl libpq-dev gcc -y \
+RUN apt update && apt install -y \
+    curl \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/* \
     && groupadd -g 119 jenkins \
     && useradd -r -u 113 -g jenkins -d /home/jenkins jenkins \
     && mkdir /home/jenkins \
