@@ -44,23 +44,43 @@ Además de lo anterior, también se puede configurar un Despliegue Continuo, as�
 
 \section{Descripción del problema}
 
-La Tierra está siendo \enquote{bombardeada} constantemente con rayos cósmicos que provienen, como su nombre indica, del universo. Estos rayos se componen de partículas que viajan a la velocidad de la luz, que al entrar en contacto con la atmósfera producen una cascada atmosférica extensa. Dicha cascada emite una luz debido a la radiación gamma llamada \enquote{Luz de Cherenkov}. A la misma vez, el rayo cósmico se fragmenta formando hadrones. Es decir, estos rayos se descomponen en una componente hadrónica y otra componente electromagnética.\newline
+La Tierra está siendo \enquote{bombardeada} constantemente con rayos cósmicos que provienen, como su nombre indica, del universo. Estos rayos se componen de partículas que viajan a la velocidad de la luz, que al entrar en contacto con la atmósfera producen una cascada atmosférica extensa. Dicha cascada emite una luz debido a la radiación gamma llamada \enquote{Luz de Cherenkov}.\newline
 
 \enquote{La detección de de rayos gamma de muy alta energía es esencial para investigar las fuentes de la radiación entrante producida por alguno de los fenómenos más extremos que suceden en el universo, por ejemplo estrellas de neutrones y agujeros negros supermasivos} \cite{gonzalez2021tackling}.
 
 \begin{figure}[H]
 	\includegraphics[scale=.3]{imagenes/01_Introduccion/EAS.jpg}
 	\centering
-	\label{fig:wcd}
 	\caption{Así sería una Cascada Atmosférica Extensa incidiendo sobre un Water Cherenkov Detector (WCD). Fuente: \href{https://revolucion.news/cienciario.mx/los-rayos-cosmicos-de-muy-alta-energia-vienen-de-fuera-de-la-via-lactea/}{revolucion.news}.}
+	\label{fig:wcd}
 \end{figure}
 
-Para poder capturar información sobre dichos rayos cósmicos, se usan WCD (se puede ver la imagen de uno en la Figura \ref{fig:wcd}) que son tanques de agua ultrapura que contienen fotomultiplicadores distribuidos simétricamente dentro del tanque que se utilizan para captar la señal del rayo que incide sobre el mismo. En función de la profundidad del agua del WCD, se emitirá más luz o menos, siendo directamente proporcionales.\newline
-
-El problema que se pretende solucionar en este proyecto, es diseñar un modelo que sea capaz de diferenciar un rayo que sea solo radiación gamma electromagnética de uno que tenga una partícula denominada \enquote{muón}. Esta partícula se genera por la interacción a alta energía de los hadrones y nos permiten discriminar bastante bien entre la radiación gamma y los hadrones \cite{gonzalez2021tackling}.
+Para poder capturar información sobre dichos rayos cósmicos, se usan WCD que son tanques de agua ultrapura que contienen fotomultiplicadores distribuidos simétricamente, como puede verse en la Figura \ref{fig:wcdschema}, (la cantidad de fotomultiplicadores depende del diseño del tanque) y son utilizados para captar la señal del rayo que incide sobre el mismo. En función de la profundidad del agua del WCD, se emitirá más luz o menos, siendo directamente proporcionales. En la figura \ref{fig:wcd} podemos observar cómo son desde fuera.\newline
 
 \begin{figure}[H]
 	\includegraphics[scale=.1]{imagenes/01_Introduccion/wcd.png}
 	\centering
 	\caption{Diseño de un WCD \cite{gonzalez2021tackling}.}
+	\label{fig:wcdschema}
+\end{figure}
+
+El problema que se pretende solucionar en este proyecto, es diseñar un modelo que sea capaz de diferenciar entre dos tipos de rayos, los producidos por partículas de hierro de los que se producen por protones. Para ello, los datos que tenemos son imágenes de una simulación, en la que podemos observar la cantidad de energía recogida en cada punto. Cada uno de esos puntos representa un WCD. Las dos siguientes imágenes muestran una muestra de las dos clases que tenemos en el conjunto de datos:
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{imagenes/01_Introduccion/iron.png}
+         \caption{Cascada generada por hierros}
+         \label{fig:y equals x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{imagenes/01_Introduccion/proton.png}
+         \caption{Cascada generada por protones}
+         \label{fig:three sin x}
+     \end{subfigure}
+        \caption{Muestras del conjunto de datos}
+        \label{fig:three graphs}
 \end{figure}
