@@ -1,6 +1,8 @@
 """Utils for training models or get the data"""
-from typing import Callable, Tuple
+from typing import Callable, Tuple, List
 from pathlib import Path
+from pydantic.errors import DecimalIsNotFiniteError
+from sklearn.metrics import confusion_matrix
 import torch
 import torch.nn as nn
 from torch import Tensor
@@ -10,6 +12,9 @@ import numpy as np
 import pandas as pd
 import h5py
 from .device_data_loader import DeviceDataLoader
+import pandas as pd
+import seaborn as sn
+import matplotlib.pyplot as plt
 
 
 def validate(
@@ -45,11 +50,11 @@ def compute_general_loss(
 ) -> float:
     """Compute the loss in the entire DataSet"""
 
-    losses, nums = zip(
+    losses, lens = zip(
         *[compute_batch_loss(model, loss_func, xb, yb) for xb, yb in data_loader]
     )
 
-    train_acc = np.sum(np.multiply(losses, nums)) / np.sum(nums)
+    train_acc = np.sum(np.multiply(losses, lens)) / np.sum(lens)
 
     return train_acc
 
@@ -88,3 +93,28 @@ def read_data(path: Path) -> Tensor:
         labels = torch.from_numpy(info.loc[:, "Y_class"].values)
 
     return data, labels.long()
+
+
+def generate_confusion_matrix(data_loader: DataLoader, model: nn.Module) -> str:
+    """Generate the confusion matrix"""
+    labels_pred = np.array([])
+    labels_true = np.array([])
+
+    for data, labels in data_loader:
+        labels_true = np.append(labels_true, labels.cpu().detach().numpy())
+
+        pred_prob = model(data).cpu().detach().numpy()
+        labels_pred = np.append(labels_pred, np.argmax(pred_prob, axis=1))
+
+    cmatrix = confusion_matrix(labels_true, labels_pred, normalize="true")
+
+    return cmatrix
+
+
+def save_confusion_matrix(confusion_matrix: List, class_names: str, dest_dir: Path):
+    """Saves the computed confusion matrix as a image in the dest_dir"""
+    plt.figure()
+    df_cm = pd.DataFrame(confusion_matrix, index=class_names, columns=class_names)
+    sn_plot = sn.heatmap(df_cm, annot=True)
+    fig = sn_plot.get_figure()
+    fig.savefig(dest_dir)
