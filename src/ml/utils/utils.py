@@ -1,7 +1,6 @@
 """Utils for training models or get the data"""
 from typing import Callable, Tuple, List
 from pathlib import Path
-from pydantic.errors import DecimalIsNotFiniteError
 from sklearn.metrics import confusion_matrix
 import torch
 import torch.nn as nn
@@ -9,12 +8,11 @@ from torch import Tensor
 from torch.optim import Optimizer
 from torch.utils.data import TensorDataset, DataLoader
 import numpy as np
-import pandas as pd
 import h5py
-from .device_data_loader import DeviceDataLoader
 import pandas as pd
 import seaborn as sn
 import matplotlib.pyplot as plt
+from .device_data_loader import DeviceDataLoader
 
 
 def validate(
@@ -111,10 +109,10 @@ def generate_confusion_matrix(data_loader: DataLoader, model: nn.Module) -> str:
     return cmatrix
 
 
-def save_confusion_matrix(confusion_matrix: List, class_names: str, dest_dir: Path):
+def save_confusion_matrix(cm_values: List, class_names: str, dest_dir: Path):
     """Saves the computed confusion matrix as a image in the dest_dir"""
     plt.figure()
-    df_cm = pd.DataFrame(confusion_matrix, index=class_names, columns=class_names)
+    df_cm = pd.DataFrame(cm_values, index=class_names, columns=class_names)
     sn_plot = sn.heatmap(df_cm, annot=True)
     fig = sn_plot.get_figure()
     fig.savefig(dest_dir)
