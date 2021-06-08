@@ -6,7 +6,13 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.metrics import accuracy_score, f1_score
 import config
-from ml.utils.utils import compute_general_loss, default_device, fit
+from ml.utils.utils import (
+    compute_general_loss,
+    default_device,
+    fit,
+    generate_confusion_matrix,
+    save_confusion_matrix,
+)
 from ml.utils.snapperml_data_loader import SnapperDataLoader
 from ml.models.convnet import ConvClassifier
 
@@ -52,6 +58,24 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
     train_f1 = compute_general_loss(train_dl, model, f1_score)
     test_f1 = compute_general_loss(test_dl, model, f1_score)
 
+    logger.info("Generating confusion matrix...")
+
+    train_cmatrix = generate_confusion_matrix(train_dl, model)
+    train_cm_file = config.artifacts_path.joinpath("train_confusion_matrix.png")
+    save_confusion_matrix(
+        train_cmatrix,
+        config.class_names,
+        train_cm_file,
+    )
+
+    test_cmatrix = generate_confusion_matrix(test_dl, model)
+    test_cm_file = config.artifacts_path.joinpath("test_confusion_matrix.png")
+    save_confusion_matrix(
+        test_cmatrix,
+        config.class_names,
+        test_cm_file,
+    )
+
     logger.info("Generating artifacts...")
 
     # Save the model
@@ -62,7 +86,11 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
         "test_acc": test_acc,
         "train_f1": train_f1,
         "test_f1": test_f1,
-    }, {"model": str(model_path)}
+    }, {
+        "model": str(model_path),
+        "train_confusion_matrix": str(train_cm_file),
+        "test_confusion_matrix": str(test_cm_file),
+    }
 
 
 if __name__ == "__main__":

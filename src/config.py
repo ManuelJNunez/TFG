@@ -12,3 +12,5 @@ artifacts_path = repo_root.joinpath("artifacts")
 artifacts_path.mkdir(exist_ok=True)
 
 model_path = artifacts_path.joinpath("model.pth")
+
+class_names = ["iron", "proton"]
