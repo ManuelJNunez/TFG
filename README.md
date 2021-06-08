@@ -49,7 +49,7 @@ El problema que se pretende solucionar en este proyecto, es diseñar un modelo q
 
 ### Conectarse a través de SSH para entrenar modelos
 
-    poetry run invoke sshtrain --host=<host> [--gw=<gateway>]
+    poetry run invoke sshtrain --destdir=<destination_directory> --host=<host> [--gw=<gateway>]
 
 ## Cómo reproducir el experimento
 
