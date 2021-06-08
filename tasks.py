@@ -3,6 +3,7 @@ from fabric import Connection
 from pathlib import Path
 from dotenv import dotenv_values
 import sys
+import os
 
 
 @task
@@ -58,6 +59,7 @@ def train(c, all=False):
 
         if train:
             c.run(f"snapper-ml --config_file={str(file)}", pty=True, env=config)
+            #c.run("rm -rf artifacts/")
 
 
 @task
@@ -75,13 +77,18 @@ def dockertrain(c):
 
 
 @task
-def sshtrain(c, host=None, gw=None):
-    if host is None:
-        sys.exit("Usage: inv sshtrain --host=<server_dir> [--gw=<gw_dir>]")
+def sshtrain(c, destdir=None, host=None, gw=None):
+    if host is None or destdir is None:
+        sys.exit("Usage: inv sshtrain --destdir=<destination_directory> --host=<server_dir> [--gw=<gw_dir>]")
 
-    gw = Connection(gw)
-    connect = Connection(host, gateway=gw)
+    cwd = os.getcwd()
+    current_dirname = cwd.split("/")[-1]
 
-    with connect.cd("TFG/"):
-        connect.run("git pull")
+    gw_connection = Connection(gw)
+    connect = Connection(host, gateway=gw_connection)
+
+    c.run(f"rsync -vah $PWD {gw}:{destdir}")
+
+    with connect.cd(current_dirname):
+        connect.run("poetry install")
         connect.run("poetry run inv venvtrain")
