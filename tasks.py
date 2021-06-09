@@ -5,6 +5,8 @@ from dotenv import dotenv_values
 import sys
 import os
 
+from pydantic.errors import ConfigError
+
 
 @task
 def test(c):
@@ -65,6 +67,7 @@ def train(c, all=False):
 @task
 def venvtrain(c):
     c.run("docker-compose up -d optuna-db")
+    print()
     c.run("invoke train")
     c.run("docker-compose down")
 
@@ -84,11 +87,15 @@ def sshtrain(c, destdir=None, host=None, gw=None):
     cwd = os.getcwd()
     current_dirname = cwd.split("/")[-1]
 
-    gw_connection = Connection(gw)
+    gw_connection = Connection(gw) if gw else None
     connect = Connection(host, gateway=gw_connection)
 
-    c.run(f"rsync -vah $PWD {gw}:{destdir}")
+    print("Synchronizing files...")
+
+    c.run(f"rsync -vah $PWD {gw if gw else host}:{destdir}")
 
     with connect.cd(current_dirname):
+        print("\n\nChecking if dependencies are up to date...")
         connect.run("poetry install")
+        print()
         connect.run("poetry run inv venvtrain")
