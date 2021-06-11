@@ -1,0 +1,26 @@
+name: "CAE"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  lr: loguniform(0.0001, 0.01)
+  norm: loguniform(0, 0.1)
+  bs: randint(32, 256)
+  first_conv_out_channels: randint(1, 10)
+  depth: randint(2, 10)
+  latent_size: randint(10, 100)
+  optimizer: choice(['adam', 'sgd'])
+
+metric:
+  name: test_acc
+  direction: maximize
+
+run:
+  - src/cae.py
