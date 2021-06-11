@@ -32,7 +32,13 @@ def compute_batch_loss(
     labels: Tensor,
 ) -> Tuple[Tensor]:
     """Compute the loss for a given batch"""
-    pred_labels = model(data).argmax(dim=1)
+    pred_probs = model(data)
+
+    if isinstance(pred_probs, tuple):
+        pred_probs = pred_probs[1]
+
+    pred_labels = pred_probs.argmax(dim=1)
+
     pred_labels = pred_labels.cpu()
     true_labels = labels.cpu()
 
@@ -101,7 +107,12 @@ def generate_confusion_matrix(data_loader: DataLoader, model: nn.Module) -> str:
     for data, labels in data_loader:
         labels_true = np.append(labels_true, labels.cpu().detach().numpy())
 
-        pred_prob = model(data).cpu().detach().numpy()
+        pred_prob = model(data)
+        
+        if isinstance(pred_prob, tuple):
+            pred_prob = pred_prob[1]
+        
+        pred_prob = pred_prob.cpu().detach().numpy()
         labels_pred = np.append(labels_pred, np.argmax(pred_prob, axis=1))
 
     cmatrix = confusion_matrix(labels_true, labels_pred, normalize="true")
