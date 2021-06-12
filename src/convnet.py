@@ -18,7 +18,7 @@ from ml.models.convnet import ConvClassifier
 
 
 @job(data_loader_func=SnapperDataLoader)
-def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
+def main(epochs=10, seed=2342, lr=0.0001, bs=64, optimizer="adam", out_channels=None):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
     torch.manual_seed(seed)
@@ -42,7 +42,10 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, out_channels=None):
     model.to(dev)
 
     # Initialize optimizer
-    opt = optim.Adam(model.parameters(), lr)
+    if optimizer == "adam":
+        opt = optim.Adam(model.parameters(), lr)
+    elif optimizer == "sgd":
+        opt = optim.SGD(model.parameters(), lr)
 
     logger.info("Training model...")
 
