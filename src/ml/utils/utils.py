@@ -108,10 +108,10 @@ def generate_confusion_matrix(data_loader: DataLoader, model: nn.Module) -> str:
         labels_true = np.append(labels_true, labels.cpu().detach().numpy())
 
         pred_prob = model(data)
-        
+
         if isinstance(pred_prob, tuple):
             pred_prob = pred_prob[1]
-        
+
         pred_prob = pred_prob.cpu().detach().numpy()
         labels_pred = np.append(labels_pred, np.argmax(pred_prob, axis=1))
 
