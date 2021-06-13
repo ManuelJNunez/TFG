@@ -1,3 +1,4 @@
+"""Script for training a Convolutional Autoencoder based network"""
 from snapper_ml import job
 from snapper_ml.logging import logger
 import torch
@@ -18,6 +19,7 @@ from ml.models.cae import ConvAutoencoder
 
 
 def cae_loss(weight_decay: float):
+    """This functions retrieves another function that computes the CAE Loss"""
     def compute_cae_loss(
         cae_output: Tensor, data: Tensor, predictions: Tensor, true_labels: Tensor
     ) -> Tensor:
@@ -35,7 +37,7 @@ def main(
     epochs=10,
     seed=2342,
     lr=0.001,
-    norm=0.01,
+    reg=0.01,
     bs=128,
     first_conv_out_channels=2,
     depth=3,
@@ -71,7 +73,7 @@ def main(
     logger.info("Training model...")
 
     # Fit the model to the data
-    fit(epochs, model, cae_loss(norm), opt, train_dl)
+    fit(epochs, model, cae_loss(reg), opt, train_dl)
 
     logger.info("Computing model loss...")
 
