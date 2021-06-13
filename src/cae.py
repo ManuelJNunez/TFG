@@ -20,6 +20,7 @@ from ml.models.cae import ConvAutoencoder
 
 def cae_loss(weight_decay: float):
     """This functions retrieves another function that computes the CAE Loss"""
+
     def compute_cae_loss(
         cae_output: Tensor, data: Tensor, predictions: Tensor, true_labels: Tensor
     ) -> Tensor:
