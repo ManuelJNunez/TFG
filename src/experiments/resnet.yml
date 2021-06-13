@@ -1,0 +1,25 @@
+name: "ResNet"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  lr: loguniform(0.0001, 0.01)
+  reg: loguniform(0, 0.1)
+  bs: randint(32, 256)
+  num_channels: choice([[3, 4, 6, 3], [2, 2, 2, 2]])
+  number_of_blocks: choice([[64, 64, 128, 256, 512], [32, 32, 64, 128, 256]])
+  optimizer: choice(['adam', 'sgd'])
+
+metric:
+  name: test_acc
+  direction: maximize
+
+run:
+  - src/cae.py
