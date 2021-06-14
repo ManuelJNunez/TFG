@@ -61,7 +61,7 @@ def train(c, all=False):
 
         if train:
             c.run(f"snapper-ml --config_file={str(file)}", pty=True, env=config)
-            #c.run("rm -rf artifacts/")
+            c.run("rm -rf artifacts/")
 
 
 @task
