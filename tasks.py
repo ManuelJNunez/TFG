@@ -5,8 +5,6 @@ from dotenv import dotenv_values
 import sys
 import os
 
-from pydantic.errors import ConfigError
-
 
 @task
 def test(c):
