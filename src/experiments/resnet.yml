@@ -11,10 +11,19 @@ params:
 
 param_space:
   lr: loguniform(0.0001, 0.01)
-  reg: loguniform(0, 0.1)
+  reg: loguniform(0.0001, 0.1)
   bs: randint(32, 256)
-  num_channels: choice([[3, 4, 6, 3], [2, 2, 2, 2]])
-  number_of_blocks: choice([[64, 64, 128, 256, 512], [32, 32, 64, 128, 256]])
+  number_of_blocks:
+    - randint(2, 6)
+    - randint(2, 6)
+    - randint(2, 6)
+    - randint(2, 6)
+  num_channels:
+    - randint(32, 512)
+    - randint(32, 512)
+    - randint(32, 512)
+    - randint(32, 512)
+    - randint(32, 512)
   optimizer: choice(['adam', 'sgd'])
 
 metric:
@@ -22,4 +31,4 @@ metric:
   direction: maximize
 
 run:
-  - src/cae.py
+  - src/resnet.py
