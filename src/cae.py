@@ -57,7 +57,7 @@ def main(
     train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs)
 
     # Compute the size of the first fully-connected layer
-    classifier_sizes = [10, 5]
+    classifier_sizes = [latent_size, 10, 5]
 
     # Initialize the model and load it to the training device
     model = ConvAutoencoder(
