@@ -11,15 +11,19 @@ class SnapperDataLoader(snapper_ml.DataLoader):
     """DataLoader for SnapperML, contains the PyTorch's DataLoaders"""
 
     @classmethod
-    def load_data(cls, dev: torch.device, batch_size: int):
+    def load_data(cls, dev: torch.device, batch_size: int, flatten=False):
         train_path = Path("data/Train_EnergyGround_alt5200m_qgsii_fluka_N44971.h5")
         test_path = Path("data/Test_EnergyGround_alt5200m_qgsii_fluka_N14989.h5")
 
         train_data, train_labels = read_data(train_path)
         test_data, test_labels = read_data(test_path)
 
-        train_data.unsqueeze_(1)
-        test_data.unsqueeze_(1)
+        if not flatten:
+            train_data.unsqueeze_(1)
+            test_data.unsqueeze_(1)
+        else:
+            train_data = torch.flatten(train_data, start_dim=1)
+            test_data = torch.flatten(test_data, start_dim=1)
 
         # Create a Tensor Dataset and a Data Loader for the training data
         train_ds = TensorDataset(train_data, train_labels)
