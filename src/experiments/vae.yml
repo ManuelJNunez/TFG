@@ -1,0 +1,28 @@
+name: "VAE"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  lr: loguniform(0.0001, 0.01)
+  reg: loguniform(0.0001, 0.1)
+  bs: randint(32, 256)
+  autoencoder_sizes:
+    - randint(500, 1000)
+    - randint(100, 500)
+    - randint(50, 100)
+    - randint(10, 50)
+  optimizer: choice(['adam', 'sgd'])
+
+metric:
+  name: test_acc
+  direction: maximize
+
+run:
+  - src/vae.py
