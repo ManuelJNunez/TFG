@@ -21,6 +21,7 @@ from ml.models.vae import VAE
 def vae_loss(weight_decay: float):
     """This functions retrieves another function that computes the CAE Loss"""
 
+    # pylint: disable=unused-argument
     def compute_vae_loss(
         cae_output: Tensor,
         data: Tensor,
