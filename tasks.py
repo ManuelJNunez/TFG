@@ -80,7 +80,9 @@ def dockertrain(c):
 @task
 def sshtrain(c, destdir=None, host=None, gw=None):
     if host is None or destdir is None:
-        sys.exit("Usage: inv sshtrain --destdir=<destination_directory> --host=<server_dir> [--gw=<gw_dir>]")
+        sys.exit(
+            "Usage: inv sshtrain --destdir=<destination_directory> --host=<server_dir> [--gw=<gw_dir>]"
+        )
 
     cwd = os.getcwd()
     current_dirname = cwd.split("/")[-1]
