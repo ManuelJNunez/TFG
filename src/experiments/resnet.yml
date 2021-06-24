@@ -19,15 +19,15 @@ param_space:
     - randint(2, 6)
     - randint(2, 6)
   num_channels:
-    - randint(32, 512)
-    - randint(32, 512)
-    - randint(32, 512)
-    - randint(32, 512)
-    - randint(32, 512)
+    - randint(8, 32)
+    - randint(32, 64)
+    - randint(64, 128)
+    - randint(128, 256)
+    - randint(256, 512)
   optimizer: choice(['adam', 'sgd'])
 
 metric:
-  name: test_acc
+  name: test_f1
   direction: maximize
 
 run:

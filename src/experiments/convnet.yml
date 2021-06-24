@@ -18,7 +18,7 @@ param_space:
     - randint(2, 20)
 
 metric:
-  name: test_acc
+  name: test_f1
   direction: maximize
 
 run:

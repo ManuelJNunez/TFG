@@ -19,7 +19,7 @@ param_space:
   optimizer: choice(['adam', 'sgd'])
 
 metric:
-  name: test_acc
+  name: test_f1
   direction: maximize
 
 run:
