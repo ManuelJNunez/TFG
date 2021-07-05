@@ -27,7 +27,7 @@ def main(
     num_channels=None,
     number_of_blocks=None,
     optimizer="adam",
-    normalize=True,
+    normalize="yes",
 ):
     """Main function for training a ResNet based model with Snapper-ML"""
     # Set the seed and get the default device for training
@@ -40,6 +40,8 @@ def main(
 
     if number_of_blocks is None:
         number_of_blocks = [3, 4, 6, 3]
+
+    normalize = bool(normalize)
 
     logger.info("Reading data...")
 

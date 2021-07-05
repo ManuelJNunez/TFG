@@ -44,13 +44,15 @@ def main(
     depth=3,
     latent_size=10,
     optimizer="adam",
-    normalize=True,
+    normalize="yes",
 ):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
     torch.manual_seed(seed)
     dev = default_device()
     model_path = config.model_path
+
+    normalize = bool(normalize)
 
     logger.info("Reading data...")
 

@@ -48,7 +48,7 @@ def main(
     bs=128,
     autoencoder_sizes=None,
     optimizer="adam",
-    normalize=True,
+    normalize="yes",
 ):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
@@ -58,6 +58,8 @@ def main(
 
     if autoencoder_sizes is None:
         autoencoder_sizes = [500, 100, 20, 10]
+
+    normalize = bool(normalize)
 
     logger.info("Reading data...")
 

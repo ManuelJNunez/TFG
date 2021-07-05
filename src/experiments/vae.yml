@@ -19,7 +19,7 @@ param_space:
     - randint(50, 100)
     - randint(10, 50)
   optimizer: choice(['adam', 'sgd'])
-  normalize: choice([True, False])
+  normalize: choice(['yes', 'no'])
 
 metric:
   name: test_f1

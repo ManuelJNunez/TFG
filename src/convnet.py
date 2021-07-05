@@ -25,7 +25,7 @@ def main(
     bs=64,
     optimizer="adam",
     out_channels=None,
-    normalize=True,
+    normalize="yes",
 ):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
@@ -35,6 +35,8 @@ def main(
 
     if out_channels is None:
         out_channels = [2, 6]
+
+    normalize = bool(normalize)
 
     logger.info("Reading data...")
 

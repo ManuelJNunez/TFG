@@ -17,7 +17,7 @@ param_space:
   depth: randint(2, 4)
   latent_size: randint(10, 100)
   optimizer: choice(['adam', 'sgd'])
-  normalize: choice([True, False])
+  normalize: choice(['yes', 'no'])
 
 metric:
   name: test_f1
