@@ -18,7 +18,15 @@ from ml.models.convnet import ConvClassifier
 
 
 @job(data_loader_func=SnapperDataLoader)
-def main(epochs=10, seed=2342, lr=0.0001, bs=64, optimizer="adam", out_channels=None):
+def main(
+    epochs=10,
+    seed=2342,
+    lr=0.0001,
+    bs=64,
+    optimizer="adam",
+    out_channels=None,
+    normalize=True,
+):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
     torch.manual_seed(seed)
@@ -31,7 +39,7 @@ def main(epochs=10, seed=2342, lr=0.0001, bs=64, optimizer="adam", out_channels=
     logger.info("Reading data...")
 
     # Read the data and create the DataLoader
-    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs)
+    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs, normalize)
 
     # Compute the size of the first fully-connected layer
     first_layer = int(((((data_size[3] - 4) / 2) - 4) / 2))

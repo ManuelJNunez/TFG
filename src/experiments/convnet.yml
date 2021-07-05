@@ -13,6 +13,7 @@ param_space:
   bs: randint(32, 256)
   lr: loguniform(0.0001, 0.01)
   optimizer: choice(['adam', 'sgd'])
+  normalize: choice([True, False])
   out_channels:
     - randint(2, 20)
     - randint(2, 20)

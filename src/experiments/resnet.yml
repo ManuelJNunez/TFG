@@ -25,6 +25,7 @@ param_space:
     - randint(128, 256)
     - randint(256, 512)
   optimizer: choice(['adam', 'sgd'])
+  normalize: choice([True, False])
 
 metric:
   name: test_f1

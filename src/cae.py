@@ -44,6 +44,7 @@ def main(
     depth=3,
     latent_size=10,
     optimizer="adam",
+    normalize=True,
 ):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
@@ -54,7 +55,7 @@ def main(
     logger.info("Reading data...")
 
     # Read the data and create the DataLoader
-    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs)
+    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs, normalize)
 
     # Compute the size of the first fully-connected layer
     classifier_sizes = [latent_size, 10, 5]

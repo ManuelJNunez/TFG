@@ -48,6 +48,7 @@ def main(
     bs=128,
     autoencoder_sizes=None,
     optimizer="adam",
+    normalize=True,
 ):
     """Main function for training a LeNet-5 based model with Snapper-ML"""
     # Set the seed and get the default device for training
@@ -61,7 +62,7 @@ def main(
     logger.info("Reading data...")
 
     # Read the data and create the DataLoader
-    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs, True)
+    train_dl, test_dl, data_size = SnapperDataLoader.load_data(dev, bs, normalize, True)
 
     autoencoder_sizes.insert(0, data_size[1])
 
