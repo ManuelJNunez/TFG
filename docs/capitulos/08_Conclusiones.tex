@@ -1,0 +1,17 @@
+\chapter{Conclusiones y Trabajos Futuros}
+
+\section{Conclusiones}
+
+En este trabajo se ha intentado hacer una guía lo más completa posible del campo del \textit{Machine Learning} desde la perspectiva de la Ingeniería. En los capítulos anteriores se ha llegado a una solución usando las prácticas de \textit{DevOps} en el contexto del \textit{Machine Learning}, lo cual recibe el nombre de \textit{MLOps}. Sobre esto último no hay muchos trabajos publicados en internet.\\
+
+La solución propuesta hace uso de contenedores y de software libre de tal forma que los experimentos y la infraestructura virtual usada en este trabajo son reproducibles por cualquier persona o entidad (usando la \textit{cloud} o incluso su propia infraestructura). Para poder reproducir lo anterior mencionado, se ha dejado una guía en el fichero \path{README.md} del repositorio de \textit{GitHub}.\\
+
+Por otro lado, se ha conseguido unos resultados muy buenos en el problema que se pretendía resolver en este trabajo, llegando a un valor de 0.99 para la métrica $F_1$ en el conjunto de pruebas y además pudiendo analizar cuáles son los hiperparámetros que mayor efecto tienen sobre la métrica que mide la capacidad predictiva del modelo entrenado.\\
+
+Gracias al uso de la herramienta \textit{mlflow} se ha podido llevar un \textit{tracking} de los experimentos, es decir, se ha podido guardar los hiperparámetros con los que se han entrenado los modelos y las métricas. Además, ha permitido almacenar automáticamente el modelo entrenado para su posterior descarga y despliegue en otra máquina y algunos \textit{plots} (como la matriz de confusión) para su posterior análisis. Y por último, mencionar la gran utilidad del framework \textit{SnapperML}, con el cual he podido definir los experimentos en ficheros con formato \textit{YAML} para poder ejecutar los experimentos fácilmente y guardar los resultados y artefactos en \textit{mlflow}.
+
+\section{Trabajos Futuros}
+
+Este trabajo constituye solo la primera parte de mi estudio sobre las técnicas de \textit{MLOps}, ya tengo listo el \textit{workflow} para entrenar modelos y he ideado como sería el despliegue del modelo en un microservicio y en el contexto del \textit{Edge Computing} (ver Capítulo \ref{chap:deploy}). Claramente, los siguientes pasos de este trabajo serían aprender sobre herramientas de orquestación para hacer pruebas de concepto de cómo sería el despliegue en el observatorio (o cualquier otro dentro del contexto del \textit{Edge Computing}), además de probar y añadir la infraestructura necesaria para monitorización y \textit{logging}.\\
+
+Además, se podría adaptar el \textit{workflow} actual a \textit{kubernetes} para hacer que el despliegue de \textit{mlflow} y de los servicios que usa \textit{SnapperML} sea realizado con una única orden y por tanto de forma más sencilla. Por último, recalcar que también sería interesante implementar \textit{tests} de infraestructura para comprobar que la infraestructura levantada funciona tal y como está planificado que lo haga.\\
