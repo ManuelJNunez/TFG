@@ -12,6 +12,13 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+
+% Euro
+\usepackage{eurosym}
+\usepackage{multirow}
+
+\usepackage{array}
+
 % Matemáticas y algoritmos
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -19,6 +26,8 @@
 
 % Comandos matemáticos
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage[dvipsnames]{xcolor}
 
 % nonl command
 \let\oldnl\nl
@@ -166,6 +175,18 @@ pdfproducer = {pdflatex}
     frame=single,
     numbers=none
    }
+   
+\lstdefinelanguage{docker}{
+  keywords={FROM, RUN, COPY, ADD, ENTRYPOINT, CMD,  ENV, ARG, WORKDIR, EXPOSE, LABEL, USER, VOLUME, STOPSIGNAL, ONBUILD, MAINTAINER},
+  keywordstyle=\color{blue}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{Emerald}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
 
 
 \newcommand{\bigrule}{\titlerule[0.5mm]}
@@ -189,17 +210,22 @@ pdfproducer = {pdflatex}
 }
 \makeatother
 
+\usepackage{footnote}
+
 \usepackage{pdfpages}
 \begin{document}
+
+\renewcommand{\tablename}{Tabla}
+
 \input{portada/portada}
 \input{prefacios/prefacio}
-%\frontmatter
+\frontmatter
 \tableofcontents
-%\listoffigures
-%\listoftables
+\listoffigures
+\listoftables
 %
-%\mainmatter
-%\setlength{\parskip}{5pt}
+\mainmatter
+\setlength{\parskip}{5pt}
 
 \input{capitulos/01_objetivos}
 
@@ -211,17 +237,13 @@ pdfproducer = {pdflatex}
 
 \input{capitulos/05_Implementacion}
 %
-%\input{capitulos/06_Diseno}
+\input{capitulos/06_Experimentacion}
 %
-%\input{capitulos/07_Implementacion}
+\input{capitulos/07_Despliegue}
 %
-%\input{capitulos/08_Pruebas}
+\input{capitulos/08_Conclusiones}
 %
-%\input{capitulos/09_Conclusiones}
-%
-%%\chapter{Conclusiones y Trabajos Futuros}
-%
-%
+
 % \nocite{*}
 \bibliography{bibliography/bibliography}%\addcontentsline{toc}{chapter}{Bibliografía}
 \bibliographystyle{plain}
