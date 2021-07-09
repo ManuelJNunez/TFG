@@ -76,7 +76,6 @@ Manuel Jesús Núñez Ruiz
   - CI/CD
   - Control de versiones
   - Infraestructura como Código
-  - Administración de configuración
   - Monitorización
 
 ---
@@ -89,6 +88,44 @@ Manuel Jesús Núñez Ruiz
 
 ---
 
-# Control de versiones
+# DevOps
+### Control de versiones
 
+Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, permitiendo recuperar versiones específicas más adelante.
+
+<br/>
+
+![width:400px](images/gitlogo.png)
+
+---
+
+# DevOps
+### Infraestructura como Código
+
+- Permite la gestión y preparación la infraestructura con código.
+- Ventajas:
+  - Ahorro de tiempo y costes.
+  - Facilita la distribución y reproducibilidad.
+
+---
+
+# DevOps
+
+### Monitorización
+
+- Visualizar en tiempo real el rendimiento y estado de las aplicaciones.
+- Objetivo: detectar errores lo antes posible.
+- Necesario visualizar:
+  - Hardware subyacente.
+  - Aplicación en ejecución.
+
+---
+
+# MLOps
+
+- Aplicar las prácticas de DevOps al desarrollo de sistemas de ML.
+- Problema adicional:
+  - Administración de modelos.
+  - Administración de hiperparámetros y métricas.
+  - Reproducibilidad.
 
