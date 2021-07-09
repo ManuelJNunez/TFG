@@ -129,3 +129,74 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
   - Administración de hiperparámetros y métricas.
   - Reproducibilidad.
 
+---
+
+<!-- _class: lead -->
+
+# 3. Descripción del problema
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+<!-- _class: invert -->
+
+# Descripción del problema
+
+- Concepto importante: cascada atmosférica extensa.
+- Una partícula muy cargada proveniente del cosmos entra en contacto con la atmósfera.
+- Interés: investigar las fuentes de radiación del universo.
+
+![bg right:35% 90%](images/airshower.jpg)
+
+<!-- footer: Sección 3: Descripción del problema -->
+
+---
+
+<!-- _class: invert -->
+
+# Descripción del problema
+
+- Captura de información con Water Cherenkov Detectors.
+- Tanques de agua ultrapura con fotomultiplicadores en el fondo.
+- Se suelen colocar siguiendo un *layout*.
+
+![bg right:35% 90%](images/wcd.png)
+
+---
+
+<!-- _class: invert -->
+
+# Descripción del problema
+
+- Altura mínima 4.4km.
+- Tiempo de funcionamiento esperado: 20 años.
+- Coste estimado 40-50 M€.
+- Construcción por fases.
+- Para evitar derroches se han simulado datos usando CORSIKA.
+
+![bg right:40% 90%](images/layout.png)
+
+---
+
+<!-- _class: invert -->
+
+# Descripción del problema
+
+![bg center:50% 70%](images/iron.png)
+![bg center:50% 70%](images/proton.png)
+
+
+---
+
+# Descripción del problema
+
+<!-- _class: invert -->
+
+- Los datos vienen divididos en dos subconjuntos:
+  - Conjunto de entrenamiento (44.971 muestras):
+    - Clase 0: 22.481 muestras.
+    - Clase 1: 22.490 muestras.
+  - Conjunto de pruebas (14.989 muestras):
+    - Clase 0: 7.493 muestras.
+    - Clase 1: 7.496 muestras.
