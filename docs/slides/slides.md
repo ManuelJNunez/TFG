@@ -200,3 +200,183 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
   - Conjunto de pruebas (14.989 muestras):
     - Clase 0: 7.493 muestras.
     - Clase 1: 7.496 muestras.
+
+---
+
+<!-- _class: lead -->
+
+# 4. Herramientas utilizadas
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Lenguaje de programación
+
+- Ventajas:
+  - Fácil de aprender
+  - Lenguaje de propósito general.
+  - Gran ecosistema para ciencia de datos y desarrollo.
+- Desventajas:
+  - Más lento que otros lenguajes.
+
+![bg right:40% 90%](images/python.png)
+
+<!-- footer: Sección 4: Herramientas utilizadas -->
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Gestor de dependencias
+
+- Usado para registrar e instalar las dependencias en un *virtual environment*.
+- Dos alternativas:
+  - Poetry.
+  - Pipenv.
+- Elegido Poetry tras la comparación realizada (ver Subsección 3.1.2 de la memoria).
+
+---
+
+<!-- _class: invert -->
+
+<style scoped>
+section {
+  font-size: 29px
+}
+</style>
+
+## Herramientas utilizadas
+#### Gestor de dependencias
+
+
+```toml
+[tool.poetry]
+name = "TFG"
+version = "0.0.1"
+description = "Dependency file for this project :)"
+authors = ["ManuelJNunez <manueljesusnunezruiz@gmail.com>"]
+license = "GPL-3.0"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+```
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Gestor de tareas
+
+- Necesario para registrar todas las tareas que se tienen que llevar a cabo para ejecutar los tests, compilar, ejecutar...
+- Se especifican en un fichero usando algún lenguaje.
+- El gestor de tareas se encarga de ejecutar ese código.
+
+```python
+@task
+def test(c):
+    c.run("coverage run --source=src/ml -m pytest", pty=True)
+```
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Gestor de tareas
+
+- Varias alternativas:
+  - *Poe the poet* o *taskipy* (Bash).
+  - Invoke (Python).
+- Elección: Invoke
+  - Mayor portabilidad.
+  - Claridad y sencillez en la sintaxis.
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Plataforma de CI/CD
+
+- Plataforma elegida: Jenkins.
+  - *Self-hosted*.
+  - Muy personalizable.
+  - No tener que preocuparme de los créditos.
+  - Plan de eduación AWS.
+  - Interfaz compleja.
+
+![bg right:40% 60%](images/jenkins.png)
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Plataforma de CI/CD
+
+- Otra plataforma elegida: GH Actions.
+  - Gratis (por ahora).
+  - Tests secundarios: existencia de archivos y ortografía.
+  - Ejecución de *tests* en varias versiones de python.
+
+![bg right:40% 60%](images/ghactions.png)
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Linters y static analysis
+
+- Pylint
+  - *static analyzer*.
+  - Fuerza a seguir estándares de estilo de código.
+- Black
+  - Evita el *código espagueti*.
+  - Fuerza el estilo del *PEP 8*.
+
+![bg vertical right:40% 80%](images/pylint.png)
+![bg 80%](images/black.png)
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Aprovisionamiento
+
+- Elección: Terraform.
+  - Usa un DSL llamado HCL, pero
+  - Mejor documentación.
+  - Mayor comunidad.
+
+![bg vertical right:40% 80%](images/pulumi.svg)
+![bg 80%](images/terraform.png)
+
+---
+
+<!-- _class: invert -->
+
+## Herramientas utilizadas
+#### Framework MLOps
+
+- Permite configurar experimentos en ficheros con formato YAML.
+- Usa *mlfow* para registrar:
+  - Hiperparámetros.
+  - Métricas.
+  - Artefactos.
+- Solucionados problemas MLOps :rocket:
+
+![bg right:40% 90%](images/snapper.png)
