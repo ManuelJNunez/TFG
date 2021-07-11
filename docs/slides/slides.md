@@ -28,10 +28,9 @@ Manuel Jesús Núñez Ruiz
 2. DevOps y MLOps
 3. Descripción del problema
 4. Herramientas utilizadas
-5. Modelos de Deep Learning
-6. Infraestructura utilizada
-7. Resultados obtenidos
-8. Despliegue
+5. Infraestructura utilizada
+6. Experimentos y resultados
+7. Despliegue
 
 <!-- footer: Manuel Jesús Núñez Ruiz -->
 
@@ -380,3 +379,70 @@ def test(c):
 - Solucionados problemas MLOps :rocket:
 
 ![bg right:40% 90%](images/snapper.png)
+
+---
+
+<!-- _class: lead -->
+
+# 5. Infraestructura utilizada
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+# Infraestructura utilizada
+
+#### Infraestructura de entrenamiento
+
+![height:440px](images/testinfra.png)
+
+<!-- footer: Sección 5: Infraestructura utilizada -->
+
+---
+
+# Infraestructura utilizada
+
+#### Infraestructura de tests
+
+- Jenkins:
+  - Aprovisionado con Terraform.
+  - Responsabilidades:
+    - Instalar dependencias.
+    - Ejecutar tests (unitarios y de cobertura).
+    - Enviar resultados tests de cobertura a *Codacy*.
+    - Checkear estilo y formato con *Pylint* y *Black*.
+
+---
+
+# Infraestructura utilizada
+
+#### Infraestructura de tests
+
+- Codacy:
+  - Analiza el repositorio entero (no solo el código fuente).
+  - Lo evalúa con una calificación entre A y F.
+  - Registra resultados de tests de cobertura.
+  - Permite mostrar *badges* en GitHub.
+
+![](images/badges.png)
+
+---
+
+# Infraestructura utilizada
+
+#### Infraestructura de tests
+
+- GitHub Actions:
+  - Completamente gratuito (por ahora).
+  - Responsabilidades:
+    - Comprobar existencia de ficheros básicos (LICENSE, README, gitignore).
+    - Comprobar ortografía.
+    - Ejecutar *tests* en varias versiones de *Python*.
+
+---
+
+# Infraestructura utilizada
+
+#### Infraestructura de entrenamiento
+
+![height:440px](images/traininfra.png)
