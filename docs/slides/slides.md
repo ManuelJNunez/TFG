@@ -29,7 +29,7 @@ Manuel Jesús Núñez Ruiz
 3. Descripción del problema
 4. Herramientas utilizadas
 5. Infraestructura utilizada
-6. Experimentos y resultados
+6. Pruebas y resultados
 7. Despliegue
 
 <!-- footer: Manuel Jesús Núñez Ruiz -->
@@ -446,3 +446,328 @@ def test(c):
 #### Infraestructura de entrenamiento
 
 ![height:440px](images/traininfra.png)
+
+---
+
+<!-- _class: lead -->
+
+# 6. Pruebas y resultados
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+<!-- _class: invert -->
+
+## Pruebas y resultados
+
+#### Convolutional Autoencoder
+
+- Comprime la imagen a una dimensión menor.
+- Función objetivo:
+  - $\tilde{\mathcal{L}} = \mathcal{L}(y,\hat{y}) + \lambda R(x,\hat{x})$
+  - $\mathcal{L}(y,\hat{y}) = CrossEntropy(y,\hat{y})$
+  - $R(x,\hat{x}) = MSE(x,\hat{x})$
+
+![bg right:35% 95%](../imagenes/05_Implementacion/CAE.png)
+
+<!-- footer: Sección 6: Pruebas y resultados -->
+
+---
+
+<!-- _class: invert -->
+
+<style scoped>
+code {
+  font-size: 11px;
+}
+</style>
+
+## Pruebas y resultados
+
+#### Convolutional Autoencoder
+
+```yaml
+name: "CAE"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  lr: loguniform(0.0001, 0.01)
+  reg: loguniform(0.0001, 0.1)
+  bs: randint(32, 256)
+  first_conv_out_channels: randint(1, 10)
+  depth: randint(2, 4)
+  latent_size: randint(10, 100)
+  optimizer: choice(['adam', 'sgd'])
+  normalize: choice(['yes', 'no'])
+
+metric:
+  name: test_f1
+  direction: maximize
+
+run:
+  - src/cae.py
+```
+
+---
+
+<!-- _class: invert -->
+
+## Pruebas y resultados
+
+#### Convolutional Classifier
+
+- Basado en LeNet-5.
+- Función objetivo:
+  - $CrossEntropy(y,\hat{y})$
+
+
+![bg right:50% 95%](../imagenes/05_Implementacion/lenet5.png)
+
+---
+
+<!-- _class: invert -->
+
+<style scoped>
+code {
+  font-size: 11px;
+}
+</style>
+
+## Pruebas y resultados
+
+#### Convolutional Classifier
+
+```yaml
+name: "Simple CNN"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  bs: randint(32, 256)
+  lr: loguniform(0.0001, 0.01)
+  optimizer: choice(['adam', 'sgd'])
+  out_channels:
+    - randint(2, 20)
+    - randint(2, 20)
+  normalize: choice(['yes', 'no'])
+
+metric:
+  name: test_f1
+  direction: maximize
+
+run:
+  - src/convnet.py
+```
+
+---
+
+<!-- _class: invert -->
+
+## Pruebas y resultados
+
+#### Residual Network
+
+- Muy popular en la clasificación de imágenes.
+- Concatenación de varios ResBlocks.
+- Función objetivo:
+  - $CrossEntropy(y,\hat{y})$
+
+![bg right:40% 90%](../imagenes/03_Estado_del_arte/resnet-block.png)
+
+---
+
+<!-- _class: invert -->
+
+<style scoped>
+code {
+  font-size: 8.8px;
+}
+</style>
+
+## Pruebas y resultados
+
+#### Residual Network
+
+```yaml
+name: "ResNet"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  lr: loguniform(0.0001, 0.01)
+  reg: loguniform(0.0001, 0.1)
+  bs: randint(32, 256)
+  number_of_blocks:
+    - randint(2, 6)
+    - randint(2, 6)
+    - randint(2, 6)
+    - randint(2, 6)
+  num_channels:
+    - randint(8, 32)
+    - randint(32, 64)
+    - randint(64, 128)
+    - randint(128, 256)
+    - randint(256, 512)
+  optimizer: choice(['adam', 'sgd'])
+  normalize: choice(['yes', 'no'])
+
+metric:
+  name: test_f1
+  direction: maximize
+
+run:
+  - src/resnet.py
+```
+
+---
+
+<!-- _class: invert -->
+
+## Pruebas y resultados
+
+#### Varitional Autoencoder
+
+- Interesante comparar redes clásicas con convolucionales.
+- Comprime la imagen a una dimensión menor.
+- Función objetivo:
+  - $CrossEntropy(y,\hat{y})$
+
+![bg right:40% 90%](../imagenes/03_Estado_del_arte/vae-gaussian.png)
+
+---
+
+<!-- _class: invert -->
+
+<style scoped>
+code {
+  font-size: 10.3px;
+}
+</style>
+
+## Pruebas y resultados
+
+#### Varitional Autoencoder
+
+```yaml
+name: "VAE"
+kind: group
+num_trials: 1
+resources_per_worker:
+  cpu: 1.0
+  gpu: 1.0
+
+params:
+  epochs: 5
+  seed: 2342
+
+param_space:
+  lr: loguniform(0.0001, 0.01)
+  reg: loguniform(0.0001, 0.1)
+  bs: randint(32, 256)
+  autoencoder_sizes:
+    - randint(500, 1000)
+    - randint(100, 500)
+    - randint(50, 100)
+    - randint(10, 50)
+  optimizer: choice(['adam', 'sgd'])
+  normalize: choice(['yes', 'no'])
+
+metric:
+  name: test_f1
+  direction: maximize
+
+run:
+  - src/vae.py
+```
+
+---
+
+<!-- _class: invert -->
+
+<style>
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+## Pruebas y resultados
+
+#### Resultados
+
+|         **Modelo**        | **Valor *test_f1*** |
+|:-------------------------:|:-------------------:|
+| Convolutional Autoencoder |        0.988        |
+|  Convolutional Classifier |        0.991        |
+|      Residual Network     |        0.987        |
+|   Varitional Autoencoder  |        0.982        |
+
+---
+
+## Pruebas y resultados
+
+#### Profiling (entrenamiento)
+
+<!-- _class: invert -->
+
+|         **Modelo**        |  **Memoria usada**  |
+|:-------------------------:|:-------------------:|
+| Convolutional Autoencoder |       3.56 GiB      |
+|  Convolutional Classifier |       3.61 GiB      |
+|      Residual Network     |       3.14 GiB      |
+|   Varitional Autoencoder  |       3.15 GiB      |
+
+---
+
+<!-- _class: lead -->
+
+# 7. Despliegue
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+## Despliegue
+#### Ciclo de vida de un modelo
+
+![height:420px](images/modellife.png)
+
+<!-- footer: Sección 7: Despliegue -->
+
+---
+
+## Despliegue
+#### Ciclo de vida de un modelo
+
+![height:420px](images/cd.png)
+
+---
+
+Manuel Jesús Núñez Ruiz ([@ManuelJNunez](https://github.com/ManuelJNunez))
+
+https://github.com/ManuelJNunez/TFG
+
+<!-- _footer: Fin -->
