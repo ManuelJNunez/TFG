@@ -31,6 +31,7 @@ Manuel Jesús Núñez Ruiz
 5. Infraestructura utilizada
 6. Pruebas y resultados
 7. Despliegue
+8. Conclusiones y trabaos futuros.
 
 <!-- footer: Manuel Jesús Núñez Ruiz -->
 
@@ -47,7 +48,7 @@ Manuel Jesús Núñez Ruiz
 - Llevar un control de los experimentos realizados.
 - Obtener los mejores resultados posibles mediante el uso de hiperparámetros óptimos.
 - Comprobar la validez de un modelo mediante *tests* unitarios (TDD aplicado al ML).
-- Despliegue ágil de modelos.
+- Diseñar un despliegue ágil de modelos.
 - Permitir la reproducibilidad.
 
 <!-- _footer: Sección 1: Objetivos -->
@@ -168,10 +169,10 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 # Descripción del problema
 
-- Altura mínima 4.4km.
-- Tiempo de funcionamiento esperado: 20 años.
-- Coste estimado 40-50 M€.
 - Construcción por fases.
+- Altura mínima 4.4km.
+- Coste estimado 40-50 M€.
+- Tiempo de funcionamiento esperado: 20 años.
 - Para evitar derroches se han simulado datos usando CORSIKA.
 
 ![bg right:40% 90%](images/layout.png)
@@ -326,9 +327,9 @@ def test(c):
 #### Plataforma de CI/CD
 
 - Otra plataforma elegida: GH Actions.
+  - No es *self-hosted*.
   - Gratis (por ahora).
-  - Tests secundarios: existencia de archivos y ortografía.
-  - Ejecución de *tests* en varias versiones de python.
+  - Usado para tests secundarios.
 
 ![bg right:40% 60%](images/ghactions.png)
 
@@ -392,7 +393,7 @@ def test(c):
 
 # Infraestructura utilizada
 
-#### Infraestructura de entrenamiento
+#### Infraestructura de test
 
 ![height:440px](images/testinfra.png)
 
@@ -402,7 +403,7 @@ def test(c):
 
 # Infraestructura utilizada
 
-#### Infraestructura de tests
+#### Infraestructura de test
 
 - Jenkins:
   - Aprovisionado con Terraform.
@@ -416,7 +417,7 @@ def test(c):
 
 # Infraestructura utilizada
 
-#### Infraestructura de tests
+#### Infraestructura de test
 
 - Codacy:
   - Analiza el repositorio entero (no solo el código fuente).
@@ -430,10 +431,9 @@ def test(c):
 
 # Infraestructura utilizada
 
-#### Infraestructura de tests
+#### Infraestructura de test
 
 - GitHub Actions:
-  - Completamente gratuito (por ahora).
   - Responsabilidades:
     - Comprobar existencia de ficheros básicos (LICENSE, README, gitignore).
     - Comprobar ortografía.
@@ -653,7 +653,7 @@ run:
 - Interesante comparar redes clásicas con convolucionales.
 - Comprime la imagen a una dimensión menor.
 - Función objetivo:
-  - $CrossEntropy(y,\hat{y})$
+  - Igual que la del Convolutional Autoencoder
 
 ![bg right:40% 90%](../imagenes/03_Estado_del_arte/vae-gaussian.png)
 
@@ -760,11 +760,58 @@ table {
 ---
 
 ## Despliegue
-#### Ciclo de vida de un modelo
+#### Infraestructura despliegue
 
 ![height:420px](images/cd.png)
 
 ---
+
+<!-- _class: lead -->
+
+# 8. Conclusiones y trabajos futuros
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+## Conclusiones y trabajos futuros
+#### Conclusiones
+
+- Todo ha sido implementado usando software libre.
+- Toda la infraestructura es reproducible.
+- Gracias al uso de *mlflow*:
+  - Se puede llevar un control de los experimentos.
+  - Se puede utilizar para despliegue ágil de modelos.
+- Gracias al uso de *SnapperML* se puede ejecutar los experimentos en otra máquina con una sola orden.
+- Pero aún hay mas...
+
+---
+
+## Conclusiones y trabajos futuros
+#### Trabajos futuros
+
+- Usar herramientas de orquestación para:
+  - Permitir la reproducibilidad de la infraestructura con una orden.
+  - Ahorrar tiempo.
+  - Pruebas de concepto despliegue (contexto del observatorio).
+- Añadir infraestructura monitorización y *logging*.
+- Tests de infraestructura.
+- Ejecutar *tests* en otras plataformas (Windows, MacOSX).
+
+<!-- footer: Sección 8: Conclusiones y trabajos futuros -->
+
+---
+
+<!-- _color: black -->
+<!-- _backgroundColor: #00FFCD -->
+
+<style scoped>
+footer {
+  color: black;
+}
+</style>
+
+# Fin
 
 Manuel Jesús Núñez Ruiz ([@ManuelJNunez](https://github.com/ManuelJNunez))
 
