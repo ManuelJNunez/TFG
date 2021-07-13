@@ -22,16 +22,23 @@ Manuel Jesús Núñez Ruiz
 
 ---
 
+<style scoped>
+section {
+  font-size: 32px;
+}
+</style>
+
 # Índice
 
 1. Objetivos
 2. DevOps y MLOps
 3. Descripción del problema
-4. Herramientas utilizadas
-5. Infraestructura utilizada
-6. Pruebas y resultados
-7. Despliegue
-8. Conclusiones y trabaos futuros.
+4. Planificación y presupuesto
+5. Herramientas utilizadas
+6. Infraestructura utilizada
+7. Pruebas y resultados
+8. Despliegue
+9. Conclusiones y trabaos futuros.
 
 <!-- footer: Manuel Jesús Núñez Ruiz -->
 
@@ -113,7 +120,7 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 ### Monitorización
 
-- Visualizar en tiempo real el rendimiento y estado de las aplicaciones.
+- Registrar en tiempo real el rendimiento y estado de las aplicaciones.
 - Objetivo: detectar errores lo antes posible.
 - Necesario visualizar:
   - Hardware subyacente.
@@ -123,6 +130,7 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 # MLOps
 
+- Disciplina reciente.
 - Aplicar las prácticas de DevOps al desarrollo de sistemas de ML.
 - Problema adicional:
   - Administración de modelos.
@@ -143,7 +151,7 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 # Descripción del problema
 
-- Concepto importante: cascada atmosférica extensa.
+- Concepto importante: cascada atmosférica extensa (EAS).
 - Una partícula muy cargada proveniente del cosmos entra en contacto con la atmósfera.
 - Interés: investigar las fuentes de radiación del universo.
 
@@ -157,7 +165,7 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 # Descripción del problema
 
-- Captura de información con Water Cherenkov Detectors.
+- Captura de información con Water Cherenkov Detectors en observatorio SWGO.
 - Tanques de agua ultrapura con fotomultiplicadores en el fondo.
 - Se suelen colocar siguiendo un *layout*.
 
@@ -205,7 +213,31 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 <!-- _class: lead -->
 
-# 4. Herramientas utilizadas
+# 4. Planificación y presupuesto
+
+<!-- _footer: Manuel Jesús Núñez Ruiz -->
+
+---
+
+## Planificación y presupuesto
+#### Planificación
+
+![height:420px](../imagenes/04_Planificacion/kanban.png)
+
+<!-- Sección 4: Planificación y presupuesto -->
+
+---
+
+## Planificación y presupuesto
+#### Presupuesto
+
+![](images/presupuesto.png)
+
+---
+
+<!-- _class: lead -->
+
+# 5. Herramientas utilizadas
 
 <!-- _footer: Manuel Jesús Núñez Ruiz -->
 
@@ -225,7 +257,7 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
 
 ![bg right:40% 90%](images/python.png)
 
-<!-- footer: Sección 4: Herramientas utilizadas -->
+<!-- footer: Sección 5: Herramientas utilizadas -->
 
 ---
 
@@ -240,37 +272,6 @@ Registra los cambios realizados en los ficheros fuentes a lo largo del tiempo, p
   - Pipenv.
 - Elegido Poetry tras la comparación realizada (ver Subsección 3.1.2 de la memoria).
 
----
-
-<!-- _class: invert -->
-
-<style scoped>
-section {
-  font-size: 29px
-}
-</style>
-
-## Herramientas utilizadas
-#### Gestor de dependencias
-
-
-```toml
-[tool.poetry]
-name = "TFG"
-version = "0.0.1"
-description = "Dependency file for this project :)"
-authors = ["ManuelJNunez <manueljesusnunezruiz@gmail.com>"]
-license = "GPL-3.0"
-
-[tool.poetry.dependencies]
-python = "^3.7"
-
-[tool.poetry.dev-dependencies]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-```
 
 ---
 
@@ -385,7 +386,7 @@ def test(c):
 
 <!-- _class: lead -->
 
-# 5. Infraestructura utilizada
+# 6. Infraestructura utilizada
 
 <!-- _footer: Manuel Jesús Núñez Ruiz -->
 
@@ -397,7 +398,7 @@ def test(c):
 
 ![height:440px](images/testinfra.png)
 
-<!-- footer: Sección 5: Infraestructura utilizada -->
+<!-- footer: Sección 6: Infraestructura utilizada -->
 
 ---
 
@@ -451,7 +452,7 @@ def test(c):
 
 <!-- _class: lead -->
 
-# 6. Pruebas y resultados
+# 7. Pruebas y resultados
 
 <!-- _footer: Manuel Jesús Núñez Ruiz -->
 
@@ -471,7 +472,7 @@ def test(c):
 
 ![bg right:35% 95%](../imagenes/05_Implementacion/CAE.png)
 
-<!-- footer: Sección 6: Pruebas y resultados -->
+<!-- footer: Sección 7: Pruebas y resultados -->
 
 ---
 
@@ -711,6 +712,7 @@ run:
 table {
   margin-left: auto;
   margin-right: auto;
+  font-size: 34px;
 }
 </style>
 
@@ -718,12 +720,12 @@ table {
 
 #### Resultados
 
-|         **Modelo**        | **Valor *test_f1*** |
-|:-------------------------:|:-------------------:|
-| Convolutional Autoencoder |        0.988        |
-|  Convolutional Classifier |        0.991        |
-|      Residual Network     |        0.987        |
-|   Varitional Autoencoder  |        0.982        |
+|         **Modelo**        |   **Valor máximo<br/>*test_f1***  |   **Valor medio<br/>*test_f1***  |  **Std. Dev.<br/>*test_f1***  |
+|:-------------------------:|:---------------------------------:|:--------------------------------:|:-----------------------------:|
+| Convolutional Autoencoder |               0.988               |                0.853             |             0.199             |
+|  Convolutional Classifier |               0.991               |                0.910             |             0.120             |
+|      Residual Network     |               0.987               |                0.842             |             0.216             |
+|   Varitional Autoencoder  |               0.982               |                0.429             |             0.414             |
 
 ---
 
@@ -744,7 +746,7 @@ table {
 
 <!-- _class: lead -->
 
-# 7. Despliegue
+# 8. Despliegue
 
 <!-- _footer: Manuel Jesús Núñez Ruiz -->
 
@@ -755,7 +757,7 @@ table {
 
 ![height:420px](images/modellife.png)
 
-<!-- footer: Sección 7: Despliegue -->
+<!-- footer: Sección 8: Despliegue -->
 
 ---
 
@@ -768,7 +770,7 @@ table {
 
 <!-- _class: lead -->
 
-# 8. Conclusiones y trabajos futuros
+# 9. Conclusiones y trabajos futuros
 
 <!-- _footer: Manuel Jesús Núñez Ruiz -->
 
@@ -785,6 +787,8 @@ table {
 - Gracias al uso de *SnapperML* se puede ejecutar los experimentos en otra máquina con una sola orden.
 - Pero aún hay mas...
 
+<!-- footer: Sección 9: Conclusiones y trabajos futuros -->
+
 ---
 
 ## Conclusiones y trabajos futuros
@@ -792,13 +796,11 @@ table {
 
 - Usar herramientas de orquestación para:
   - Permitir la reproducibilidad de la infraestructura con una orden.
-  - Ahorrar tiempo.
   - Pruebas de concepto despliegue (contexto del observatorio).
 - Añadir infraestructura monitorización y *logging*.
 - Tests de infraestructura.
 - Ejecutar *tests* en otras plataformas (Windows, MacOSX).
-
-<!-- footer: Sección 8: Conclusiones y trabajos futuros -->
+- Probar los modelos con los datos del simulador EPOS.
 
 ---
 
